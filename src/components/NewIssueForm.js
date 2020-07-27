@@ -40,7 +40,6 @@ class NewIssueForm extends Component {
   }
 
   render() {
-    // console.log("NewIssueForm ====> ", this.state) 
     return (
        <div className="NewIssueForm">
         <h1 class="ui header">Issue Away</h1>

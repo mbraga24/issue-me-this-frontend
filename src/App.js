@@ -21,14 +21,13 @@ const App = () => {
         <div className="ui attached pushable App-sidebar">
           <SideBar toggleMenu={toggle}/>
           <Switch>  
-            <div className={`pusher bottom App-main ${toggle ? 'dimmed' : ''}`}>
-              <Route exact path="/issues" render={() => <Main />} />
-              <Route path="/issues/new" render={() => <NewIssueForm />} />
-              {/* =================================== */}
-              {/* still working on this component */}
-              {/* =================================== */}
-              <Route path="/issues/:id" render={routeProps => <ShowIssue {...routeProps} />} />
-            </div>
+            <React.Fragment>
+              <div className={`pusher bottom ui aligned container App-main ${toggle ? 'dimmed' : ''}`}>
+                <Route exact path="/issues" render={() => <Main />} />
+                <Route path="/issues/new" render={() => <NewIssueForm />} />
+                <Route path="/issues/:id" render={routeProps => <ShowIssue {...routeProps} />} customProps={toggleMenu}/>
+              </div>
+            </React.Fragment>
           </Switch>
       </div>
     </div>

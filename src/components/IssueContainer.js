@@ -6,7 +6,7 @@ const IssueContainer = (props) => {
 
   const renderIssues = () => {
     return props.issues.map(issue => (
-      <Issue key={issue.id} issue={issue} />
+      <Issue key={issue.id} issue={issue} user={issue.user_info} comment={issue.comment_details}/>
     ))
   }
   console.log("IssueContainer ====> ", props) 
