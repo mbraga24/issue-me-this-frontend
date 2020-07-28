@@ -14,7 +14,7 @@ const IssueContainer = (props) => {
     ))
   }
     return (
-        <div className="ui basic segment container">
+        <div className="ui basic segment">
           <h1 className="ui center aligned header">All Issues</h1>
           <SearchIssue setSearchTerm={props.setSearchTerm} /> 
           {renderIssues()}

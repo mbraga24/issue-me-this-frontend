@@ -24,7 +24,7 @@ class Main extends Component {
 
   render() {
     return(
-      <div className="Main">
+      <div className="ui container">
         <IssueContainer 
           searchTerm={this.state.searchTerm} 
           setSearchTerm={this.setSearchTerm}

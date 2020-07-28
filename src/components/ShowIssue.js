@@ -36,7 +36,8 @@ class ShowIssue extends Component {
     const { title, issue_body, user_info } = this.state.issue
   
     return (
-      <div className="ShowIssue" >
+      <div className="ui container" >
+        <h1 className="ui center aligned header">Issue</h1>
         <div className="ui card fluid">
           <div className="content">
             <div className="header">
