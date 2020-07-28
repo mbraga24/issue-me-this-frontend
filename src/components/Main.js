@@ -4,6 +4,7 @@ import IssueContainer from './IssueContainer';
 class Main extends Component {
 
   state = {
+    searchTerm: "",
     issues: []
   }
 
@@ -17,10 +18,18 @@ class Main extends Component {
     })
   }
 
+  setSearchTerm = (searchTerm) => {
+    this.setState({ searchTerm })
+  }
+
   render() {
     return(
       <div className="Main">
-        <IssueContainer issues={this.state.issues} />
+        <IssueContainer 
+          searchTerm={this.state.searchTerm} 
+          setSearchTerm={this.setSearchTerm}
+          issues={this.state.issues} 
+          />
       </div>
     );
   }

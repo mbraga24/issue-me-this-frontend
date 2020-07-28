@@ -20,7 +20,10 @@ class NewIssueForm extends Component {
     const newIssue = {
       title: this.state.title,
       issue_body: this.state.issueBody
+      // user_id: 2
     }
+
+    // console.log(newIssue)
     
     fetch("http://localhost:3000/issues", {
       method: "POST",

@@ -16,13 +16,13 @@ const App = () => {
   }
 
   return (
-    <div className="App-container">
+    <div>
       <Header onToggleMenu={toggleMenu}/>
         <div className="ui attached pushable App-sidebar">
           <SideBar toggleMenu={toggle}/>
           <Switch>  
             <React.Fragment>
-              <div className={`pusher bottom ui aligned container App-main ${toggle ? 'dimmed' : ''}`}>
+              <div className={`ui pusher bottom aligned container${toggle ? 'dimmed' : ''}`}>
                 <Route exact path="/issues" render={() => <Main />} />
                 <Route path="/issues/new" render={() => <NewIssueForm />} />
                 <Route path="/issues/:id" render={routeProps => <ShowIssue {...routeProps} />} customProps={toggleMenu}/>

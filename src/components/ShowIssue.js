@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Comment from './Comment';
+import '../ShowIssue.css';
 
 class ShowIssue extends Component {
 
@@ -27,38 +28,41 @@ class ShowIssue extends Component {
 
   render() {
     // console.log("ShowIssue ====> ", this.state.issue)
-
     // BUG - KEEPS SHOWING UP ON OTHER THE ADD ISSUE FORM
     if (!this.state.issue) {
       return <h1>Loading...</h1>
     }
 
-    const { title, issue_body } = this.state.issue
-
+    const { title, issue_body, user_info } = this.state.issue
+  
     return (
-    <div className="ShowIssue">
-      <div class="ui card fluid">
-        <div class="content"><div class="header">{title}</div></div>
-          <div class="content">
-            <div class="description">
-              {issue_body}
+      <div className="ShowIssue" >
+        <div className="ui card fluid">
+          <div className="content">
+            <div className="header">
+              {title}
+              <img src={user_info.avatar} alt={user_info.name} className="ui mini right floated image" />
+              </div>
+          </div>
+            <div className="content">
+              <div className="description">
+                {issue_body}
+              </div>
             </div>
           </div>
-        </div>
 
-      <div className="ui comments">
-        <h3 className="ui dividing header">Comments</h3>
-        {this.renderComments()}
-        <form className="ui reply form">
-          <div className="field"><textarea rows="3"></textarea></div>
-          <button className="ui icon primary left labeled button">
-            <i aria-hidden="true" className="edit icon"></i>
-            Add Reply
-          </button>
-        </form>
+        <div className="ui comments">
+          <h3 className="ui dividing header">Comments</h3>
+          {this.renderComments()}
+          <form className="ui reply form">
+            <div className="field"><textarea rows="3"></textarea></div>
+            <button className="ui icon primary left labeled button">
+              <i aria-hidden="true" className="edit icon"></i>
+              Add Reply
+            </button>
+          </form>
+        </div>
       </div>
-    </div>
-            
     );
   }
 }

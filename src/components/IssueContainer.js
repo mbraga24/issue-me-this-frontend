@@ -1,21 +1,25 @@
 import React from 'react';
 import Issue from './Issue';
+import SearchIssue from './SearchIssue';
 import '../IssueContainer.css';
 
 const IssueContainer = (props) => {
 
   const renderIssues = () => {
-    return props.issues.map(issue => (
+
+    const filteredIssues = props.issues.filter(issue => issue.title.toLowerCase().includes(props.searchTerm.toLowerCase()))
+
+    return filteredIssues.map(issue => (
       <Issue key={issue.id} issue={issue} user={issue.user_info} comment={issue.comment_details}/>
     ))
   }
-  console.log("IssueContainer ====> ", props) 
-  return (
-    <div className="ui basic segment container">
-      {/* <AddIssueForm handleNewIssue={this.props.handleNewIssue}/> */}
-      {renderIssues()}
-    </div>
-  );
+    return (
+        <div className="ui basic segment container">
+          <h1 className="ui center aligned header">All Issues</h1>
+          <SearchIssue setSearchTerm={props.setSearchTerm} /> 
+          {renderIssues()}
+        </div>
+    );
 }
 
 export default IssueContainer;
