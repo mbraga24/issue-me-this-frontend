@@ -1,0 +1,7 @@
+.SignUp-container {
+  height: 100vh;
+}
+
+.SignUp-container, .SignUp-form {
+  margin-top: 20vh;
+}
