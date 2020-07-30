@@ -23,10 +23,10 @@ const UserList = (props) => {
         <div className="description">Profession: {profession}</div>
       </div>
       <div className="extra content">
-        <a>
+        <Link to="/pages">
           <i aria-hidden="true" className="large pen square icon"></i>
           10 Issues
-        </a>
+        </Link>
       </div>
     </div>
   );

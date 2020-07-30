@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom'
+import Home from './components/Home';
 import Login from './components/Login';
 import SignUp from './components/SignUp';
 import IssueContainer from './components/IssueContainer';
@@ -83,13 +84,14 @@ class App extends Component {
     //   CANNOT REDIRECT USER TO /issues PAGE FROM APP COMPONENT
     //   --------> remember to delete the redirect from signup page
     // ************************************************************
+    // set current user and redirect to "/home" page
     // this.setState({ currentUser }, () => {
-    //   this.props.history.push('/issues')
+    //   this.props.history.push('/home')
     // })
   }
 
  render() {
-  //  console.log("APP ====>", this.state)
+   console.log("APP ====>", this.state.currentUser)
   return (
     <div>
       <Header onToggleMenu={this.toggleMenu}/>
@@ -97,8 +99,8 @@ class App extends Component {
           <SideBar toggleMenu={this.state.toggle}/>
           <div className={`ui pusher ${this.state.toggle ? 'dimmed' : ''}`}>
             <Switch>  
-              <Route path="/login" component={Login} />
-              <Route path="/signup" render={(routeProps) => <SignUp {...routeProps} handleNewUser={this.addUser}/>} />
+              <Route path="/login" render={routeProps => <Login {...routeProps} handleLogin={this.handleLogin} />} />
+              <Route path="/signup" render={routeProps => <SignUp {...routeProps} handleNewUser={this.addUser}/>} />
               <Route exact path="/issues" render={() => (
                 <IssueContainer 
                   searchTerm={this.state.searchTerm} 
@@ -112,6 +114,7 @@ class App extends Component {
                   users={this.state.users} />
                 )} />
               <Route path="/users/:id" render={routeProps => <UserProfile {...routeProps} />} />
+              <Route path="/home" component={Home} />
             </Switch>
           </div>
       </div>

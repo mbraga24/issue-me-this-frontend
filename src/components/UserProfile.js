@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 class UserProfile extends Component {
 
@@ -45,10 +46,10 @@ class UserProfile extends Component {
                     <div class="description">Profession: {profession}</div>
                   </div>
                   <div class="extra content">
-                    <a>
+                    <Link to="/pages">
                       <i aria-hidden="true" class="list alternate outline icon"></i>
                         22 Issues
-                        </a>
+                    </Link>
                   </div>
                 </div>
               </div>

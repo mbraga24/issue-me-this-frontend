@@ -108,7 +108,7 @@ class SignUp extends Component {
       // APP COMPONENT
       // ************************************************************
       // ************************************************************
-      this.props.history.push('/issues')
+      this.props.history.push('/home')
     })
   }
 
