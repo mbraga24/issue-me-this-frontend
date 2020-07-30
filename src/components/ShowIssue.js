@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import Comment from './Comment';
 import '../ShowIssue.css';
 
@@ -10,7 +11,6 @@ class ShowIssue extends Component {
 
   componentDidMount() {
     const issueId = this.props.match.params.id
-
     fetch(`http://localhost:3000/issues/${issueId}`)
       .then(r => r.json())
       .then(issue => {
@@ -24,14 +24,12 @@ class ShowIssue extends Component {
     ))
   }
 
-  render() {
-    console.log("SHOW ISSUE PAGE")
-
+  render() { 
     if (!this.state.issue) {
       return <h1>Loading...</h1>
     }
 
-    const { title, issue_body, user } = this.state.issue
+    const { title, issueBody, user } = this.state.issue
     const imgUrl = `https://semantic-ui.com/images/avatar/small/${user.avatar}.jpg`
 
     return (
@@ -41,13 +39,18 @@ class ShowIssue extends Component {
           <div className="content">
             <div className="header">
               {title}
-              <img src={imgUrl} alt={user.name} className="ui mini right floated image" />
+            <Link to={`/users/${user.id}`}>
+              <img src={imgUrl} alt={user.username} className="ui mini right floated image" />
+            </Link>
             </div>
           </div>
           <div className="content">
             <div className="description">
-              {issue_body}
+              {issueBody}
             </div>
+            <Link to={`/users/${user.id}`}>
+              <p className="ui right aligned">{user.username}</p>
+            </Link>
           </div>
         </div>
 

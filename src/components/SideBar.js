@@ -5,6 +5,18 @@ import '../SideBar.css';
 const SideBar = (props) => {
   return (
     <div className={`ui vertical inverted overlay left animating sidebar menu ${props.toggleMenu ? 'visible' : 'hidden'}`}>
+      <Link to="/signup" className="item">
+        Signup
+        <i className="large write square icon"></i>
+      </Link>
+      <Link to="/login" className="item">
+        Login
+        <i className="large sign-in alternate icon"></i>
+      </Link>
+      <Link to="/login" className="item">
+        Logout
+        <i className="large sign-out alternate icon"></i>
+      </Link>
       <Link to="/issues" className="item">
         Issues
         <i className="large list alternate outline icon"></i>
@@ -19,7 +31,7 @@ const SideBar = (props) => {
       </Link>
       <Link to="/users/id" className="item">
         Profile
-        <i className="large user circle outline icon"></i>
+        <i className="large user circle icon"></i>
       </Link>
     </div>
   );

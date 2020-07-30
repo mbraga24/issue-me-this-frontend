@@ -16,41 +16,31 @@ class App extends Component {
     searchTerm: "",
     issues: [],
     users: [],
-    toggle: false
+    toggle: false,
+    currentUser: ""
   }
 
+  // handle issues and users initial fetch
   componentDidMount() {
     fetch("http://localhost:3000/issues")
     .then(r => r.json())
-    .then(dataIssues => {
-      this.setState({
-        issues: dataIssues
-      })
+    .then(issues => {
+      this.setState({ issues })
     })
 
     fetch("http://localhost:3000/users")
     .then(r => r.json())
-    .then(dataUsers => {
-      this.setState({
-        users: dataUsers
-      })
+    .then(users => {
+      this.setState({ users })
     })
+  }
+
+  toggleMenu = () => {
+    this.setToggle()
   }
 
   setSearchTerm = (searchTerm) => {
     this.setState({ searchTerm })
-  }
-
-  deleteIssue = (issueId) => {
-    console.log("DELETE ISSUE: ", updatedIssues)
-    const updatedIssues = this.state.issues.filter(issue => issue.id !== issueId)
-    this.setState({ issues: updatedIssues })
-  }
-
-  addIssue = (newIssue) => {
-    this.setState({
-      issues: [...this.state.issues, newIssue]
-    })
   }
 
   setToggle = () => {
@@ -58,12 +48,48 @@ class App extends Component {
       toggle: !prevState.toggle
     }))
   }
+  
+  // =============================================
+  //             HANDLE ISSUE LOGIC
+  // =============================================
 
-  toggleMenu = () => {
-    this.setToggle()
+  addIssue = newIssue => {
+    this.setState({
+      issues: [...this.state.issues, newIssue]
+    })
+  }
+
+  deleteIssue = issueId => {
+    const updatedIssues = this.state.issues.filter(issue => issue.id !== issueId)
+    this.setState({ issues: updatedIssues })
+  }
+
+  // =============================================
+  //             HANDLE ISSUE USER
+  // =============================================
+
+  addUser = newUser => {
+    this.setState({ users: [...this.state.users, newUser] })
+    this.handleLogin(newUser)
+  }
+
+  // =============================================
+  //             HANDLE LOGIN
+  // =============================================
+
+  handleLogin = currentUser => {
+    this.setState({ currentUser })
+    // ************************************************************
+    //   CANNOT REDIRECT USER TO /issues PAGE FROM APP COMPONENT
+    //   --------> remember to delete the redirect from signup page
+    // ************************************************************
+    // this.setState({ currentUser }, () => {
+    //   this.props.history.push('/issues')
+    // })
   }
 
  render() {
+  //  console.log("APP ====>", this.state)
   return (
     <div>
       <Header onToggleMenu={this.toggleMenu}/>
@@ -71,21 +97,21 @@ class App extends Component {
           <SideBar toggleMenu={this.state.toggle}/>
           <div className={`ui pusher ${this.state.toggle ? 'dimmed' : ''}`}>
             <Switch>  
-                <Route path="/Login" component={Login} />
-                <Route path="/SignUp" component={SignUp} />
-                <Route exact path="/issues" render={() => (
-                  <IssueContainer 
-                    searchTerm={this.state.searchTerm} 
-                    setSearchTerm={this.setSearchTerm}
-                    issues={this.state.issues} />
-                  )} />
-                <Route path="/issues/new" render={routeProps => <NewIssueForm {...routeProps} handleNewIssue={this.addIssue}/>} />
-                <Route path="/issues/:id" render={routeProps => <ShowIssue {...routeProps} />} />
-                <Route exact path="/users" render={() => (
-                  <UserContainer 
-                    users={this.state.users} />
-                  )} />
-                <Route path="/users/:id" render={routeProps => <UserProfile {...routeProps} />} />
+              <Route path="/login" component={Login} />
+              <Route path="/signup" render={(routeProps) => <SignUp {...routeProps} handleNewUser={this.addUser}/>} />
+              <Route exact path="/issues" render={() => (
+                <IssueContainer 
+                  searchTerm={this.state.searchTerm} 
+                  setSearchTerm={this.setSearchTerm}
+                  issues={this.state.issues} />
+                )} />
+              <Route path="/issues/new" render={routeProps => <NewIssueForm {...routeProps} handleNewIssue={this.addIssue}/>} />
+              <Route path="/issues/:id" render={routeProps => <ShowIssue {...routeProps} />} />
+              <Route exact path="/users" render={() => (
+                <UserContainer 
+                  users={this.state.users} />
+                )} />
+              <Route path="/users/:id" render={routeProps => <UserProfile {...routeProps} />} />
             </Switch>
           </div>
       </div>

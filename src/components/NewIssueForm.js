@@ -40,7 +40,7 @@ class NewIssueForm extends Component {
   render() {
     return (
       <div className="ui container">
-        <h1 class="ui center aligned header">Issue Away</h1>
+        <h1 class="ui center aligned header">New Issue</h1>
         <form className="ui large form" onSubmit={this.addIssue}>
           <div className="equal width fields">
             <div className="field">

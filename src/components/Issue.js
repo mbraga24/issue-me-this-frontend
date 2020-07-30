@@ -4,9 +4,9 @@ import { Link } from 'react-router-dom';
 const Issue = (props) => {
 
   const issueId = props.issue.id
-  const user_name = props.user.name
-  const total_comments = props.comment.length
-  const img_url = `https://semantic-ui.com/images/avatar/small/${props.user.avatar}.jpg`
+  const username = props.user.username
+  const totalComments = props.comment.length
+  const imgUrl = `https://semantic-ui.com/images/avatar/small/${props.user.avatar}.jpg`
   const { title, issue_body } = props.issue
 
   const handleDeleteButton = () => {
@@ -15,20 +15,19 @@ const Issue = (props) => {
     })
       .then(r => r.json())
       .then(data => {
-        // console.log(data, `issueId: ${issueId}`)
         props.handleDelete(issueId)
       })
   }
 
   return (
-    <div class="ui celled grid">
-      <div class="row">
-        <div class="sixteen wide column ui card">
+    <div className="ui celled grid">
+      <div className="row">
+        <div className="sixteen wide column ui card">
           <div className="content">
             <div className="header">
               <Link to={`/issues/${issueId}`}>
                 {title}
-                <img src={img_url} alt={user_name} className="ui mini right floated image" />
+                <img src={imgUrl} alt={username} className="ui mini right floated image" />
               </Link>
             </div>
           </div>
@@ -40,15 +39,15 @@ const Issue = (props) => {
           <div className="extra content">
             <Link to={`/issues/${issueId}`}>
               <i aria-hidden="true" className="comment alternate icon"></i>
-              {total_comments} Comments
+              {totalComments} Comments
             </Link>
           </div>
         </div>
-        <div class="row">
-          <div class="five wide column">
-            <div class="ui buttons" style={{ padding: "10px" }}>
-              <button class="ui red button" onClick={handleDeleteButton}>Delete</button>
-              <button class="ui olive button">Edit</button>
+        <div className="row">
+          <div className="five wide column">
+            <div className="ui buttons" style={{ padding: "10px" }}>
+              <button className="ui red button" onClick={handleDeleteButton}>Delete</button>
+              <button className="ui olive button">Edit</button>
             </div>
           </div>
         </div>

@@ -3,20 +3,20 @@ import { Link } from 'react-router-dom';
 
 const UserList = (props) => {
 
-  const { id, name, age, profession, avatar } = props
+  const { id, username, age, profession, avatar } = props
   const imgUrl = `https://semantic-ui.com/images/avatar/large/${avatar}.jpg`
 
   return (
     <div className="ui card">
       <div className="image">
         <Link to={`/users/${id}`}>
-          <img src={imgUrl} alt={name} className="ui image" />
+          <img src={imgUrl} alt={username} className="ui image" />
         </Link>
       </div>
       <div className="content">
         <div className="header">
           <Link to={`/users/${id}`}>
-            {name}
+            {username}
           </Link>
         </div>
         <div className="meta">Age: {age}</div>

@@ -22,12 +22,12 @@ class UserProfile extends Component {
       return <h1>Loading...</h1>
     }
 
-    const { name, age, profession, avatar } = this.state.user
+    const { username, age, profession, avatar } = this.state.user
     const imgUrl = `https://semantic-ui.com/images/avatar/large/${avatar}.jpg`
 
     return (
       <>
-        <h1 className="ui center aligned header">{name} Profile</h1>
+        <h1 className="ui center aligned header">{username} Profile</h1>
         <div class="ui container">
           <div class="ui divided padded equal width grid">
             <div class="center aligned row">
@@ -37,10 +37,10 @@ class UserProfile extends Component {
               <div class="column">
                 <div class="ui card center aligned container raised segment">
                   <div class="image">
-                    <img src={imgUrl} alt={name} />
+                    <img src={imgUrl} alt={username} />
                   </div>
                   <div class="content">
-                    <div class="header">{name}</div>
+                    <div class="header">{username}</div>
                     <div class="meta"><span class="date">Age: {age}</span></div>
                     <div class="description">Profession: {profession}</div>
                   </div>

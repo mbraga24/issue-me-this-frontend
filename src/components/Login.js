@@ -10,14 +10,14 @@ class Login extends Component {
             <form className="ui form six wide column centered raised segment Login-form">
               <h1 className="ui center aligned header">Login</h1>
               <div className="field">
-                <label>Name</label>
-                <input placeholder="Name" />
+                <label>Username</label>
+                <input placeholder="Username" />
               </div>
-            <div className="field">
-              <label>Password</label>
-              <input type="password" name="password" autoComplete="current-password" placeholder="Password" />
-            </div>
-              <button type="submit" className="ui button">Submit</button>
+              <div className="field">
+                <label>Password</label>
+                <input type="password" name="password" autoComplete="current-password" placeholder="Password" />
+              </div>
+              <button type="submit" className="ui button">Login</button>
             </form>
           </div>
       </div>

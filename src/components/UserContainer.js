@@ -11,7 +11,7 @@ const UserContainer = (props) => {
         <div key={user.id} className="column">
           <UserList
             id={user.id}
-            name={user.name}
+            username={user.username}
             age={user.age}
             profession={user.profession}
             avatar={user.avatar}
