@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Dropdown, Grid } from 'semantic-ui-react'
+import { avatarOptions } from '../avatar';
+import { professionOptions } from '../profession';
 import '../SignUp.css';
 
 class SignUp extends Component {
@@ -10,19 +12,8 @@ class SignUp extends Component {
     profession: "",
     topSkills: [],
     password: "",
+    avatar: "",
     skillOptions: []
-  }
-
-  professions = () => {
-    return [
-      {text: "Jr. Software Engineer", value: "Jr. Software Engineer"},
-      {text: "DevOps", value: "DevOps"},
-      {text: "Senior Software Engineer", value: "Senior Software Engineer"},
-      {text: "Technical Support", value: "Technical Support"},
-      {text: "IT", value: "IT"},
-      {text: "Electronic Engineer", value: "Electronic Engineer"},
-      {text: "Mechanical Engineer", value: "Mechanical Engineer"}
-    ]
   }
 
   // set age range for dropdown 
@@ -46,6 +37,9 @@ class SignUp extends Component {
 
   // set profession
   handleInputProfession = (event) => this.setState({ profession: event.target.textContent })
+  
+  // set avatar
+  handleInputAvatar = (event) => this.setState({ avatar: event.target.textContent })
 
   // set top five skills
   handleInputSkills = (event) => {
@@ -73,12 +67,12 @@ class SignUp extends Component {
     event.preventDefault()
 
     const newUser = {
-      username: this.state.username,
+      username: this.state.username[0].toUpperCase() + this.state.username.slice(1),
       password: this.state.password,
       profession: this.state.profession,
       topSkills: this.state.topSkills,
       age: this.state.age,
-      avatar: "laura"
+      avatar: this.state.avatar
     }
 
     fetch("http://localhost:3000/users", {
@@ -89,9 +83,13 @@ class SignUp extends Component {
       body: JSON.stringify(newUser)
     })
     .then(r => r.json())
-    .then(newUser => {
+    .then(data => {
+      console.log("SIGNUP =========> ", data)
+      const { user, token } = data
       // set user in state in the App component 
-      this.props.handleNewUser(newUser)
+      this.props.handleNewUser(user)
+      // set localStorage to token id
+      localStorage.token = token
       // clear all values in state
       this.setState({
         username: "",
@@ -101,22 +99,16 @@ class SignUp extends Component {
         password: "",
         skillOptions: []
       })
-      
-      // ************************************************************
-      // ************************************************************
-      // IT PUSHES TO /issues PAGE BUT IT DOES NOT PUSH IT FROM
-      // APP COMPONENT
-      // ************************************************************
-      // ************************************************************
-      this.props.history.push('/home')
     })
   }
 
   render() {
+    const professions = professionOptions()
+    const avatars = avatarOptions()
+    // console.log("SIGNUP ===>", this.state)
     return (
       <div className="ui container SignUp-container">
           <div className="ui grid">
-            {/* loading */}
             <form className="ui form six wide column centered raised segment SignUp-form" onSubmit={this.handleSubmit}>
               <h1 className="ui center aligned header">Signup</h1>
               <div className="field">
@@ -142,9 +134,8 @@ class SignUp extends Component {
                 <label>Profession</label>
                 <Grid.Column>
                   <Dropdown
-                    // event.target.firstChild.tagName
-                    onChange={(event) => this.handleInputProfession(event)}
-                    options={this.professions()}
+                    onChange={this.handleInputProfession}
+                    options={professions}
                     placeholder='What is your current job title?'
                     selection
                     value={this.state.profession}
@@ -161,12 +152,25 @@ class SignUp extends Component {
                   onChange={this.handleInputSkills} 
                 />
                   { this.state.topSkills.length === 5 &&
-                  <div className="ui success form">
-                    <div className="ui pointing above prompt label" role="alert" aria-atomic="true">
-                      All set! Don't worry if you changed you mind. You can change it later. 
+                    <div className="ui success form">
+                      <div className="ui pointing above prompt label" role="alert" aria-atomic="true">
+                        All set! Don't worry if you changed you mind. You can change it later. 
+                      </div>
                     </div>
-                  </div>
                   }
+              </div>
+              <div className="field">
+                <label>Avatar</label>
+                  <Grid.Column>
+                    <Dropdown
+                      placeholder='Choose avatar'
+                      openOnFocus
+                      selection
+                      options={avatars}
+                      onChange={this.handleInputAvatar}
+                      value={this.state.avatar}
+                    />
+                  </Grid.Column>
               </div>
               <div className="field">
                 <label>Password</label>
@@ -175,11 +179,11 @@ class SignUp extends Component {
                   name="password" 
                   autoComplete="current-password" 
                   placeholder="Password" 
-                  onChange={(event) => this.handleInputChange(event)}
+                  onChange={this.handleInputChange}
                   value={this.state.password}
                 />
               </div>
-              <button type="submit" className="ui button">Signup</button>
+              <button type="submit" className="ui button blue">Signup</button>
             </form>
           </div>
       </div>

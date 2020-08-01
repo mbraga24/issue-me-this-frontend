@@ -5,18 +5,26 @@ import '../SideBar.css';
 const SideBar = (props) => {
   return (
     <div className={`ui vertical inverted overlay left animating sidebar menu ${props.toggleMenu ? 'visible' : 'hidden'}`}>
-      <Link to="/signup" className="item">
-        Signup
-        <i className="large write square icon"></i>
-      </Link>
-      <Link to="/login" className="item">
-        Login
-        <i className="large sign-in alternate icon"></i>
-      </Link>
-      <Link to="/login" className="item">
-        Logout
-        <i className="large sign-out alternate icon"></i>
-      </Link>
+      {props.currentUser ? (
+        <>
+          <Link to="/login" className="item" onClick={props.handleLogout}>
+            Logout
+            <i className="large sign-out alternate icon"></i>
+          </Link>       
+        </>
+        ) : (
+        <>
+          <Link to="/signup" className="item">
+            Signup
+            <i className="large write square icon"></i>
+          </Link>
+          <Link to="/login" className="item">
+            Login
+            <i className="large sign-in alternate icon"></i>
+          </Link>
+        </>
+      )}
+
       <Link to="/issues" className="item">
         Issues
         <i className="large list alternate outline icon"></i>
@@ -29,12 +37,10 @@ const SideBar = (props) => {
         Users
         <i className="large users icon"></i>
       </Link>
-      <Link to="/users/id" className="item">
-        Profile
-        <i className="large user circle icon"></i>
-      </Link>
     </div>
   );
 }
 
 export default SideBar;
+
+{/* <i className="large user circle icon"></i> */}

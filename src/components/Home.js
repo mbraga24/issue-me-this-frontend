@@ -1,8 +1,15 @@
 import React from 'react';
+import { Header, Icon, Segment } from 'semantic-ui-react';
+import '../Home.css';
 
 const Home = (props) => {
   return (
-    <h1>Home page</h1>
+      <Segment placeholder className="Home-container">
+        <Header icon>
+          <Icon name='question circle outline' className="Home-icon"/>
+          <Header className="Home-title">Issue Me This</Header>
+        </Header>
+      </Segment>
   )
 }
 

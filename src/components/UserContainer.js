@@ -15,6 +15,7 @@ const UserContainer = (props) => {
             age={user.age}
             profession={user.profession}
             avatar={user.avatar}
+            issues={user.issues}
           />
         </div>
       ))

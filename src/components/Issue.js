@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import '../Issue.css';
 
 const Issue = (props) => {
 
@@ -9,16 +10,6 @@ const Issue = (props) => {
   const imgUrl = `https://semantic-ui.com/images/avatar/small/${props.user.avatar}.jpg`
   const { title, issue_body } = props.issue
 
-  const handleDeleteButton = () => {
-    fetch(`http://localhost:3000/issues/${issueId}`, {
-      method: "DELETE"
-    })
-      .then(r => r.json())
-      .then(data => {
-        props.handleDelete(issueId)
-      })
-  }
-
   return (
     <div className="ui celled grid">
       <div className="row">
@@ -27,7 +18,7 @@ const Issue = (props) => {
             <div className="header">
               <Link to={`/issues/${issueId}`}>
                 {title}
-                <img src={imgUrl} alt={username} className="ui mini right floated image" />
+                <img src={imgUrl} alt={username} className="ui circular mini right floated image" />
               </Link>
             </div>
           </div>
@@ -45,9 +36,9 @@ const Issue = (props) => {
         </div>
         <div className="row">
           <div className="five wide column">
-            <div className="ui buttons" style={{ padding: "10px" }}>
-              <button className="ui red button" onClick={handleDeleteButton}>Delete</button>
-              <button className="ui olive button">Edit</button>
+            <div className="Issue-buttons">
+              <button className="ui button">Delete</button>
+              <button className="ui button">Edit</button>
             </div>
           </div>
         </div>

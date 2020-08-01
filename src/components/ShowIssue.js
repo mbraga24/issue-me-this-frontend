@@ -1,12 +1,18 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { Button } from 'semantic-ui-react';
 import Comment from './Comment';
 import '../ShowIssue.css';
 
 class ShowIssue extends Component {
 
   state = {
-    issue: null
+    issue: null,
+    comments: ""
+  }
+
+  refreshPage = () => {
+    window.location.reload(false);
   }
 
   componentDidMount() {
@@ -14,8 +20,48 @@ class ShowIssue extends Component {
     fetch(`http://localhost:3000/issues/${issueId}`)
       .then(r => r.json())
       .then(issue => {
-        this.setState({ issue })
+        this.setState({ 
+          issue: issue
+        })
       })
+  }
+
+  handleOnChange = (event) => {
+    this.setState({ 
+      [event.target.name]: event.target.value
+     })
+  }
+
+  addCommentToIssue = (newComment) => {
+    this.setState({
+      issue: {...this.state.issue, comments: [...this.state.issue.comments, newComment]}
+    })
+  }
+
+  handleOnSubmit = (event) => {
+    event.preventDefault()
+    
+    const new_coment = {
+      title: this.state.title,
+      comment_body: this.state.comment
+    }
+
+    fetch("http://localhost:3000/comments", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        comment: new_coment, 
+        user_id: this.props.currentUser.id, 
+        issue_id: this.state.issue.id
+      })
+    })
+    .then(r => r.json())
+    .then(newComment => {
+      this.addCommentToIssue(newComment)
+      this.setState({ comment: "" })
+    })
   }
 
   renderComments = () => {
@@ -57,13 +103,31 @@ class ShowIssue extends Component {
         <div className="ui comments">
           <h3 className="ui dividing header">Comments</h3>
           {this.renderComments()}
-          <form className="ui reply form">
-            <div className="field"><textarea rows="3"></textarea></div>
-            <button className="ui icon primary left labeled button">
-              <i aria-hidden="true" className="edit icon"></i>
-              Add Reply
-            </button>
-          </form>
+          { 
+            this.props.currentUser ? 
+            <form className="ui reply form" onSubmit={this.handleOnSubmit}>
+              <div className="field">
+                <input placeholder="Title" name="title" onChange={(event) => this.handleOnChange(event)}/>
+              </div>
+              <div className="field">
+                <textarea name="comment" rows="3" onChange={(event) => this.handleOnChange(event)}></textarea>
+              </div>
+              <button className="ui icon primary left labeled button">
+                <i aria-hidden="true" className="edit icon"></i>
+                Add Reply
+              </button>
+            </form>
+            : 
+              <Button.Group size='large'>
+                <Link to="/login">
+                  <Button color="green">Login</Button>
+                </Link>
+                <Button.Or />
+                <Link to="/signup">
+                  <Button color="blue">Sign up</Button>
+                </Link>
+              </Button.Group>
+          }
         </div>
       </div>
     );
