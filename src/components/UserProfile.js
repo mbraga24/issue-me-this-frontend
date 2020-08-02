@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Segment } from 'semantic-ui-react'
+import { Segment } from 'semantic-ui-react';
 
 class UserProfile extends Component {
 
@@ -10,14 +10,12 @@ class UserProfile extends Component {
   }
 
   renderTopSkills = () => {
-    // console.log(this.state.skills)
     return this.state.skills.map(skill => (
       <Segment key={`${skill.key}`} color={`${skill.color}`}>{skill.text}</Segment> 
     ))
   }
-  componentDidMount() {
-    const userId = this.props.match.params.id
-    // console.log("INSIDE FETCH ========> ", userId)
+
+  fetchData = (userId) => {
     fetch(`http://localhost:3000/users/${userId}`)
     .then(r => r.json())
     .then(data => {
@@ -29,11 +27,16 @@ class UserProfile extends Component {
     })
   }
 
-  // --------------------------------------------------------------
-  // It's as if the sidebar doesn't know I'm already in the page.
-  // It sends the id of the current user to the component but it 
-  // does not re-render the component
-  // ---------------------------------------------------------------
+  componentDidMount() {
+    this.fetchData(this.props.match.params.id);  
+  }
+
+  renderAgain(thisUser) {
+    const browserId = parseInt(this.props.match.params.id)
+    if (this.props.currentUser && this.props.currentUser.id === browserId && thisUser !== this.props.currentUser.id) {
+      this.setState({ user: this.props.currentUser })
+    }
+  }
   
   render() {
 
@@ -41,26 +44,24 @@ class UserProfile extends Component {
       return <h1>Loading...</h1>
     }
 
-    const { username, age, profession, avatar, issues } = this.state.user
+    const { id, email, first_name, last_name, age, profession, avatar, issues } = this.state.user
     const imgUrl = `https://semantic-ui.com/images/avatar/large/${avatar}.jpg`
-
-    // if (!this.props.currentUser && this.props.match.params.id !== this.props.currentUser.id && id !== this.props.currentUser.id) {
-    //   this.forceUpdateHandler()
-    // }
+    // re-render component
+    this.renderAgain(id)
 
     return (
       <>
-      <h1 className="ui center aligned header" style={{margin: "10px auto"}}>{this.props.currentUser && this.props.currentUser.username === username ? `Hello, ${username}! ` : `${username} Profile` }</h1>
+      <h1 className="ui center aligned header" style={{margin: "10px auto"}}>{this.props.currentUser && this.props.currentUser.email === email ? `Hello, ${first_name}! ` : `${first_name} ${last_name} Profile` }</h1>
         <div className="ui container">
           <div className="ui divided padded equal width grid">
             <div className="center aligned row">
               <div className="column">
                 <div className="ui card center aligned container raised segment">
                   <div className="image">
-                    <img src={imgUrl} alt={username} />
+                    <img src={imgUrl} alt={first_name} />
                   </div>
                   <div className="content">
-                    <div className="header">{username}</div>
+                    <div className="header">{first_name}</div>
                     <div className="meta"><span className="date">Age: {age}</span></div>
                     <div className="description">Profession: {profession}</div>
                   </div>

@@ -12,9 +12,8 @@ const IssueContainer = (props) => {
       <Issue
         key={issue.id}
         issue={issue}
-        user={issue.user}
-        comment={issue.comments}
-        handleDelete={props.handleDelete}
+        handleDeleteIssue={props.handleDeleteIssue}
+        currentUser={props.currentUser}
       />
     ))
   }

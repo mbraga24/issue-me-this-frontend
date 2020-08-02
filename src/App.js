@@ -73,7 +73,7 @@ class App extends Component {
   }
   
   // =============================================
-  //             HANDLE ISSUE LOGIC
+  //                 HANDLE ISSUE
   // =============================================
 
   addIssue = newIssue => {
@@ -85,6 +85,11 @@ class App extends Component {
   deleteIssue = issueId => {
     const updatedIssues = this.state.issues.filter(issue => issue.id !== issueId)
     this.setState({ issues: updatedIssues })
+  }
+
+  // sort issues from greatest to least
+  sortedIssues = () => {
+    return this.state.issues.sort((a, b) => b.id - a.id)
   }
 
   // =============================================
@@ -126,8 +131,6 @@ class App extends Component {
   }
 
  render() {
-
-  // console.log(this.state.comments)
   return (
     <div>
       <Header onToggleMenu={this.toggleMenu} currentUser={this.state.currentUser}/>
@@ -141,10 +144,12 @@ class App extends Component {
                 <IssueContainer 
                   searchTerm={this.state.searchTerm} 
                   setSearchTerm={this.setSearchTerm}
-                  issues={this.state.issues} />
+                  handleDeleteIssue={this.deleteIssue}
+                  issues={this.sortedIssues()}
+                  currentUser={this.state.currentUser} />
                 )} />
                 <Route path="/users/:id" render={routeProps => <UserProfile {...routeProps} currentUser={this.state.currentUser} />} />
-              <Route path="/issues/new" render={routeProps => <NewIssueForm {...routeProps} handleNewIssue={this.addIssue}/>} />
+              <Route path="/issues/new" render={routeProps => <NewIssueForm {...routeProps} handleNewIssue={this.addIssue} currentUser={this.state.currentUser} />} />
               <Route path="/issues/:id" render={routeProps => <ShowIssue {...routeProps} currentUser={this.state.currentUser}/>} />
               <Route exact path="/users" render={() => (
                 <UserContainer 

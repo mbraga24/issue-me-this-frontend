@@ -8,11 +8,9 @@ class ShowIssue extends Component {
 
   state = {
     issue: null,
-    comments: ""
-  }
-
-  refreshPage = () => {
-    window.location.reload(false);
+    title: "",
+    comment: "",
+    comments: []
   }
 
   componentDidMount() {
@@ -26,20 +24,33 @@ class ShowIssue extends Component {
       })
   }
 
+  // setting title and comment state on change
   handleOnChange = (event) => {
     this.setState({ 
       [event.target.name]: event.target.value
      })
   }
 
+  // add comment to this issue
   addCommentToIssue = (newComment) => {
     this.setState({
       issue: {...this.state.issue, comments: [...this.state.issue.comments, newComment]}
     })
   }
 
+  // delete comment from this issue 
+  deleteComment = (deletedIssue) => {
+    const updatedComments = this.state.issue.comments.filter(comment => comment.id !== deletedIssue)
+    this.setState({ 
+      issue: {...this.state.issue, comments: [...updatedComments]}
+    })
+  }
+
   handleOnSubmit = (event) => {
     event.preventDefault()
+    // removing the synthetic event from the pool allowing the event properties
+    // to be accessed in an asynchronous way
+    event.persist()
     
     const new_coment = {
       title: this.state.title,
@@ -60,13 +71,22 @@ class ShowIssue extends Component {
     .then(r => r.json())
     .then(newComment => {
       this.addCommentToIssue(newComment)
-      this.setState({ comment: "" })
+      // reset title and comment values on form to an empty string
+      event.target.title.value = ""
+      event.target.comment.value = ""
     })
   }
 
   renderComments = () => {
-    return this.state.issue.comments.map(comment => (
-      <Comment key={comment.id} user={comment.user} comment={comment} />
+    const sortedComments = this.state.issue.comments.sort((a, b) => b.id - a.id)
+    
+    return sortedComments.map(comment => (
+      <Comment 
+        key={comment.id} 
+        commentId={comment.id} 
+        comment={comment} 
+        handleDeleteComment={this.deleteComment}
+        currentUser={this.props.currentUser}/>
     ))
   }
 
@@ -75,9 +95,11 @@ class ShowIssue extends Component {
       return <h1>Loading...</h1>
     }
 
-    const { title, issueBody, user } = this.state.issue
+    const { title, issue_body, user } = this.state.issue
     const imgUrl = `https://semantic-ui.com/images/avatar/small/${user.avatar}.jpg`
 
+    console.log("ISSUE BODY:", issue_body)
+  
     return (
       <div className="ui container" >
         <h1 className="ui center aligned header">Issue</h1>
@@ -86,16 +108,16 @@ class ShowIssue extends Component {
             <div className="header">
               {title}
             <Link to={`/users/${user.id}`}>
-              <img src={imgUrl} alt={user.username} className="ui mini right floated image" />
+              <img src={imgUrl} alt={user.first_name} className="ui mini right floated image" />
             </Link>
             </div>
           </div>
           <div className="content">
             <div className="description">
-              {issueBody}
+              {issue_body}
             </div>
             <Link to={`/users/${user.id}`}>
-              <p className="ui right aligned">{user.username}</p>
+              <p className="ui right aligned">- {user.first_name}</p>
             </Link>
           </div>
         </div>
@@ -112,9 +134,9 @@ class ShowIssue extends Component {
               <div className="field">
                 <textarea name="comment" rows="3" onChange={(event) => this.handleOnChange(event)}></textarea>
               </div>
-              <button className="ui icon primary left labeled button">
+              <button type="submit" className="ui icon secondary left labeled button">
                 <i aria-hidden="true" className="edit icon"></i>
-                Add Reply
+                Leave comment
               </button>
             </form>
             : 

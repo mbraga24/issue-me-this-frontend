@@ -4,21 +4,31 @@ import '../Issue.css';
 
 const Issue = (props) => {
 
-  const issueId = props.issue.id
-  const username = props.user.username
-  const totalComments = props.comment.length
-  const imgUrl = `https://semantic-ui.com/images/avatar/small/${props.user.avatar}.jpg`
-  const { title, issue_body } = props.issue
+  const handleDelete = (issueId) => {
+    console.log(issueId)
 
+    fetch(`http://localhost:3000/issues/${issueId}`, {
+      method: "DELETE"
+    })
+    props.handleDeleteIssue(issueId)
+  }
+
+  const { id, title, issue_body, comments, user } = props.issue
+  const totalComments = comments.length
+  const imgUrl = `https://semantic-ui.com/images/avatar/small/${user.avatar}.jpg`
+  console.log(user.first_name)
   return (
     <div className="ui celled grid">
       <div className="row">
         <div className="sixteen wide column ui card">
           <div className="content">
             <div className="header">
-              <Link to={`/issues/${issueId}`}>
+              <Link to={`/issues/${id}`} className="Issue-header">
                 {title}
-                <img src={imgUrl} alt={username} className="ui circular mini right floated image" />
+                <div className="Issue-user-subheader">
+                  <span className="layer1"><img src={imgUrl} alt={user.first_name} className="ui circular mini right floated image" /></span>
+                  <span className="layer2">{user.first_name}</span>
+                </div>
               </Link>
             </div>
           </div>
@@ -27,19 +37,18 @@ const Issue = (props) => {
               {issue_body}
             </div>
           </div>
-          <div className="extra content">
-            <Link to={`/issues/${issueId}`}>
+          <div className="Issue-extra-content">
+            <Link to={`/issues/${id}`}>
               <i aria-hidden="true" className="comment alternate icon"></i>
-              {totalComments} Comments
+                {totalComments} Comments
             </Link>
-          </div>
-        </div>
-        <div className="row">
-          <div className="five wide column">
-            <div className="Issue-buttons">
-              <button className="ui button">Delete</button>
-              <button className="ui button">Edit</button>
-            </div>
+            { 
+              (props.currentUser && props.currentUser.id === user.id) &&
+              <div className="Issue-buttons">
+                <button className="ui circular icon red button" onClick={() => handleDelete(id)}><i aria-hidden="true" className="trash alternate outline icon"></i></button>
+                <button className="ui circular icon blue button"><i aria-hidden="true" className="edit outline icon"></i></button>
+              </div>
+            }
           </div>
         </div>
       </div>

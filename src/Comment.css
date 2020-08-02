@@ -1,3 +1,9 @@
-.Comment-container {
-  padding: 20px!important;
+.Comment-extra-content {
+  display: flex!important;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.Comment-user-info {
+  padding-left: 15px;
 }

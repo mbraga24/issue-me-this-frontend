@@ -17,10 +17,15 @@ class NewIssueForm extends Component {
   addIssue = (event) => {
     event.preventDefault()
     
-    const newIssue = {
-      title: this.state.title,
-      issue_body: this.state.issueBody
+    const data = {
+      issue: {
+        title: this.state.title,
+        issue_body: this.state.issueBody
+      }, 
+      user_id: this.props.currentUser.id
     }
+
+    console.log("DATA:", data)
 
     fetch("http://localhost:3000/issues", {
       method: "POST",
@@ -28,7 +33,7 @@ class NewIssueForm extends Component {
         "Content-Type": "application/json",
         Accept: "application/json"
       },
-      body: JSON.stringify(newIssue)
+      body: JSON.stringify(data)
     })
       .then(r => r.json())
       .then(newData => {
@@ -38,6 +43,8 @@ class NewIssueForm extends Component {
   }
 
   render() {
+    console.log(this.props.currentUser)
+    console.log(this.state)
     return (
       <div className="ui container">
         <h1 class="ui center aligned header">New Issue</h1>
