@@ -7,7 +7,9 @@ import '../SignUp.css';
 class SignUp extends Component {
 
   state = {
-    username: "",
+    email: "",
+    firstName: "",
+    lastName: "",
     age: null,
     profession: "",
     topSkills: [],
@@ -67,13 +69,17 @@ class SignUp extends Component {
     event.preventDefault()
 
     const newUser = {
-      username: this.state.username[0].toUpperCase() + this.state.username.slice(1),
+      email: this.state.email,
+      first_name: this.state.firstName,
+      last_name: this.state.lastName,
       password: this.state.password,
       profession: this.state.profession,
       topSkills: this.state.topSkills,
       age: this.state.age,
       avatar: this.state.avatar
     }
+
+    console.log(newUser)
 
     fetch("http://localhost:3000/users", {
       method: "POST",  
@@ -84,40 +90,62 @@ class SignUp extends Component {
     })
     .then(r => r.json())
     .then(data => {
-      console.log("SIGNUP =========> ", data)
-      const { user, token } = data
-      // set user in state in the App component 
-      this.props.handleNewUser(user)
-      // set localStorage to token id
-      localStorage.token = token
+
+      if (data.error) {
+        this.props.handleMessages(data)
+        // this.props.handleMessages(data)
+      } else {
+        const { user, token } = data
+        // set user in state in the App component 
+        this.props.handleNewUser(user)
+        // set localStorage to token id
+        localStorage.token = token
+      }
       // clear all values in state
-      this.setState({
-        username: "",
-        age: null,
-        profession: "",
-        topSkills: [],
-        password: "",
-        skillOptions: []
-      })
+      // this.setState({
+      //   username: "",
+      //   age: null,
+      //   profession: "",
+      //   topSkills: [],
+      //   password: "",
+      //   skillOptions: []
+      // })
     })
   }
 
   render() {
     const professions = professionOptions()
     const avatars = avatarOptions()
-    // console.log("SIGNUP ===>", this.state)
     return (
       <div className="ui container SignUp-container">
           <div className="ui grid">
             <form className="ui form six wide column centered raised segment SignUp-form" onSubmit={this.handleSubmit}>
               <h1 className="ui center aligned header">Signup</h1>
               <div className="field">
-                <label>Username</label>
+                <label>Email</label>
                 <input 
-                  placeholder="Username" 
-                  name="username" 
-                  onChange={(event) => this.handleInputChange(event)}
-                  value={this.state.username}
+                  placeholder="email" 
+                  name="email" 
+                  onChange={this.handleInputChange}
+                  value={this.state.email}
+                />
+              </div>
+              <div className="field">
+                <label>First Name</label>
+                <input 
+                  placeholder="First Name" 
+                  name="firstName" 
+                  onChange={this.handleInputChange}
+                  value={this.state.firstName}
+                />
+              </div>
+              <div className="field">
+                <label>Last Name</label>
+                <input 
+                  placeholder="Last Name" 
+                  name="lastName" 
+                  onChange={this.handleInputChange}
+                  value={this.state.lastName}
                 />
               </div>
               <div className="field">

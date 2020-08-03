@@ -1,10 +1,12 @@
 import React from 'react';
+import moment from 'moment';
 import { Link } from 'react-router-dom';
 import '../Comment.css';
 
 const Comment = (props) => {
 
   const handleDelete = () => {
+    console.log(props.commentId)
     fetch(`http://localhost:3000/comments/${props.commentId}`, {
       method: "DELETE"
     })
@@ -17,20 +19,22 @@ const Comment = (props) => {
 
   return (
     <div className="ui comment">
-      <Link to={`/users/${id}`} className="author Comment-user-info"> 
-          {first_name} - {profession}
-      </Link>
+      <div className="Comment-user-header">
+        <Link to={`/users/${id}`} className="author Comment-user-info"> 
+            {first_name} - {profession}
+        </Link>
+        <div className="metadata">
+          {moment().startOf('day').fromNow()} days ago
+        </div>
+      </div>
       <div className="avatar">
         <img src={imgUrl} alt={first_name} />
       </div>
       <div className="content">
-        <div className="ui fitted divider"></div>
+        <div className="ui divider"></div>
           <h3>{title}</h3>
           <div className="text">{comment_body}</div>
           <div className="Comment-extra-content">
-            <div className="metadata">
-              5 days ago
-            </div>
             {/* validates if user is loggedin and the id of the this comment is the same as the currentUser id */}
             { (props.currentUser && props.currentUser.id === id) &&
               <div className="row">
@@ -42,6 +46,7 @@ const Comment = (props) => {
             }
           </div>
         </div>
+        <div className="ui divider"></div>
       </div>
   )
 }

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 const UserList = (props) => {
 
-  const { id, first_name, age, profession, avatar, issues } = props
+  const { id, first_name, age, profession, avatar, issues } = props.user
   const imgUrl = `https://semantic-ui.com/images/avatar/large/${avatar}.jpg`
 
   return (

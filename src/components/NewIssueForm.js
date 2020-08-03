@@ -18,11 +18,8 @@ class NewIssueForm extends Component {
     event.preventDefault()
     
     const data = {
-      issue: {
-        title: this.state.title,
-        issue_body: this.state.issueBody
-      }, 
-      user_id: this.props.currentUser.id
+      title: this.state.title,
+      issue_body: this.state.issueBody
     }
 
     console.log("DATA:", data)
@@ -30,30 +27,31 @@ class NewIssueForm extends Component {
     fetch("http://localhost:3000/issues", {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json"
+        "Content-Type": "application/json"
       },
-      body: JSON.stringify(data)
+      body: JSON.stringify({issue: data, id: this.props.currentUser.id})
     })
       .then(r => r.json())
-      .then(newData => {
-        this.props.handleNewIssue(newData)
-        this.props.history.push(`/issues`)
+      .then(data => {
+        if (data.error) {
+          this.props.handleMessages(data)
+        } else {
+          this.props.handleNewIssue(data)
+          this.props.history.push(`/issues`)
+        }
       })
   }
 
   render() {
-    console.log(this.props.currentUser)
-    console.log(this.state)
+    console.log("NEW ISSUE FORM:", this.state)
     return (
       <div className="ui container">
-        <h1 class="ui center aligned header">New Issue</h1>
+        <h1 className="ui center aligned header">New Issue</h1>
         <form className="ui large form" onSubmit={this.addIssue}>
           <div className="equal width fields">
             <div className="field">
               <label>Title</label>
               <input
-                style={{ width: "600px" }}
                 name="title" placeholder="Issue title"
                 onChange={this.handleOnChange}
                 value={this.state.title}

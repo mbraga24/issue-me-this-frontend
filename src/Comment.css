@@ -1,3 +1,10 @@
+.Comment-user-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 5%;
+}
+
 .Comment-extra-content {
   display: flex!important;
   justify-content: space-between;

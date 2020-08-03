@@ -69,8 +69,12 @@ class ShowIssue extends Component {
       })
     })
     .then(r => r.json())
-    .then(newComment => {
-      this.addCommentToIssue(newComment)
+    .then(data => {
+      if (data.error) {
+        this.props.handleMessages(data)
+      } else {
+        this.addCommentToIssue(data)
+      }
       // reset title and comment values on form to an empty string
       event.target.title.value = ""
       event.target.comment.value = ""
@@ -97,8 +101,6 @@ class ShowIssue extends Component {
 
     const { title, issue_body, user } = this.state.issue
     const imgUrl = `https://semantic-ui.com/images/avatar/small/${user.avatar}.jpg`
-
-    console.log("ISSUE BODY:", issue_body)
   
     return (
       <div className="ui container" >

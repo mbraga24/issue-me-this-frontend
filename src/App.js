@@ -15,10 +15,15 @@ import './App.css';
 class App extends Component {
   state = {
     searchTerm: "",
+    currentUser: "",
+    messageHeader: "",
+    messageType: "",
+    message: [],
     issues: [],
     users: [],
     toggle: false,
-    currentUser: ""
+    active: true,
+    messageVisible: false
   }
 
   componentDidMount() {
@@ -130,32 +135,76 @@ class App extends Component {
     })
   }
 
+  // =============================================
+  //               HANDLE MESSAGES
+  // =============================================
+
+  handleMessages = (data) => {
+    console.log(data.type)
+    if (data.message) {
+      this.setState(prevState => ({ 
+        messageVisible: !prevState.messageVisible,
+        messageHeader: data.header,
+        messageType: data.type,
+        message: [...data.message]
+       }))       
+      this.handleDismissCountDown()
+    }
+  }
+
+  renderMessage = () => {
+    return this.state.message.map(message => <li key={message} className="content">{message}</li> )
+  }
+
+  handleDismissOnClick = () => {
+    this.setState({ messageVisible: false })
+  }
+
+  handleDismissCountDown = () => {
+    setTimeout(() => {
+      this.setState({ messageVisible: false })
+    }, 4000)
+  }
+
  render() {
+  console.log(this.state.messageType)
   return (
     <div>
       <Header onToggleMenu={this.toggleMenu} currentUser={this.state.currentUser}/>
         <div className="ui attached pushable App-sidebar">
           <SideBar toggleMenu={this.state.toggle} handleLogout={this.handleLogout} currentUser={this.state.currentUser}/>
-          <div className={`ui pusher ${this.state.toggle ? 'dimmed' : ''}`} onClick={this.closeSidebarOnClick}>
-            <Switch>  
-              <Route path="/login" render={routeProps => <Login {...routeProps} handleLogin={this.handleLogin} />} />
-              <Route path="/signup" render={routeProps => <SignUp {...routeProps} handleNewUser={this.addUser}/>} />
-              <Route exact path="/issues" render={() => (
-                <IssueContainer 
-                  searchTerm={this.state.searchTerm} 
-                  setSearchTerm={this.setSearchTerm}
-                  handleDeleteIssue={this.deleteIssue}
-                  issues={this.sortedIssues()}
-                  currentUser={this.state.currentUser} />
-                )} />
+            {
+            (!!this.state.message && this.state.messageVisible) && (
+              <div className={`ui ${this.state.messageType} message`}>
+                <i aria-hidden="true" className="close icon" onClick={this.handleDismissOnClick}></i>
+                <div className="content">
+                  <div className="header">{this.state.messageHeader}</div>
+                  <ul className="list">
+                    {this.renderMessage() === [] ? this.renderMessage() : null}
+                  </ul>
+                </div>
+              </div> )
+            }
+            <div className={`ui pusher ${this.state.toggle ? 'dimmed' : ''}`} onClick={this.closeSidebarOnClick}>
+              <Switch>  
+                <Route path="/login" render={routeProps => <Login {...routeProps} handleLogin={this.handleLogin} handleMessages={this.handleMessages}/>} />
+                <Route path="/signup" render={routeProps => <SignUp {...routeProps} handleNewUser={this.addUser} handleMessages={this.handleMessages}/>} />
+                <Route exact path="/issues" render={() => (
+                  <IssueContainer 
+                    searchTerm={this.state.searchTerm} 
+                    setSearchTerm={this.setSearchTerm}
+                    handleDeleteIssue={this.deleteIssue}
+                    issues={this.sortedIssues()}
+                    currentUser={this.state.currentUser} />
+                  )} />
                 <Route path="/users/:id" render={routeProps => <UserProfile {...routeProps} currentUser={this.state.currentUser} />} />
-              <Route path="/issues/new" render={routeProps => <NewIssueForm {...routeProps} handleNewIssue={this.addIssue} currentUser={this.state.currentUser} />} />
-              <Route path="/issues/:id" render={routeProps => <ShowIssue {...routeProps} currentUser={this.state.currentUser}/>} />
-              <Route exact path="/users" render={() => (
-                <UserContainer 
-                  users={this.state.users} />
-                )} />
-              <Route exact path="/home" render={routeProps => <Home {...routeProps} currentUser={this.state.currentUser}/>} />
+                <Route path="/issues/new" render={routeProps => <NewIssueForm {...routeProps} handleNewIssue={this.addIssue} currentUser={this.state.currentUser} handleMessages={this.handleMessages} />} />
+                <Route path="/issues/:id" render={routeProps => <ShowIssue {...routeProps} currentUser={this.state.currentUser} handleMessages={this.handleMessages}/>} />
+                <Route exact path="/users" render={() => (
+                  <UserContainer 
+                    users={this.state.users} />
+                  )} />
+                <Route exact path="/home" render={routeProps => <Home {...routeProps} currentUser={this.state.currentUser}/>} />
             </Switch>
           </div>
       </div>
@@ -164,5 +213,5 @@ class App extends Component {
  }
 }
 
-
 export default withRouter(App);
+

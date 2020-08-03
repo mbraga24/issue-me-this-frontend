@@ -5,8 +5,6 @@ import '../Issue.css';
 const Issue = (props) => {
 
   const handleDelete = (issueId) => {
-    console.log(issueId)
-
     fetch(`http://localhost:3000/issues/${issueId}`, {
       method: "DELETE"
     })
@@ -16,7 +14,7 @@ const Issue = (props) => {
   const { id, title, issue_body, comments, user } = props.issue
   const totalComments = comments.length
   const imgUrl = `https://semantic-ui.com/images/avatar/small/${user.avatar}.jpg`
-  console.log(user.first_name)
+  
   return (
     <div className="ui celled grid">
       <div className="row">
@@ -40,7 +38,7 @@ const Issue = (props) => {
           <div className="Issue-extra-content">
             <Link to={`/issues/${id}`}>
               <i aria-hidden="true" className="comment alternate icon"></i>
-                {totalComments} Comments
+              {totalComments} Comments
             </Link>
             { 
               (props.currentUser && props.currentUser.id === user.id) &&

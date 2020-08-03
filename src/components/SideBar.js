@@ -10,7 +10,11 @@ const SideBar = (props) => {
           <Link to="/login" className="item" onClick={props.handleLogout}>
             Logout
             <i className="large sign-out alternate icon"></i>
-          </Link>       
+          </Link>  
+          <Link to="/issues/new" className="item">
+            New Issue
+            <i className="large pen square icon"></i>
+          </Link>     
         </>
         ) : (
         <>
@@ -29,10 +33,6 @@ const SideBar = (props) => {
         Issues
         <i className="large list alternate outline icon"></i>
       </Link>
-      <Link to="/issues/new" className="item">
-        New Issue
-        <i className="large pen square icon"></i>
-      </Link>
       <Link to="/users" className="item">
         Users
         <i className="large users icon"></i>
@@ -42,5 +42,3 @@ const SideBar = (props) => {
 }
 
 export default SideBar;
-
-{/* <i className="large user circle icon"></i> */}

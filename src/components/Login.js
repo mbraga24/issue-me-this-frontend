@@ -4,7 +4,7 @@ import '../Login.css';
 class Login extends Component {
 
   state = {
-    username: "",
+    email: "",
     password: ""
   }
 
@@ -16,7 +16,7 @@ class Login extends Component {
     event.preventDefault()
 
     const loginUser = {
-      username: this.state.username[0].toUpperCase() + this.state.username.slice(1),
+      email: this.state.email.toLowerCase(),
       password: this.state.password
     }
     // make a fetch request to request to login the user - the fetch will be to the custom route "/login"
@@ -29,27 +29,31 @@ class Login extends Component {
     })
     .then(r => r.json())
     .then(data => {
-      console.log("LOGIN =========> ", data)
-      // deconstruct assignment - user and token
-      const { user, token } = data
-      // set user in state in the App component
-      this.props.handleLogin(user)
-      // set localStorage to token
-      localStorage.token = token
+      if (data.type === "error") {
+        // will handle error message
+        this.props.handleMessages(data)
+      } else {
+        // deconstruct assignment - user and token
+        const { user, token } = data
+        // set user in state in the App component
+        this.props.handleLogin(user)
+        // set localStorage to token
+        localStorage.token = token
+        // will handle success message
+        this.props.handleMessages(data)
+      }
     })
   }
 
   render() {
-    // console.log("LOGIN ======>", this.state)
-
     return (
       <div className="ui container Login-container" onSubmit={this.handleSubmit}>
           <div className="ui grid">
             <form className="ui form six wide column centered raised segment Login-form">
               <h1 className="ui center aligned header">Login</h1>
               <div className="field">
-                <label>Username</label>
-                <input name="username" placeholder="Username" onChange={this.handleChange} />
+                <label>Email</label>
+                <input name="email" placeholder="email" onChange={this.handleChange} />
               </div>
               <div className="field">
                 <label>Password</label>
