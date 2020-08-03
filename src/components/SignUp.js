@@ -79,8 +79,6 @@ class SignUp extends Component {
       avatar: this.state.avatar
     }
 
-    console.log(newUser)
-
     fetch("http://localhost:3000/users", {
       method: "POST",  
       headers: {
@@ -101,15 +99,6 @@ class SignUp extends Component {
         // set localStorage to token id
         localStorage.token = token
       }
-      // clear all values in state
-      // this.setState({
-      //   username: "",
-      //   age: null,
-      //   profession: "",
-      //   topSkills: [],
-      //   password: "",
-      //   skillOptions: []
-      // })
     })
   }
 

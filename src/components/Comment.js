@@ -6,7 +6,6 @@ import '../Comment.css';
 const Comment = (props) => {
 
   const handleDelete = () => {
-    console.log(props.commentId)
     fetch(`http://localhost:3000/comments/${props.commentId}`, {
       method: "DELETE"
     })

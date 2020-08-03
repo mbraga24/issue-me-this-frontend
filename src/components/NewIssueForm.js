@@ -22,8 +22,6 @@ class NewIssueForm extends Component {
       issue_body: this.state.issueBody
     }
 
-    console.log("DATA:", data)
-
     fetch("http://localhost:3000/issues", {
       method: "POST",
       headers: {
@@ -43,7 +41,6 @@ class NewIssueForm extends Component {
   }
 
   render() {
-    console.log("NEW ISSUE FORM:", this.state)
     return (
       <div className="ui container">
         <h1 className="ui center aligned header">New Issue</h1>

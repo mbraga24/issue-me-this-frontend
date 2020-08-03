@@ -140,7 +140,6 @@ class App extends Component {
   // =============================================
 
   handleMessages = (data) => {
-    console.log(data.type)
     if (data.message) {
       this.setState(prevState => ({ 
         messageVisible: !prevState.messageVisible,
@@ -167,7 +166,6 @@ class App extends Component {
   }
 
  render() {
-  console.log(this.state.messageType)
   return (
     <div>
       <Header onToggleMenu={this.toggleMenu} currentUser={this.state.currentUser}/>
