@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Route, Switch, withRouter } from 'react-router-dom'
 import Home from './Home';
 import Login from './Login';
@@ -12,21 +12,33 @@ import ShowIssue from './ShowIssue';
 import UserProfile from './UserProfile';
 import '../resources/App.css';
 
-class App extends Component {
-  state = {
-    searchTerm: "",
-    currentUser: "",
-    messageHeader: "",
-    messageType: "",
-    message: [],
-    issues: [],
-    users: [],
-    toggle: false,
-    active: true,
-    messageVisible: false
-  }
+const App = props => {
 
-  componentDidMount() {
+    // searchTerm: "",
+    // currentUser: "",
+    // messageHeader: "",
+    // messageType: "",
+    // message: [],
+    // issues: [],
+    // users: [],
+    // toggle: false,
+    // active: true,
+    // messageVisible: false
+
+    const [ searchTerm, setSearchTerm ] = useState("")
+    const [ currentUser, setCurrentUser ] = useState("")
+    const [ messageHeader, setMessageHeader ] = useState("")
+    const [ messageType, setMessageType ] = useState("")
+    const [ toggle, setToggle ] = useState(false)
+    // const [ active, setActive ] = useState(true)
+    const [ messageVisible, setMessageVisible ] = useState(false)
+    const [ message, setMessage ] = useState([])
+    const [ issues, setIssues ] = useState([])
+    const [ users, setUsers ] = useState([])
+
+
+
+  useEffect(() => {
     // log user in when component mounts
     // check if user is loggedin with the id stored in localStorage
     // Additional metadata - authorization header convention
@@ -39,7 +51,7 @@ class App extends Component {
     .then(r => r.json())
     .then(loggedInUser => {
       // set current user in state
-      this.handleLogin(loggedInUser)
+      handleLogin(loggedInUser)
     })
    }
 
@@ -47,32 +59,30 @@ class App extends Component {
     fetch("http://localhost:3000/issues")
     .then(r => r.json())
     .then(issues => {
-      this.setState({ issues })
+      setIssues(issues)
     })
     // fetch users
     fetch("http://localhost:3000/users")
     .then(r => r.json())
     .then(users => {
-      this.setState({ users })
+      setUsers(users)
     })
+  }, [])
+
+  const toggleMenu = () => {
+    setToggleRefactor()
   }
 
-  toggleMenu = () => {
-    this.setToggle()
+  const setSearchTermRefactor = (searchTerm) => {
+    setSearchTerm(searchTerm)
   }
 
-  setSearchTerm = (searchTerm) => {
-    this.setState({ searchTerm })
+  const setToggleRefactor = () => {
+    setToggle(!toggle)
   }
 
-  setToggle = () => {
-    this.setState(prevState => ({
-      toggle: !prevState.toggle
-    }))
-  }
-
-  closeSidebarOnClick = () => {
-    if (this.state.toggle) {
+  const closeSidebarOnClick = () => {
+    if (toggle) {
       this.setToggle()
     }
   }
@@ -81,28 +91,28 @@ class App extends Component {
   //                 HANDLE ISSUE
   // =============================================
 
-  addIssue = newIssue => {
+  const addIssue = newIssue => {
     this.setState({
-      issues: [...this.state.issues, newIssue]
+      issues: [...issues, newIssue]
     })
   }
 
-  deleteIssue = issueId => {
-    const updatedIssues = this.state.issues.filter(issue => issue.id !== issueId)
+  const deleteIssue = issueId => {
+    const updatedIssues = issues.filter(issue => issue.id !== issueId)
     this.setState({ issues: updatedIssues })
   }
 
   // sort issues from greatest to least
-  sortedIssues = () => {
-    return this.state.issues.sort((a, b) => b.id - a.id)
+  const sortedIssues = () => {
+    return issues.sort((a, b) => b.id - a.id)
   }
 
   // =============================================
   //             HANDLE USER
   // =============================================
 
-  addUser = newUser => {
-    this.setState({ users: [...this.state.users, newUser] })
+  const addUser = newUser => {
+    this.setState({ users: [...users, newUser] })
     this.handleLogin(newUser)
   }
 
@@ -110,11 +120,13 @@ class App extends Component {
   //             HANDLE LOGIN / OUT 
   // =============================================
 
-  handleLogin = currentUser => {
+  const handleLogin = currentUser => {
     // set current user and redirect user to "/issues" page
-    this.setState({ currentUser }, () => {
-      this.props.history.push('/issues')
-    })
+    // this.setState({ currentUser }, () => {
+      // this.props.history.push('/issues')
+    // })
+    setCurrentUser(currentUser)
+    // this.props.history.push('/issues')
     // NOTE:
     // For the App component to have access to the browser history 
     // you need to import withRouter at the top of the file:
@@ -125,7 +137,7 @@ class App extends Component {
     // export default withRouter(App);
   }
 
-  handleLogout = () => {
+  const handleLogout = () => {
     // remove token from localStorage
     localStorage.removeItem("token")
     
@@ -139,76 +151,74 @@ class App extends Component {
   //               HANDLE MESSAGES
   // =============================================
 
-  handleMessages = (data) => {
+  const handleMessages = (data) => {
     if (data.message) {
-      this.setState(prevState => ({ 
-        messageVisible: !prevState.messageVisible,
-        messageHeader: data.header,
-        messageType: data.type,
-        message: [...data.message]
-       }))       
-      this.handleDismissCountDown()
+       setMessageVisible(!messageVisible)
+       setMessageHeader(data.header)
+       setMessageType(data.type)
+       setMessage([...data.message])
+      handleDismissCountDown()
     }
   }
 
-  renderMessage = () => {
-    return this.state.message.map(message => <li key={message} className="content">{message}</li> )
+  const renderMessage = () => {
+    return message.map(message => <li key={message} className="content">{message}</li> )
   }
 
-  handleDismissOnClick = () => {
-    this.setState({ messageVisible: false })
+  const handleDismissOnClick = () => {
+    setMessageVisible(!messageVisible)
+    // this.setState({ messageVisible: false })
   }
 
-  handleDismissCountDown = () => {
+  const handleDismissCountDown = () => {
     setTimeout(() => {
-      this.setState({ messageVisible: false })
+      setMessageVisible(!messageVisible)
+      // this.setState({ messageVisible: false })
     }, 4000)
   }
 
- render() {
   return (
     <div>
-      <Header onToggleMenu={this.toggleMenu} currentUser={this.state.currentUser}/>
+      <Header onToggleMenu={toggleMenu} currentUser={currentUser}/>
         <div className="ui attached pushable App-sidebar">
-          <SideBar toggleMenu={this.state.toggle} handleLogout={this.handleLogout} currentUser={this.state.currentUser}/>
+          <SideBar toggleMenu={toggle} handleLogout={handleLogout} currentUser={currentUser}/>
             {
-            (!!this.state.message && this.state.messageVisible) && (
-              <div className={`ui ${this.state.messageType} message`}>
-                <i aria-hidden="true" className="close icon" onClick={this.handleDismissOnClick}></i>
+            (!!message && messageVisible) && (
+              <div className={`ui ${messageType} message`}>
+                <i aria-hidden="true" className="close icon" onClick={handleDismissOnClick}></i>
                 <div className="content">
-                  <div className="header">{this.state.messageHeader}</div>
+                  <div className="header">{messageHeader}</div>
                   <ul className="list">
-                    {this.renderMessage() === [] ? this.renderMessage() : null}
+                    {renderMessage() === [] ? renderMessage() : null}
                   </ul>
                 </div>
               </div> )
             }
-            <div className={`ui pusher ${this.state.toggle ? 'dimmed' : ''}`} onClick={this.closeSidebarOnClick}>
+            <div className={`ui pusher ${toggle ? 'dimmed' : ''}`} onClick={closeSidebarOnClick}>
               <Switch>  
-                <Route path="/login" render={routeProps => <Login {...routeProps} handleLogin={this.handleLogin} handleMessages={this.handleMessages}/>} />
-                <Route path="/signup" render={routeProps => <SignUp {...routeProps} handleNewUser={this.addUser} handleMessages={this.handleMessages}/>} />
+                <Route path="/login" render={routeProps => <Login {...routeProps} handleLogin={handleLogin} handleMessages={handleMessages}/>} />
+                <Route path="/signup" render={routeProps => <SignUp {...routeProps} handleNewUser={addUser} handleMessages={handleMessages}/>} />
                 <Route exact path="/issues" render={() => (
                   <IssueContainer 
-                    searchTerm={this.state.searchTerm} 
-                    setSearchTerm={this.setSearchTerm}
-                    handleDeleteIssue={this.deleteIssue}
-                    issues={this.sortedIssues()}
-                    currentUser={this.state.currentUser} />
+                    searchTerm={searchTerm} 
+                    setSearchTermRefactor={setSearchTermRefactor}
+                    handleDeleteIssue={deleteIssue}
+                    issues={sortedIssues()}
+                    currentUser={currentUser} />
                   )} />
-                <Route path="/users/:id" render={routeProps => <UserProfile {...routeProps} currentUser={this.state.currentUser} />} />
-                <Route path="/issues/new" render={routeProps => <NewIssueForm {...routeProps} handleNewIssue={this.addIssue} currentUser={this.state.currentUser} handleMessages={this.handleMessages} />} />
-                <Route path="/issues/:id" render={routeProps => <ShowIssue {...routeProps} currentUser={this.state.currentUser} handleMessages={this.handleMessages}/>} />
+                <Route path="/users/:id" render={routeProps => <UserProfile {...routeProps} currentUser={currentUser} />} />
+                <Route path="/issues/new" render={routeProps => <NewIssueForm {...routeProps} handleNewIssue={addIssue} currentUser={currentUser} handleMessages={handleMessages} />} />
+                <Route path="/issues/:id" render={routeProps => <ShowIssue {...routeProps} currentUser={currentUser} handleMessages={handleMessages}/>} />
                 <Route exact path="/users" render={() => (
                   <UserContainer 
-                    users={this.state.users} />
+                    users={users} />
                   )} />
-                <Route exact path="/home" render={routeProps => <Home {...routeProps} currentUser={this.state.currentUser}/>} />
+                <Route exact path="/home" render={routeProps => <Home {...routeProps} currentUser={currentUser}/>} />
             </Switch>
           </div>
       </div>
     </div>
   );
- }
 }
 
 export default withRouter(App);
