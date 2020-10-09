@@ -1,14 +1,19 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import '../resources/SideBar.css';
+import { SET_KEY_HOLDER } from '../store/type';
 
 const SideBar = props => {
 
   const currentUser = useSelector(state => state.user.keyHolder)
-
+  const dispatch = useDispatch()
+  
   const handleLogout = () => {
-    
+    // remove token from localStorage
+    localStorage.removeItem("token")
+    // set currentUser state back to null
+    dispatch({ type: SET_KEY_HOLDER, payload: null })
   }
 
   return (

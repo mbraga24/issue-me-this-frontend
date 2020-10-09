@@ -70,16 +70,6 @@ const App = props => {
     toggle && setToggleRefactor()
   }
 
-  // const handleLogout = () => {
-  //   // remove token from localStorage
-  //   localStorage.removeItem("token")
-    
-  //   // set currentUser state back to null
-  //   this.setState({ 
-  //     currentUser: null
-  //   })
-  // }
-
   return (
     <div>
       <Header onToggleMenu={toggleMenu} currentUser={currentUser}/>
