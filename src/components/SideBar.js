@@ -1,13 +1,21 @@
-import React, { useEffect } from 'react';
+import React from 'react';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import '../resources/SideBar.css';
 
-const SideBar = (props) => {
+const SideBar = props => {
+
+  const currentUser = useSelector(state => state.user.keyHolder)
+
+  const handleLogout = () => {
+    
+  }
+
   return (
     <div className={`ui vertical inverted overlay left animating sidebar menu ${props.toggleMenu ? 'visible' : 'hidden'}`}>
-      {props.currentUser ? (
+      {currentUser ? (
         <>
-          <Link to="/login" className="item" onClick={props.handleLogout}>
+          <Link to="/login" className="item" onClick={handleLogout}>
             Logout
             <i className="large sign-out alternate icon"></i>
           </Link>  

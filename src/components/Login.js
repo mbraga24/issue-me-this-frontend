@@ -1,24 +1,37 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { withRouter } from 'react-router-dom';
+import useFormFields from '../hooks/useFormFields';
+import { SET_KEY_HOLDER } from '../store/type';
 import '../resources/Login.css';
 
-class Login extends Component {
+const Login = props => {
 
-  state = {
+  const dispatch = useDispatch()
+  const [ fields, handleFieldChange ] = useFormFields({
     email: "",
     password: ""
+  })
+  // const [ messageType, setMessageType ] = useState("")
+  const [ alertHeader, setAlertHeader ] = useState("")
+  const [ alertStatus, setAlertStatus ] = useState(false)
+  const [ message, setMessage ] = useState([])
+
+  const handleMessages = data => {
+    setAlertHeader(data.header)
+    setAlertStatus(true)
+    setMessage(data.message)
+    handleDismissCountDown()
   }
 
-  handleChange = event => {
-    this.setState({ [event.target.name]: event.target.value }) 
-  }
-
-  handleSubmit = event => {
+  const handleSubmit = event => {
     event.preventDefault()
 
     const loginUser = {
-      email: this.state.email.toLowerCase(),
-      password: this.state.password
+      email: fields.email.toLowerCase(),
+      password: fields.password
     }
+
     // make a fetch request to request to login the user - the fetch will be to the custom route "/login"
     fetch("http://localhost:3000/login", {
       method: "POST",
@@ -29,45 +42,78 @@ class Login extends Component {
     })
     .then(r => r.json())
     .then(data => {
+      console.log("LOG IN --->", data)
       if (data.type === "error") {
-        console.log("NOT ALLOWED")
-        console.log("MESSAGE -->", data.message)
-        console.log("HEADER -->", data.header)
         // will handle error message
-        this.props.handleMessages(data)
+        handleMessages(data)
       } else {
         // deconstruct assignment - user and token
         const { user, token } = data
-        // set user in state in the App component
-        this.props.handleLogin(user)
+        // set the key holder in the store
+        dispatch({ type: SET_KEY_HOLDER, payload: user })
         // set localStorage to token
         localStorage.token = token
-        // will handle success message
-        this.props.handleMessages(data)
+        // send logged in user to the issues page
+        this.props.history.push('/issues')
       }
     })
   }
 
-  render() {
-    return (
-      <div className="ui container Login-container" onSubmit={this.handleSubmit}>
-          <div className="ui grid">
-            <form className="ui form six wide column centered raised segment Login-form">
-              <h1 className="ui center aligned header">Login</h1>
-              <div className="field">
-                <label>Email</label>
-                <input name="email" placeholder="email" onChange={this.handleChange} />
-              </div>
-              <div className="field">
-                <label>Password</label>
-                <input type="password" name="password" autoComplete="current-password" placeholder="Password" onChange={this.handleChange} />
-              </div>
-              <button type="submit" className="ui button green">Login</button>
-            </form>
-          </div>
-      </div>
-    );
+  // const handleMessages = (data) => {
+  //   if (data.message) {
+  //      setMessageVisible(!messageVisible)
+  //      setMessageHeader(data.header)
+  //      setMessageType(data.type)
+  //      setMessage([...data.message])
+      // handleDismissCountDown()
+  //   }
+  // }
+
+  const renderAlertMessage = () => {
+    return message.map(message => <li key={message} className="content">{message}</li> )
   }
+
+  const handleDismissOnClick = () => {
+    setAlertStatus(!alertStatus)
+  }
+
+  const handleDismissCountDown = () => {
+    setTimeout(() => {
+      setAlertStatus(!alertStatus)
+    }, 4000)
+  }
+
+  return (
+    <div className="ui container Login-container" onSubmit={handleSubmit}>
+        <div className="ui grid">
+          <form className="ui form six wide column centered raised segment Login-form">
+            <h1 className="ui center aligned header">Login</h1>
+            <div className="field">
+              <label>Email</label>
+              <input name="email" placeholder="email" onChange={handleFieldChange} />
+            </div>
+            <div className="field">
+              <label>Password</label>
+              <input type="password" name="password" autoComplete="current-password" placeholder="Password" onChange={handleFieldChange} />
+            </div>
+            <button type="submit" className="ui button green">Login</button>
+            {
+            (!!message && alertStatus) && (
+              // <div className={`ui ${messageType} message`}>
+              <div className="ui error message">
+                <i aria-hidden="true" className="close icon" onClick={handleDismissOnClick}></i>
+                <div className="content">
+                  <div className="header">{alertHeader}</div>
+                  <ul className="list">
+                    {renderAlertMessage().length !== 0 ? renderAlertMessage() : null}
+                  </ul>
+                </div>
+              </div> )
+            }
+          </form>
+        </div>
+    </div>
+  );
 }
 
-export default Login;
+export default withRouter(Login);

@@ -1,5 +1,7 @@
 // user store
-export const SET_USERS = "SER_USERS";
+export const SET_USERS = "SET_USERS";
+export const SET_KEY_HOLDER = "SET_KEY_HOLDER";
+export const ADD_USER = "ADD_USER";
 
 // search term store
 export const SET_SEARCH_TERM = "SET_SEARCH_TERM";

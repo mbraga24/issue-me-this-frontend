@@ -1,9 +1,11 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Popup } from 'semantic-ui-react';
 
 const Header = (props) => {
 
+  const currentUser = useSelector(state => state.user.keyHolder)
   const richardQuotes = () => {
     const phrases = [
       "Yeah, it's minimalist, you know? Sharp, clean lines.",
@@ -20,9 +22,9 @@ const Header = (props) => {
       <Link to="/home" className="item link grey">
         Home
       </Link>
-      {props.currentUser &&
+      {currentUser &&
         <>
-          <Link to={`/users/${props.currentUser.id}`} className="item link grey">
+          <Link to={`/users/${currentUser.id}`} className="item link grey">
             Profile
           </Link>     
         </>

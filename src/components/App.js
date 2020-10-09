@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Route, Switch, withRouter } from 'react-router-dom';
 import  { useSelector, useDispatch } from 'react-redux';
-import { SET_USERS, SET_ISSUES } from '../store/type';
+import { SET_USERS, SET_ISSUES, SET_KEY_HOLDER } from '../store/type';
 import Home from './Home';
 import Login from './Login';
 import SignUp from './SignUp';
@@ -16,18 +16,13 @@ import '../resources/App.css';
 
 const App = props => {
 
-  const [ searchTerm, setSearchTerm ] = useState("")
-  const [ currentUser, setCurrentUser ] = useState("")
-  const [ messageHeader, setMessageHeader ] = useState("")
-  const [ messageType, setMessageType ] = useState("")
+  // const [ searchTerm, setSearchTerm ] = useState("")
   const [ toggle, setToggle ] = useState(false)
   // const [ active, setActive ] = useState(true)
-  const [ messageVisible, setMessageVisible ] = useState(false)
-  const [ message, setMessage ] = useState([])
   // const [ issues, setIssues ] = useState([])
   // const [ users, setUsers ] = useState([])
-
-  const users = useSelector(state => state.user.users)
+  
+  const currentUser = useSelector(state => state.user.keyHolder)
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -41,9 +36,9 @@ const App = props => {
       }
     })
     .then(r => r.json())
-    .then(loggedInUser => {
-      // set current user in state
-      handleLogin(loggedInUser)
+    .then(user => {
+      // set current user in store
+      dispatch({ type: SET_KEY_HOLDER, payload: user })
     })
    }
 
@@ -51,25 +46,20 @@ const App = props => {
     fetch("http://localhost:3000/issues")
     .then(r => r.json())
     .then(issues => {
-      // setIssues(issues)
+      // set issues in the store
       dispatch({ type: SET_ISSUES, payload: issues })
     })
     // fetch users
     fetch("http://localhost:3000/users")
     .then(r => r.json())
     .then(users => {
-      // setUsers(users)
+      // set users in the store
       dispatch({ type: SET_USERS, payload: users })
     })
   }, [dispatch])
 
   const toggleMenu = () => {
     setToggleRefactor()
-  }
-
-  const setSearchTermRefactor = term => {
-    // console.log("app ---> ",term)
-    setSearchTerm(term)
   }
 
   const setToggleRefactor = () => {
@@ -79,110 +69,33 @@ const App = props => {
   const closeSidebarOnClick = () => {
     toggle && setToggleRefactor()
   }
-  
-  // =============================================
-  //                 HANDLE ISSUE
-  // =============================================
 
-  // sort issues from greatest to least
-  // const sortedIssues = () => {
-  //   return issues.sort((a, b) => b.id - a.id)
-  // }
-
-  // =============================================
-  //             HANDLE USER
-  // =============================================
-
-  const addUser = newUser => {
-    this.setState({ users: [...users, newUser] })
-    this.handleLogin(newUser)
-  }
-
-  // =============================================
-  //             HANDLE LOGIN / OUT 
-  // =============================================
-
-  const handleLogin = currentUser => {
-    setCurrentUser(currentUser)
-    // this.props.history.push('/issues')
-  }
-
-  const handleLogout = () => {
-    // remove token from localStorage
-    localStorage.removeItem("token")
+  // const handleLogout = () => {
+  //   // remove token from localStorage
+  //   localStorage.removeItem("token")
     
-    // set currentUser state back to null
-    this.setState({ 
-      currentUser: null
-    })
-  }
-
-  // =============================================
-  //               HANDLE MESSAGES
-  // =============================================
-
-  const handleMessages = (data) => {
-    if (data.message) {
-       setMessageVisible(!messageVisible)
-       setMessageHeader(data.header)
-       setMessageType(data.type)
-       setMessage([...data.message])
-      handleDismissCountDown()
-    }
-  }
-
-  const renderMessage = () => {
-    return message.map(message => <li key={message} className="content">{message}</li> )
-  }
-
-  const handleDismissOnClick = () => {
-    setMessageVisible(!messageVisible)
-  }
-
-  const handleDismissCountDown = () => {
-    setTimeout(() => {
-      setMessageVisible(!messageVisible)
-    }, 4000)
-  }
+  //   // set currentUser state back to null
+  //   this.setState({ 
+  //     currentUser: null
+  //   })
+  // }
 
   return (
     <div>
       <Header onToggleMenu={toggleMenu} currentUser={currentUser}/>
         <div className="ui attached pushable App-sidebar">
-          <SideBar toggleMenu={toggle} handleLogout={handleLogout} currentUser={currentUser}/>
-            {
-            (!!message && messageVisible) && (
-              <div className={`ui ${messageType} message`}>
-                <i aria-hidden="true" className="close icon" onClick={handleDismissOnClick}></i>
-                <div className="content">
-                  <div className="header">{messageHeader}</div>
-                  <ul className="list">
-                    {renderMessage() === [] ? renderMessage() : null}
-                  </ul>
-                </div>
-              </div> )
-            }
+          <SideBar toggleMenu={toggle} />
             <div className={`ui pusher ${toggle ? 'dimmed' : ''}`} onClick={closeSidebarOnClick}>
               <Switch>  
-                <Route path="/login" render={routeProps => <Login {...routeProps} handleLogin={handleLogin} handleMessages={handleMessages}/>} />
-                <Route path="/signup" render={routeProps => <SignUp {...routeProps} handleNewUser={addUser} handleMessages={handleMessages}/>} />
-                <Route exact path="/issues" render={() => (
-                  <IssueContainer 
-                    searchTerm={searchTerm} 
-                    setSearchTermRefactor={setSearchTermRefactor}
-                    // handleDeleteIssue={deleteIssue}
-                    // issues={sortedIssues()}
-                    currentUser={currentUser} />
-                  )} />
-                <Route path="/users/:id" render={routeProps => <UserProfile {...routeProps} currentUser={currentUser} />} />
+                <Route path="/login" render={routeProps => <Login {...routeProps} />} />
+                <Route path="/signup" render={routeProps => <SignUp {...routeProps} />} />
+                <Route exact path="/issues" render={() => ( <IssueContainer /> )} />
+                <Route path="/users/:id" render={routeProps => <UserProfile {...routeProps} />} />
                 {/* handleNewIssue={addIssue} */}
-                <Route path="/issues/new" render={routeProps => <NewIssueForm {...routeProps} currentUser={currentUser} handleMessages={handleMessages} />} />
-                <Route path="/issues/:id" render={routeProps => <ShowIssue {...routeProps} currentUser={currentUser} handleMessages={handleMessages}/>} />
-                <Route exact path="/users" render={() => (
-                  <UserContainer 
-                    users={users} />
-                  )} />
-                <Route exact path="/home" render={routeProps => <Home {...routeProps} currentUser={currentUser}/>} />
+                <Route path="/issues/new" render={routeProps => <NewIssueForm {...routeProps} />} />
+                <Route path="/issues/:id" render={routeProps => <ShowIssue {...routeProps} />} />
+                <Route exact path="/users" render={() => ( <UserContainer /> )} />
+                <Route exact path="/home" render={routeProps => <Home {...routeProps} />} />
             </Switch>
           </div>
       </div>
