@@ -1,8 +1,12 @@
-import { createStore, combineReducers } from 'Redux';
+import { createStore, combineReducers } from 'redux';
 import user from './User';
+import term from './SearchTerm';
+import issue from './Issue';
 
 const rootReducer = combineReducers({
-  user
+  user,
+  issue,
+  term
 })
 
 const store = createStore(rootReducer)

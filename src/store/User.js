@@ -1,8 +1,10 @@
+import { SET_USERS } from './type';
+
 const defaultState = {
   users: []
 }
 
-const reducer = () => {
+const reducer = (state = defaultState, action) => {
   switch(action.type) {
     case SET_USERS:
       return {

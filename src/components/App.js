@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Route, Switch, withRouter } from 'react-router-dom'
+import { Route, Switch, withRouter } from 'react-router-dom';
+import  { useSelector, useDispatch } from 'react-redux';
+import { SET_USERS, SET_ISSUES } from '../store/type';
 import Home from './Home';
 import Login from './Login';
 import SignUp from './SignUp';
@@ -14,29 +16,19 @@ import '../resources/App.css';
 
 const App = props => {
 
-    // searchTerm: "",
-    // currentUser: "",
-    // messageHeader: "",
-    // messageType: "",
-    // message: [],
-    // issues: [],
-    // users: [],
-    // toggle: false,
-    // active: true,
-    // messageVisible: false
+  const [ searchTerm, setSearchTerm ] = useState("")
+  const [ currentUser, setCurrentUser ] = useState("")
+  const [ messageHeader, setMessageHeader ] = useState("")
+  const [ messageType, setMessageType ] = useState("")
+  const [ toggle, setToggle ] = useState(false)
+  // const [ active, setActive ] = useState(true)
+  const [ messageVisible, setMessageVisible ] = useState(false)
+  const [ message, setMessage ] = useState([])
+  // const [ issues, setIssues ] = useState([])
+  // const [ users, setUsers ] = useState([])
 
-    const [ searchTerm, setSearchTerm ] = useState("")
-    const [ currentUser, setCurrentUser ] = useState("")
-    const [ messageHeader, setMessageHeader ] = useState("")
-    const [ messageType, setMessageType ] = useState("")
-    const [ toggle, setToggle ] = useState(false)
-    // const [ active, setActive ] = useState(true)
-    const [ messageVisible, setMessageVisible ] = useState(false)
-    const [ message, setMessage ] = useState([])
-    const [ issues, setIssues ] = useState([])
-    const [ users, setUsers ] = useState([])
-
-
+  const users = useSelector(state => state.user.users)
+  const dispatch = useDispatch()
 
   useEffect(() => {
     // log user in when component mounts
@@ -59,22 +51,25 @@ const App = props => {
     fetch("http://localhost:3000/issues")
     .then(r => r.json())
     .then(issues => {
-      setIssues(issues)
+      // setIssues(issues)
+      dispatch({ type: SET_ISSUES, payload: issues })
     })
     // fetch users
     fetch("http://localhost:3000/users")
     .then(r => r.json())
     .then(users => {
-      setUsers(users)
+      // setUsers(users)
+      dispatch({ type: SET_USERS, payload: users })
     })
-  }, [])
+  }, [dispatch])
 
   const toggleMenu = () => {
     setToggleRefactor()
   }
 
-  const setSearchTermRefactor = (searchTerm) => {
-    setSearchTerm(searchTerm)
+  const setSearchTermRefactor = term => {
+    // console.log("app ---> ",term)
+    setSearchTerm(term)
   }
 
   const setToggleRefactor = () => {
@@ -82,30 +77,17 @@ const App = props => {
   }
 
   const closeSidebarOnClick = () => {
-    if (toggle) {
-      this.setToggle()
-    }
+    toggle && setToggleRefactor()
   }
   
   // =============================================
   //                 HANDLE ISSUE
   // =============================================
 
-  const addIssue = newIssue => {
-    this.setState({
-      issues: [...issues, newIssue]
-    })
-  }
-
-  const deleteIssue = issueId => {
-    const updatedIssues = issues.filter(issue => issue.id !== issueId)
-    this.setState({ issues: updatedIssues })
-  }
-
   // sort issues from greatest to least
-  const sortedIssues = () => {
-    return issues.sort((a, b) => b.id - a.id)
-  }
+  // const sortedIssues = () => {
+  //   return issues.sort((a, b) => b.id - a.id)
+  // }
 
   // =============================================
   //             HANDLE USER
@@ -121,20 +103,8 @@ const App = props => {
   // =============================================
 
   const handleLogin = currentUser => {
-    // set current user and redirect user to "/issues" page
-    // this.setState({ currentUser }, () => {
-      // this.props.history.push('/issues')
-    // })
     setCurrentUser(currentUser)
     // this.props.history.push('/issues')
-    // NOTE:
-    // For the App component to have access to the browser history 
-    // you need to import withRouter at the top of the file:
-    // import { withRouter } from 'react-router-dom'
-
-    // Then pass in the App component as an argument at the bottom of 
-    // the file and export it like so: 
-    // export default withRouter(App);
   }
 
   const handleLogout = () => {
@@ -167,13 +137,11 @@ const App = props => {
 
   const handleDismissOnClick = () => {
     setMessageVisible(!messageVisible)
-    // this.setState({ messageVisible: false })
   }
 
   const handleDismissCountDown = () => {
     setTimeout(() => {
       setMessageVisible(!messageVisible)
-      // this.setState({ messageVisible: false })
     }, 4000)
   }
 
@@ -202,12 +170,13 @@ const App = props => {
                   <IssueContainer 
                     searchTerm={searchTerm} 
                     setSearchTermRefactor={setSearchTermRefactor}
-                    handleDeleteIssue={deleteIssue}
-                    issues={sortedIssues()}
+                    // handleDeleteIssue={deleteIssue}
+                    // issues={sortedIssues()}
                     currentUser={currentUser} />
                   )} />
                 <Route path="/users/:id" render={routeProps => <UserProfile {...routeProps} currentUser={currentUser} />} />
-                <Route path="/issues/new" render={routeProps => <NewIssueForm {...routeProps} handleNewIssue={addIssue} currentUser={currentUser} handleMessages={handleMessages} />} />
+                {/* handleNewIssue={addIssue} */}
+                <Route path="/issues/new" render={routeProps => <NewIssueForm {...routeProps} currentUser={currentUser} handleMessages={handleMessages} />} />
                 <Route path="/issues/:id" render={routeProps => <ShowIssue {...routeProps} currentUser={currentUser} handleMessages={handleMessages}/>} />
                 <Route exact path="/users" render={() => (
                   <UserContainer 
