@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Segment } from 'semantic-ui-react';
-import '../UserProfile.css';
+import '../resources/UserProfile.css';
 
 class UserProfile extends Component {
 

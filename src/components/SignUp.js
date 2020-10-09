@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Dropdown, Grid } from 'semantic-ui-react'
 import { avatarOptions } from '../avatar';
 import { professionOptions } from '../profession';
-import '../SignUp.css';
+import '../resources/SignUp.css';
 
 class SignUp extends Component {
 

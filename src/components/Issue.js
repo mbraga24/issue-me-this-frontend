@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import '../Issue.css';
+import '../resources/Issue.css';
 
 const Issue = (props) => {
 

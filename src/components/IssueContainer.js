@@ -1,7 +1,7 @@
 import React from 'react';
 import Issue from './Issue';
 import SearchIssue from './SearchIssue';
-import '../IssueContainer.css';
+import '../resources/IssueContainer.css';
 
 const IssueContainer = (props) => {
 

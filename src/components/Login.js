@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import '../Login.css';
+import '../resources/Login.css';
 
 class Login extends Component {
 
@@ -30,6 +30,9 @@ class Login extends Component {
     .then(r => r.json())
     .then(data => {
       if (data.type === "error") {
+        console.log("NOT ALLOWED")
+        console.log("MESSAGE -->", data.message)
+        console.log("HEADER -->", data.header)
         // will handle error message
         this.props.handleMessages(data)
       } else {

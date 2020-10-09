@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import '../SideBar.css';
+import '../resources/SideBar.css';
 
 const SideBar = (props) => {
   return (

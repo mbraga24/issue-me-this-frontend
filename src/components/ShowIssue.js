@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from 'semantic-ui-react';
 import Comment from './Comment';
-import '../ShowIssue.css';
+import '../resources/ShowIssue.css';
 
 class ShowIssue extends Component {
 

@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
 import { Route, Switch, withRouter } from 'react-router-dom'
-import Home from './components/Home';
-import Login from './components/Login';
-import SignUp from './components/SignUp';
-import IssueContainer from './components/IssueContainer';
-import UserContainer from './components/UserContainer';
-import SideBar from './components/SideBar';
-import Header from './components/Header';
-import NewIssueForm from './components/NewIssueForm';
-import ShowIssue from './components/ShowIssue';
-import UserProfile from './components/UserProfile';
-import './App.css';
+import Home from './Home';
+import Login from './Login';
+import SignUp from './SignUp';
+import IssueContainer from './IssueContainer';
+import UserContainer from './UserContainer';
+import SideBar from './SideBar';
+import Header from './Header';
+import NewIssueForm from './NewIssueForm';
+import ShowIssue from './ShowIssue';
+import UserProfile from './UserProfile';
+import '../resources/App.css';
 
 class App extends Component {
   state = {

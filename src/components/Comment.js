@@ -1,7 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 import { Link } from 'react-router-dom';
-import '../Comment.css';
+import '../resources/Comment.css';
 
 const Comment = (props) => {
 
@@ -23,7 +23,7 @@ const Comment = (props) => {
             {first_name} - {profession}
         </Link>
         <div className="metadata">
-          {moment().startOf('day').fromNow()} days ago
+          {moment().startOf('day').fromNow()}
         </div>
       </div>
       <div className="avatar">
