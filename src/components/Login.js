@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import useFormFields from '../hooks/useFormFields';
 import { SET_KEY_HOLDER } from '../store/type';
@@ -12,7 +12,7 @@ const Login = props => {
     email: "",
     password: ""
   })
-  // const [ messageType, setMessageType ] = useState("")
+  const [ messageType, setMessageType ] = useState("")
   const [ alertHeader, setAlertHeader ] = useState("")
   const [ alertStatus, setAlertStatus ] = useState(false)
   const [ message, setMessage ] = useState([])
@@ -20,8 +20,9 @@ const Login = props => {
   const handleMessages = data => {
     setAlertHeader(data.header)
     setAlertStatus(true)
-    setMessage(data.message)
     handleDismissCountDown()
+    setMessage(data.message)
+    setMessageType(data.type)
   }
 
   const handleSubmit = event => {
@@ -43,8 +44,7 @@ const Login = props => {
     .then(r => r.json())
     .then(data => {
       console.log("LOG IN --->", data)
-      if (data.type === "error") {
-        // will handle error message
+      if (data.type === "negative") {
         handleMessages(data)
       } else {
         // deconstruct assignment - user and token
@@ -54,32 +54,22 @@ const Login = props => {
         // set localStorage to token
         localStorage.token = token
         // send logged in user to the issues page
-        this.props.history.push('/issues')
+        // this.props.history.push('/issues')
       }
     })
   }
 
-  // const handleMessages = (data) => {
-  //   if (data.message) {
-  //      setMessageVisible(!messageVisible)
-  //      setMessageHeader(data.header)
-  //      setMessageType(data.type)
-  //      setMessage([...data.message])
-      // handleDismissCountDown()
-  //   }
-  // }
-
   const renderAlertMessage = () => {
-    return message.map(message => <li key={message} className="content">{message}</li> )
+    return message.map(message => <li className="content">{message}</li> )
   }
 
   const handleDismissOnClick = () => {
-    setAlertStatus(!alertStatus)
+    setAlertStatus(false)
   }
 
   const handleDismissCountDown = () => {
     setTimeout(() => {
-      setAlertStatus(!alertStatus)
+      setAlertStatus(false)
     }, 4000)
   }
 
@@ -98,17 +88,16 @@ const Login = props => {
             </div>
             <button type="submit" className="ui button green">Login</button>
             {
-            (!!message && alertStatus) && (
-              // <div className={`ui ${messageType} message`}>
-              <div className="ui error message">
-                <i aria-hidden="true" className="close icon" onClick={handleDismissOnClick}></i>
-                <div className="content">
-                  <div className="header">{alertHeader}</div>
+              (alertStatus && !!message) && 
+                <div className="ui negative message">
+                  <i className="close icon" onClick={handleDismissOnClick}></i>
+                  <div className="header">
+                    {alertHeader}
+                  </div>
                   <ul className="list">
-                    {renderAlertMessage().length !== 0 ? renderAlertMessage() : null}
+                    {message.length !== 0 ? renderAlertMessage() : null}
                   </ul>
                 </div>
-              </div> )
             }
           </form>
         </div>
