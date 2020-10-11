@@ -16,13 +16,6 @@ const Login = props => {
   const [ alertStatus, setAlertStatus ] = useState(false)
   const [ message, setMessage ] = useState([])
 
-  const handleMessages = data => {
-    setAlertHeader(data.header)
-    setAlertStatus(true)
-    handleDismissCountDown()
-    setMessage(data.message)
-  }
-
   const handleSubmit = event => {
     event.preventDefault()
 
@@ -41,7 +34,7 @@ const Login = props => {
     })
     .then(r => r.json())
     .then(data => {
-      if (data.type === "negative") {
+      if (data.errorStatus) {
         handleMessages(data)
       } else {
         // A) deconstruct assignment - user and token
@@ -54,6 +47,13 @@ const Login = props => {
         props.history.push('/issues')
       }
     })
+  }
+
+  const handleMessages = data => {
+    setAlertHeader(data.header)
+    setAlertStatus(true)
+    handleDismissCountDown()
+    setMessage(data.error)
   }
 
   const renderAlertMessage = () => {

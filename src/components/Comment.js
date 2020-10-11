@@ -3,12 +3,14 @@ import moment from 'moment';
 import { Link } from 'react-router-dom';
 import '../resources/Comment.css';
 
-const Comment = (props) => {
+const Comment = props => {
 
   const handleDelete = () => {
     fetch(`http://localhost:3000/comments/${props.commentId}`, {
       method: "DELETE"
     })
+    .then(r => r.json())
+    .then(console.log)
     props.handleDeleteComment(props.commentId)
   }
 
