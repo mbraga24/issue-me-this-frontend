@@ -1,20 +1,27 @@
 import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { DELETE_ISSUE } from '../store/type';
 import '../resources/Issue.css';
 
-const Issue = (props) => {
+const Issue = props => {
+  
+  const dispatch = useDispatch() 
+  const currentUser = useSelector(state => state.user.keyHolder)
+  const { id, title, issue_body, comments, user } = props.issue
+  const totalComments = comments.length
+  const imgUrl = `https://semantic-ui.com/images/avatar/small/${user.avatar}.jpg`
 
   const handleDelete = (issueId) => {
     fetch(`http://localhost:3000/issues/${issueId}`, {
       method: "DELETE"
     })
-    props.handleDeleteIssue(issueId)
+    .then(r => r.json())
+    .then(issue => {
+      dispatch({ type: DELETE_ISSUE, payload: issue })
+    })
   }
 
-  const { id, title, issue_body, comments, user } = props.issue
-  const totalComments = comments.length
-  const imgUrl = `https://semantic-ui.com/images/avatar/small/${user.avatar}.jpg`
-  
   return (
     <div className="ui celled grid">
       <div className="row">
@@ -41,7 +48,7 @@ const Issue = (props) => {
               {totalComments} Comments
             </Link>
             { 
-              (props.currentUser && props.currentUser.id === user.id) &&
+              ( currentUser && currentUser.id === user.id ) &&
               <div className="Issue-buttons">
                 <button className="ui circular icon red button" onClick={() => handleDelete(id)}><i aria-hidden="true" className="trash alternate outline icon"></i></button>
                 <button className="ui circular icon blue button"><i aria-hidden="true" className="edit outline icon"></i></button>

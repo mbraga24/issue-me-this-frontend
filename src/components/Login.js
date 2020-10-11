@@ -12,7 +12,6 @@ const Login = props => {
     email: "",
     password: ""
   })
-  const [ messageType, setMessageType ] = useState("")
   const [ alertHeader, setAlertHeader ] = useState("")
   const [ alertStatus, setAlertStatus ] = useState(false)
   const [ message, setMessage ] = useState([])
@@ -22,7 +21,6 @@ const Login = props => {
     setAlertStatus(true)
     handleDismissCountDown()
     setMessage(data.message)
-    setMessageType(data.type)
   }
 
   const handleSubmit = event => {
@@ -43,18 +41,17 @@ const Login = props => {
     })
     .then(r => r.json())
     .then(data => {
-      console.log("LOG IN --->", data)
       if (data.type === "negative") {
         handleMessages(data)
       } else {
-        // deconstruct assignment - user and token
+        // A) deconstruct assignment - user and token
+        // B) set the key holder in the store
+        // C) set localStorage to token
+        // D) send logged in user to the issues page
         const { user, token } = data
-        // set the key holder in the store
         dispatch({ type: SET_KEY_HOLDER, payload: user })
-        // set localStorage to token
         localStorage.token = token
-        // send logged in user to the issues page
-        // this.props.history.push('/issues')
+        props.history.push('/issues')
       }
     })
   }
