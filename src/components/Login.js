@@ -8,13 +8,13 @@ import '../resources/Login.css';
 const Login = props => {
 
   const dispatch = useDispatch()
+  const [ alertHeader, setAlertHeader ] = useState("")
+  const [ alertStatus, setAlertStatus ] = useState(false)
+  const [ message, setMessage ] = useState([])
   const [ fields, handleFieldChange ] = useFormFields({
     email: "",
     password: ""
   })
-  const [ alertHeader, setAlertHeader ] = useState("")
-  const [ alertStatus, setAlertStatus ] = useState(false)
-  const [ message, setMessage ] = useState([])
 
   const handleSubmit = event => {
     event.preventDefault()
@@ -37,10 +37,6 @@ const Login = props => {
       if (data.errorStatus) {
         handleMessages(data)
       } else {
-        // A) deconstruct assignment - user and token
-        // B) set the key holder in the store
-        // C) set localStorage to token
-        // D) send logged in user to the issues page
         const { user, token } = data
         dispatch({ type: SET_KEY_HOLDER, payload: user })
         localStorage.token = token
