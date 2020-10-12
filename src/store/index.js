@@ -2,6 +2,7 @@ import { createStore, combineReducers } from 'redux';
 import user from './User';
 import term from './SearchTerm';
 import issue from './Issue';
+// import skill from './Skill';
 
 const rootReducer = combineReducers({
   user,

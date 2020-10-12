@@ -90,7 +90,7 @@ const App = props => {
                 <Route path="/login" render={routeProps => <Login {...routeProps} />} />
                 <Route path="/signup" render={routeProps => <SignUp {...routeProps} />} />
                 <Route exact path="/issues" render={() => ( <IssueContainer /> )} />
-                <Route path="/users/:id" render={routeProps => <UserProfile {...routeProps} />} />
+                <Route path="/users/:id" render={() => <UserProfile />} />
                 {/* handleNewIssue={addIssue} */}
                 <Route path="/issues/new" render={routeProps => <NewIssueForm {...routeProps} />} />
                 <Route path="/issues/:id" render={() => <ShowIssue />} />

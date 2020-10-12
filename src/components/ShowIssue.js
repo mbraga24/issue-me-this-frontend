@@ -5,15 +5,15 @@ import { Button } from 'semantic-ui-react';
 import Comment from './Comment';
 import useFormFields from '../hooks/useFormFields';
 import '../resources/ShowIssue.css';
-import { UPDATE_ISSUE, ADD_COMMENT } from '../store/type';
+import { UPDATE_ISSUE } from '../store/type';
 
 const ShowIssue = props => {
 
   const dispatch = useDispatch()
-  const issueId = props.match.params.id
+  const issueId = parseInt(props.match.params.id)
   const issues = useSelector(state => state.issue.issues)
   const currentUser = useSelector(state => state.user.keyHolder)
-  const currentIssue = issues.find(issue => issue.id === parseInt(issueId))
+  const currentIssue = issues.find(issue => issue.id === issueId)
   const [ alertHeader, setAlertHeader ] = useState("")
   const [ alertStatus, setAlertStatus ] = useState(false)
   const [ message, setMessage ] = useState([])
@@ -45,13 +45,11 @@ const ShowIssue = props => {
     })
     .then(r => r.json())
     .then(data => {
-      // console.log("POST COMMENT --->", data)
       if (data.errorStatus) {
-        console.log("POST COMMENT ERROR -->", data)
         handleMessages(data)
       } else {
         console.log("POST COMMENT -->", data)
-        dispatch({ type: ADD_COMMENT, payload: data.comment })
+        // dispatch({ type: ADD_COMMENT, payload: data.comment })
         dispatch({ type: UPDATE_ISSUE, payload: data.issue })
       }
     })
