@@ -20,7 +20,11 @@ const SignUp = props => {
     email: "",
     firstName: "",
     lastName: "",
-    password: ""
+    age: null,
+    profession: "",
+    topSkills: [],
+    password: "",
+    avatar: ""
   })
 
   // fetch skills for dropdown
@@ -134,33 +138,36 @@ const SignUp = props => {
             <div className="field">
               <label>Age</label>
               <Dropdown
-                placeholder='Compact'
+                placeholder='Age'
+                name="age"
                 compact
                 selection
                 options={ageRange()}
-                onChange={handleInputAge}
+                onChange={handleFieldChange}
               />
             </div>
             <div className="field">
               <label>Profession</label>
               <Grid.Column>
                 <Dropdown
-                  onChange={handleInputProfession}
-                  options={professionSelection}
+                  name="profession"
                   placeholder='What is your current job title?'
+                  onChange={handleFieldChange}
+                  options={professionSelection}
                   selection
-                  value={profession}
+                  value={fields.profession}
                 />
               </Grid.Column>
             </div>
             <div className="field">
               <label>Choose your top 5 skills</label>
               <Dropdown 
+                name="topSkills"
+                placeholder='Choose your top 5 skills' 
                 className={`ui ${topSkills.length === 5 ? "disabled" : ""}`}
-                placeholder='Skills' 
                 fluid multiple selection options={skillSelection} 
                 closeOnChange
-                onChange={handleInputSkills} 
+                onChange={handleFieldChange} 
               />
                 { topSkills.length === 5 &&
                   <div className="ui success form">
@@ -174,22 +181,23 @@ const SignUp = props => {
               <label>Avatar</label>
                 <Grid.Column>
                   <Dropdown
+                    name="avatar"
                     placeholder='Choose avatar'
                     openOnFocus
                     selection
                     options={avatarSelection}
-                    onChange={handleInputAvatar}
-                    value={avatar}
+                    onChange={handleFieldChange}
+                    value={fields.avatar}
                   />
                 </Grid.Column>
             </div>
             <div className="field">
               <label>Password</label>
               <input 
-                type="password" 
                 name="password" 
-                autoComplete="current-password" 
                 placeholder="Password" 
+                type="password" 
+                autoComplete="current-password" 
                 onChange={handleFieldChange}
                 value={fields.password}
               />
