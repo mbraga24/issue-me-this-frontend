@@ -1,12 +1,22 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { Dropdown, Grid } from 'semantic-ui-react'
-import { avatarOptions } from '../avatar';
-import { professionOptions } from '../profession';
+import { avatarOptions } from '../helpers/avatar';
+import { professionOptions } from '../helpers/profession';
+import useFormFields from '../hooks/useFormFields';
 import '../resources/SignUp.css';
 
-class SignUp extends Component {
+const SignUp = props => {
 
-  state = {
+  const skills = useSelector(state => state.skill.skills)
+  const [ profession, setProfession ] = useState(null)
+  const [ avatar, setAvatar ] = useState(null)
+  const [ age, setAge ] = useState(null)
+  const [ topSkills, setTopSkills ] = useState([])
+  const [ skillSelection, setSkillSelection ] = useState([])
+  const [ avatarSelection, setAvatarSelection ] = useState([])
+  const [ professionSelection, setProfessionSelection ] = useState([])
+  const [ fields, handleFieldChange ] = useFormFields({
     email: "",
     firstName: "",
     lastName: "",
@@ -14,12 +24,19 @@ class SignUp extends Component {
     profession: "",
     topSkills: [],
     password: "",
-    avatar: "",
-    skillOptions: []
-  }
+    avatar: ""
+  })
+
+  // fetch skills for dropdown
+  useEffect(() => {
+    setSkillSelection(skills)
+    // set profession and avatar options
+    setProfessionSelection(professionOptions())
+    setAvatarSelection(avatarOptions())
+  }, [skills])
 
   // set age range for dropdown 
-  ageRange = () => {
+  const ageRange = () => {
     const ageOptions = []
     for (let start = 18; start < 85; start++) {
       ageOptions.push({ key: start, text: start, value: start })
@@ -27,56 +44,38 @@ class SignUp extends Component {
     return ageOptions
   }
 
-  // set username & password
-  handleInputChange = (event) => {
-    this.setState({
-      [event.target.name]: event.target.value
-    })
-  }
-  
   // set age
-  handleInputAge = (event) => this.setState({ age: event.target.textContent })
+  const handleInputAge = (event) => setAge(event.target.textContent)
 
   // set profession
-  handleInputProfession = (event) => this.setState({ profession: event.target.textContent })
+  const handleInputProfession = (event) => setProfession(event.target.textContent)
   
   // set avatar
-  handleInputAvatar = (event) => this.setState({ avatar: event.target.textContent })
+  const handleInputAvatar = (event) => setAvatar(event.target.textContent)
 
-  // set top five skills
-  handleInputSkills = (event) => {
+  const handleInputSkills = (event) => {
     const newSkill = event.target.textContent
-    if (this.state.topSkills.length < 5 && newSkill !== "") {  
-      this.setState({ topSkills: [...this.state.topSkills, newSkill] })
+    if (topSkills.length < 5 && newSkill !== "") {  
+      setTopSkills([...topSkills, newSkill])
     } else {
-      const removeSkill = this.state.topSkills.pop()
-      const keepSkills = this.state.topSkills.filter(skill => skill !== removeSkill)
-      this.setState({ topSkills: [...keepSkills] })
+      const removeSkill = topSkills.pop()
+      const keepSkills = topSkills.filter(skill => skill !== removeSkill)
+      setTopSkills([...keepSkills])
     }
   }
 
-  // fetch skills for dropdown
-  componentDidMount() {
-    fetch("http://localhost:3000/skills")
-    .then(r => r.json())
-    .then(skillOptions => {
-      // set skillOptions state for dropdown
-      this.setState({ skillOptions })
-    })
-  }
-
-  handleSubmit = (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault()
 
     const newUser = {
-      email: this.state.email,
-      first_name: this.state.firstName,
-      last_name: this.state.lastName,
-      password: this.state.password,
-      profession: this.state.profession,
-      topSkills: this.state.topSkills,
-      age: this.state.age,
-      avatar: this.state.avatar
+      email: fields.email,
+      first_name: fields.firstName,
+      last_name: fields.lastName,
+      password: fields.password,
+      profession: profession,
+      topSkills: topSkills,
+      age: age,
+      avatar: avatar
     }
 
     fetch("http://localhost:3000/users", {
@@ -90,122 +89,120 @@ class SignUp extends Component {
     .then(data => {
 
       if (data.error) {
-        this.props.handleMessages(data)
+        console.log("SIGN UP ERROR --->", data)
+        // this.props.handleMessages(data)
         // this.props.handleMessages(data)
       } else {
-        const { user, token } = data
+        // const { user, token } = data
+        console.log("SIGN UP --->", data)
         // set user in state in the App component 
-        this.props.handleNewUser(user)
+        // this.props.handleNewUser(user)
         // set localStorage to token id
-        localStorage.token = token
+        // localStorage.token = token
       }
     })
   }
-
-  render() {
-    const professions = professionOptions()
-    const avatars = avatarOptions()
-    return (
-      <div className="ui container SignUp-container">
-          <div className="ui grid">
-            <form className="ui form six wide column centered raised segment SignUp-form" onSubmit={this.handleSubmit}>
-              <h1 className="ui center aligned header">Signup</h1>
-              <div className="field">
-                <label>Email</label>
-                <input 
-                  placeholder="email" 
-                  name="email" 
-                  onChange={this.handleInputChange}
-                  value={this.state.email}
-                />
-              </div>
-              <div className="field">
-                <label>First Name</label>
-                <input 
-                  placeholder="First Name" 
-                  name="firstName" 
-                  onChange={this.handleInputChange}
-                  value={this.state.firstName}
-                />
-              </div>
-              <div className="field">
-                <label>Last Name</label>
-                <input 
-                  placeholder="Last Name" 
-                  name="lastName" 
-                  onChange={this.handleInputChange}
-                  value={this.state.lastName}
-                />
-              </div>
-              <div className="field">
-                <label>Age</label>
+  console.log("SIGN UP - SKILLS --->", skills)
+  return (
+    <div className="ui container SignUp-container">
+        <div className="ui grid">
+          <form className="ui form six wide column centered raised segment SignUp-form" onSubmit={handleSubmit}>
+            <h1 className="ui center aligned header">Signup</h1>
+            <div className="field">
+              <label>Email</label>
+              <input 
+                placeholder="email" 
+                name="email" 
+                onChange={handleFieldChange}
+                value={fields.email}
+              />
+            </div>
+            <div className="field">
+              <label>First Name</label>
+              <input 
+                placeholder="First Name" 
+                name="firstName" 
+                onChange={handleFieldChange}
+                value={fields.firstName}
+              />
+            </div>
+            <div className="field">
+              <label>Last Name</label>
+              <input 
+                placeholder="Last Name" 
+                name="lastName" 
+                onChange={handleFieldChange}
+                value={fields.lastName}
+              />
+            </div>
+            <div className="field">
+              <label>Age</label>
+              <Dropdown
+                placeholder='Compact'
+                compact
+                selection
+                options={ageRange()}
+                onChange={handleInputAge}
+              />
+            </div>
+            <div className="field">
+              <label>Profession</label>
+              <Grid.Column>
                 <Dropdown
-                  placeholder='Compact'
-                  compact
+                  onChange={handleInputProfession}
+                  options={professionSelection}
+                  placeholder='What is your current job title?'
                   selection
-                  options={this.ageRange()}
-                  onChange={this.handleInputAge}
+                  value={profession}
                 />
-              </div>
-              <div className="field">
-                <label>Profession</label>
+              </Grid.Column>
+            </div>
+            <div className="field">
+              <label>Choose your top 5 skills</label>
+              <Dropdown 
+                className={`ui ${topSkills.length === 5 ? "disabled" : ""}`}
+                placeholder='Skills' 
+                fluid multiple selection options={skillSelection} 
+                closeOnChange
+                onChange={handleInputSkills} 
+              />
+                { topSkills.length === 5 &&
+                  <div className="ui success form">
+                    <div className="ui pointing above prompt label" role="alert" aria-atomic="true">
+                      All set! Don't worry if your changed you mind. You can add or remove it later. 
+                    </div>
+                  </div>
+                }
+            </div>
+            <div className="field">
+              <label>Avatar</label>
                 <Grid.Column>
                   <Dropdown
-                    onChange={this.handleInputProfession}
-                    options={professions}
-                    placeholder='What is your current job title?'
+                    placeholder='Choose avatar'
+                    openOnFocus
                     selection
-                    value={this.state.profession}
+                    options={avatarSelection}
+                    onChange={handleInputAvatar}
+                    value={avatar}
                   />
                 </Grid.Column>
-              </div>
-              <div className="field">
-                <label>Choose your top 5 skills</label>
-                <Dropdown 
-                  className={`ui ${this.state.topSkills.length === 5 ? "disabled" : ""}`}
-                  placeholder='Skills' 
-                  fluid multiple selection options={this.state.skillOptions} 
-                  closeOnChange
-                  onChange={this.handleInputSkills} 
-                />
-                  { this.state.topSkills.length === 5 &&
-                    <div className="ui success form">
-                      <div className="ui pointing above prompt label" role="alert" aria-atomic="true">
-                        All set! Don't worry if you changed you mind. You can change it later. 
-                      </div>
-                    </div>
-                  }
-              </div>
-              <div className="field">
-                <label>Avatar</label>
-                  <Grid.Column>
-                    <Dropdown
-                      placeholder='Choose avatar'
-                      openOnFocus
-                      selection
-                      options={avatars}
-                      onChange={this.handleInputAvatar}
-                      value={this.state.avatar}
-                    />
-                  </Grid.Column>
-              </div>
-              <div className="field">
-                <label>Password</label>
-                <input 
-                  type="password" 
-                  name="password" 
-                  autoComplete="current-password" 
-                  placeholder="Password" 
-                  onChange={this.handleInputChange}
-                  value={this.state.password}
-                />
-              </div>
-              <button type="submit" className="ui button blue">Signup</button>
-            </form>
-          </div>
-      </div>
-    );
-  }
+            </div>
+            <div className="field">
+              <label>Password</label>
+              <input 
+                type="password" 
+                name="password" 
+                autoComplete="current-password" 
+                placeholder="Password" 
+                onChange={handleFieldChange}
+                value={fields.password}
+              />
+            </div>
+            <button type="submit" className="ui button blue">Signup</button>
+          </form>
+        </div>
+    </div>
+  );
 }
 
 export default SignUp;

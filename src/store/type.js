@@ -16,3 +16,6 @@ export const DELETE_ISSUE = "DELETE_ISSUE";
 export const SET_COMMENTS = "SET_COMMENTS";
 export const ADD_COMMENT = "ADD_COMMENT";
 export const DELETE_COMMENT = "DELETE_COMMENT";
+
+// skill store
+export const SET_SKILLS = "SET_SKILLS";

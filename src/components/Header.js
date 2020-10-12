@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Popup } from 'semantic-ui-react';
 
-const Header = (props) => {
+const Header = props => {
 
   const currentUser = useSelector(state => state.user.keyHolder)
   const richardQuotes = () => {

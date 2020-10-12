@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Route, Switch, withRouter } from 'react-router-dom';
 import  { useSelector, useDispatch } from 'react-redux';
-import { SET_USERS, SET_ISSUES, SET_KEY_HOLDER, SET_COMMENTS } from '../store/type';
+import { SET_USERS, SET_ISSUES, SET_KEY_HOLDER, SET_COMMENTS, SET_SKILLS } from '../store/type';
 import Home from './Home';
 import Login from './Login';
 import SignUp from './SignUp';
@@ -64,6 +64,14 @@ const App = props => {
     .then(comments => {
       // set comments in the store
       dispatch({ type: SET_COMMENTS, payload: comments })
+    })
+
+    // fetch skills
+    fetch("http://localhost:3000/skills")
+    .then(r => r.json())
+    .then(skills => {
+      // set skills in the store
+      dispatch({ type: SET_SKILLS, payload: skills })
     })
 
   }, [dispatch])
