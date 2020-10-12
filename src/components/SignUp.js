@@ -42,10 +42,8 @@ const SignUp = props => {
     return options
   }
 
-  // set age
+  // set age and avatar input
   const handleInputAge = (event) => setAge(event.target.textContent)
-  
-  // set avatar
   const handleInputAvatar = (event) => setAvatar(event.target.textContent)
 
   const handleInputSkills = (event) => {
@@ -115,8 +113,6 @@ const SignUp = props => {
     }, 4000)
   }
 
-  // console.log("WITHROUTER -->", props.history.push())
-
   return (
     <Container className="SignUp-Container">
       <Segment raised className="SignUp-Segment">
@@ -152,7 +148,7 @@ const SignUp = props => {
           { 
             topSkills.length === 5 &&
             <Label pointing prompt color="green">
-              All set! If you change you mind you can always add or remove it later. 
+              All set! If you change your mind you can always add or remove it later. 
             </Label>
           }
           <Form.Group>

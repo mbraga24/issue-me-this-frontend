@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import useFormFields from '../hooks/useFormFields';
+import { Container, Form, Button, Segment, Header } from 'semantic-ui-react'
 import { SET_KEY_HOLDER } from '../store/type';
 import '../resources/Login.css';
 
@@ -67,20 +68,18 @@ const Login = props => {
   }
 
   return (
-    <div className="ui container Login-container" onSubmit={handleSubmit}>
-        <div className="ui grid">
-          <form className="ui form six wide column centered raised segment Login-form">
-            <h1 className="ui center aligned header">Login</h1>
-            <div className="field">
-              <label>Email</label>
-              <input name="email" placeholder="email" onChange={handleFieldChange} />
-            </div>
-            <div className="field">
-              <label>Password</label>
-              <input type="password" name="password" autoComplete="current-password" placeholder="Password" onChange={handleFieldChange} />
-            </div>
-            <button type="submit" className="ui button green">Login</button>
-            {
+      <Container className="SignUp-Container">
+      <Segment raised className="SignUp-Segment">
+        <Form onSubmit={handleSubmit}>
+          <Header as='h1' textAlign="center">Create Account</Header>
+          <Form.Group>
+            <Form.Input label='Email' placeholder='Email' width={16} name="email" onChange={handleFieldChange}/>
+          </Form.Group>
+          <Form.Group>
+            <Form.Input type="password" label='Password' placeholder='Password' width={16} name="password" onChange={handleFieldChange}/>
+          </Form.Group>
+          <Button type='submit' color="green">Create</Button>
+          {
               (alertStatus && !!message) && 
                 <div className="ui negative message">
                   <i className="close icon" onClick={handleDismissOnClick}></i>
@@ -92,9 +91,9 @@ const Login = props => {
                   </ul>
                 </div>
             }
-          </form>
-        </div>
-    </div>
+        </Form>
+      </Segment>
+    </Container>
   );
 }
 
