@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Route, Switch, withRouter } from 'react-router-dom';
 import  { useSelector, useDispatch } from 'react-redux';
-import { SET_USERS, SET_ISSUES, SET_KEY_HOLDER } from '../store/type';
+import { SET_USERS, SET_ISSUES, SET_KEY_HOLDER, SET_COMMENTS } from '../store/type';
 import Home from './Home';
 import Login from './Login';
 import SignUp from './SignUp';
@@ -42,13 +42,6 @@ const App = props => {
     })
    }
 
-    // fetch issues
-    fetch("http://localhost:3000/issues")
-    .then(r => r.json())
-    .then(issues => {
-      // set issues in the store
-      dispatch({ type: SET_ISSUES, payload: issues })
-    })
     // fetch users
     fetch("http://localhost:3000/users")
     .then(r => r.json())
@@ -56,6 +49,23 @@ const App = props => {
       // set users in the store
       dispatch({ type: SET_USERS, payload: users })
     })
+
+    // fetch issues
+    fetch("http://localhost:3000/issues")
+    .then(r => r.json())
+    .then(issues => {
+      // set issues in the store
+      dispatch({ type: SET_ISSUES, payload: issues })
+    })
+
+    // fetch comments
+    fetch("http://localhost:3000/comments")
+    .then(r => r.json())
+    .then(comments => {
+      // set comments in the store
+      dispatch({ type: SET_COMMENTS, payload: comments })
+    })
+
   }, [dispatch])
 
   const toggleMenu = () => {
@@ -83,7 +93,7 @@ const App = props => {
                 <Route path="/users/:id" render={routeProps => <UserProfile {...routeProps} />} />
                 {/* handleNewIssue={addIssue} */}
                 <Route path="/issues/new" render={routeProps => <NewIssueForm {...routeProps} />} />
-                <Route path="/issues/:id" render={routeProps => <ShowIssue {...routeProps} />} />
+                <Route path="/issues/:id" render={() => <ShowIssue />} />
                 <Route exact path="/users" render={() => ( <UserContainer /> )} />
                 <Route exact path="/home" render={routeProps => <Home {...routeProps} />} />
             </Switch>

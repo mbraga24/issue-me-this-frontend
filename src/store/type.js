@@ -9,4 +9,10 @@ export const SET_SEARCH_TERM = "SET_SEARCH_TERM";
 // issue store 
 export const SET_ISSUES = "SET_ISSUES";
 export const ADD_ISSUE = "ADD_ISSUE";
+export const UPDATE_ISSUE = "UPDATE_ISSUE";
 export const DELETE_ISSUE = "DELETE_ISSUE";
+
+// comment store
+export const SET_COMMENTS = "SET_COMMENTS";
+export const ADD_COMMENT = "ADD_COMMENT";
+export const DELETE_COMMENT = "DELETE_COMMENT";

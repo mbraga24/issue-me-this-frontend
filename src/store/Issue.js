@@ -1,11 +1,11 @@
-import { SET_ISSUES, ADD_ISSUE, DELETE_ISSUE } from './type';
+import { SET_ISSUES, ADD_ISSUE, UPDATE_ISSUE, DELETE_ISSUE } from './type';
 
 const defaultState = {
   issues: []
 }
 
 // sort issues from greatest to least
-const sortedIssues = (data) => {
+const sortedIssues = data => {
   return data.sort((a, b) => b.id - a.id)
 }
 
@@ -20,6 +20,13 @@ const store = (state = defaultState, action) => {
       return {
         ...state,
         issues: [action.payload,...state.issues]
+      }
+    case UPDATE_ISSUE:
+      console.log("UPDATE ISSUE --->", action.payload)
+      const updatedIssues = state.issues.map(issue => issue.id !== action.payload.id ? issue : action.payload)
+      return {
+        ...state,
+        issues: [...updatedIssues]
       }
     case DELETE_ISSUE:
       const filteredIssues = state.issues.filter(issue => issue.id !== action.payload.id)

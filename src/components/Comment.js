@@ -1,17 +1,23 @@
 import React from 'react';
 import moment from 'moment';
+import { useDispatch } from 'react-redux';
+import { DELETE_COMMENT, UPDATE_ISSUE } from '../store/type';
 import { Link } from 'react-router-dom';
 import '../resources/Comment.css';
 
 const Comment = props => {
 
-  const handleDelete = () => {
-    fetch(`http://localhost:3000/comments/${props.commentId}`, {
-      method: "DELETE"
+  const dispatch = useDispatch()
+  const handleDelete = commentId => {
+    fetch(`http://localhost:3000/comments/${commentId}`, {
+      method: 'DELETE'
     })
     .then(r => r.json())
-    .then(console.log)
-    props.handleDeleteComment(props.commentId)
+    .then(data => {
+      console.log("DELETE COMMENT --->", data)
+      dispatch({ type: DELETE_COMMENT, payload: data.comment })
+      dispatch({ type: UPDATE_ISSUE, payload: data.issue })
+    })
   }
 
   const { title, comment_body } = props.comment
@@ -36,7 +42,6 @@ const Comment = props => {
           <h3>{title}</h3>
           <div className="text">{comment_body}</div>
           <div className="Comment-extra-content">
-            {/* validates if user is loggedin and the id of the this comment is the same as the currentUser id */}
             { (props.currentUser && props.currentUser.id === id) &&
               <div className="row">
                 <div>
