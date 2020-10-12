@@ -7,3 +7,8 @@
   margin: 0 auto;
   margin-top: 12vh!important;
 }
+
+.SignUp-Container .SignUp-Header {
+  margin-top: 10px!important;
+  margin-bottom: 25px;
+}

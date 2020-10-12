@@ -68,17 +68,17 @@ const Login = props => {
   }
 
   return (
-      <Container className="SignUp-Container">
-      <Segment raised className="SignUp-Segment">
+      <Container className="LogIn-Container">
+      <Segment raised className="LogIn-Segment">
         <Form onSubmit={handleSubmit}>
-          <Header as='h1' textAlign="center">Create Account</Header>
+          <Header as='h1' textAlign="center" className="LogIn-Header">Log In</Header>
           <Form.Group>
             <Form.Input label='Email' placeholder='Email' width={16} name="email" onChange={handleFieldChange}/>
           </Form.Group>
           <Form.Group>
             <Form.Input type="password" label='Password' placeholder='Password' width={16} name="password" onChange={handleFieldChange}/>
           </Form.Group>
-          <Button type='submit' color="green">Create</Button>
+          <Button type='submit' color="green">Log In</Button>
           {
               (alertStatus && !!message) && 
                 <div className="ui negative message">

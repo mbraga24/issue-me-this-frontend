@@ -117,7 +117,7 @@ const SignUp = props => {
     <Container className="SignUp-Container">
       <Segment raised className="SignUp-Segment">
         <Form onSubmit={handleSubmit}>
-          <Header as='h1' textAlign="center">Create Account</Header>
+          <Header as='h1' textAlign="center" className="SignUp-Header">Create Account</Header>
           <Form.Group>
             <Form.Input label='First Name' placeholder='First Name' width={8} name="firstName" onChange={handleFieldChange} />
             <Form.Input label='Last Name' placeholder='Last Name' width={8} name="lastName" onChange={handleFieldChange} />
