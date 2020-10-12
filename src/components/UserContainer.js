@@ -1,13 +1,14 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import UserList from './UserList'
 
-const UserContainer = (props) => {
+const UserContainer = props => {
+
+  const users = useSelector(state => state.user.users)
 
   const renderUsers = () => {
-    // const filteredIssues = props.users.filter(issue => issue.title.toLowerCase().includes(props.searchTerm.toLowerCase()))
-
     return <div className="row"> {
-      props.users.map(user => (
+      users.map(user => (
         <div key={user.id} className="column">
           <UserList
             id={user.id}
@@ -19,6 +20,7 @@ const UserContainer = (props) => {
     </div>
   }
   return (
+    users && 
     <React.Fragment>
       <h1 className="ui center aligned header">Users</h1>
       <div className="ui divided four column grid container">
