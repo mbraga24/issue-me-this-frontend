@@ -1,6 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import Issue from './Issue';
+import { Container, Header } from 'semantic-ui-react'
 import SearchIssue from './SearchIssue';
 import '../resources/IssueContainer.css';
 
@@ -18,11 +19,11 @@ const IssueContainer = props => {
   }
 
   return (
-    <div className="ui basic segment container">
-      <h1 className="ui center aligned header">All Issues</h1>
-      <SearchIssue setSearchTerm={props.setSearchTerm} />
-      {renderIssues()}
-    </div>
+      <Container id="IssueContainer">
+        <Header as='h1' textAlign="center" className="IssueContainer-Header">All Issues</Header>
+        <SearchIssue setSearchTerm={props.setSearchTerm} />
+        {renderIssues()}
+      </Container>
   );
 }
 
