@@ -19,30 +19,37 @@ const UserProfile = props => {
   const renderSkills = () => {
     return userProfile.skills.map(skill => (
       <Grid.Column>
-        <Segment key={`${skill.key}`} color={`${skill.color}`}>{skill.text}</Segment> 
+        <Grid.Row>
+          <Segment key={`${skill.key}`} color={`${skill.color}`}>{skill.text}</Segment> 
+        </Grid.Row>
       </Grid.Column>
-      
     ))
   }
 
   const renderIssues = () => {
     return userProfile.issues.map(issue => (
       <Grid.Column>
-      <Card>
-        <Card.Content header={issue.title} />
-        <Card.Content description={issue.issue_body} />
-        <Card.Content extra>
-          <Grid columns={2} padded>
-            {/* <Grid.Column> */}
-              <Icon name='thumbs up'/>4 Likes
-            {/* </Grid.Column>
-            <Grid.Column> */}
-              <Icon name='comment'/>{issue.comments.length} {issue.comments.length < 1 ? "Comment" : "Comments" }
-            {/* </Grid.Column> */}
-          </Grid>
-        </Card.Content>
-      </Card>
-    </Grid.Column>
+        <Grid.Row>
+          <Card>
+            <Card.Content header={issue.title} />
+            <Card.Content description={issue.issue_body} />
+            <Card.Content extra>
+              <Grid columns={2} padded>
+                <Grid.Column>
+                  <Grid.Row>
+                    <Icon name='thumbs up'/>4 Likes
+                  </Grid.Row>
+                </Grid.Column>
+                <Grid.Column>
+                  <Grid.Row>
+                    <Icon name='comment'/>{issue.comments.length} {issue.comments.length < 1 ? "Comment" : "Comments" }
+                  </Grid.Row>
+                </Grid.Column>
+              </Grid>
+            </Card.Content>
+          </Card>
+        </Grid.Row>
+      </Grid.Column>
     ))
   }
 
@@ -79,22 +86,21 @@ const UserProfile = props => {
             </Grid.Column>
           </Grid.Row>
         </Grid>
-        <span>
-          <Segment inverted size="large" textAlign="center" className="UserProfile-Skills-Header">Top Skills</Segment>
-            <Grid columns='equal' className="UserProfile-Skills">
-              <Grid.Row>
-              {renderSkills()}
-              </Grid.Row>
-            </Grid>
-        </span>
-        <span>
-          <Segment inverted size="large" textAlign="center" className="UserProfile-Skills-Header">Popular Issue</Segment>
-            <Grid columns='equal' className="UserProfile-Skills">
-            <Grid columns={4} padded textAlign="center">
-              {renderIssues()}
-            </Grid>
-          </Grid>
-        </span>
+        
+        <Grid columns={1} padded>
+          <Grid.Row>
+            <Segment inverted size="large" textAlign="center" className="UserProfile-Skills-Header">Top Skills</Segment>
+              <Grid columns={3} padded className="UserProfile-Skills" textAlign="center">
+                {renderSkills()}
+              </Grid>
+          </Grid.Row>
+          <Grid.Row>
+            <Segment inverted size="large" textAlign="center" className="UserProfile-Skills-Header">Popular Issue</Segment>
+              <Grid columns={4} padded textAlign="center">
+                {renderIssues()}
+              </Grid>
+          </Grid.Row>
+        </Grid>
       </Container> : null
     );
 }
