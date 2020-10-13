@@ -33,8 +33,12 @@ const UserProfile = props => {
         <Card.Content description={issue.issue_body} />
         <Card.Content extra>
           <Grid columns={2} padded>
-            <Icon name='thumbs up' />4 Likes
-            <Icon name='comment' />{issue.comments.length} {issue.comments.length < 1 ? "Comment" : "Comments" }
+            {/* <Grid.Column> */}
+              <Icon name='thumbs up'/>4 Likes
+            {/* </Grid.Column>
+            <Grid.Column> */}
+              <Icon name='comment'/>{issue.comments.length} {issue.comments.length < 1 ? "Comment" : "Comments" }
+            {/* </Grid.Column> */}
           </Grid>
         </Card.Content>
       </Card>

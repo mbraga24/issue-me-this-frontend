@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import _ from 'lodash'
+import _ from 'lodash';
 import { useSelector, useDispatch } from 'react-redux';
 import { SET_SEARCH_TERM } from '../store/type';
-import { Search, Grid } from 'semantic-ui-react'
-// import useFormFields from '../hooks/useFormFields';
+import { Search, Grid } from 'semantic-ui-react';
+import '../resources/SearchBar.css';
 
 const SearchIssue = props => {
 
@@ -22,7 +22,6 @@ const SearchIssue = props => {
     dispatch({ type: SET_SEARCH_TERM, payload: value })
 
     setTimeout(() => {
-
       if (value === "") {
         dispatch({ type: SET_SEARCH_TERM, payload: "" }) 
         setIsLoading(false)
@@ -37,16 +36,20 @@ const SearchIssue = props => {
   }
 
   return (
-    <Grid>
-      <Grid.Column width={6}>
+    <Grid id="SearchBar-Container">
+      {/* <Grid.Column width={8} > */}
+      {/* <div id="SearchBar-"> */}
         <Search
+          className="SearchBar"
           aligned='right'
           loading={isLoading}
           onResultSelect={handleResultSelect}
           onSearchChange={_.debounce(handleOnChange)}
           results={results}
+          placeholder="Search"
         />
-      </Grid.Column>
+      {/* </div> */}
+      {/* </Grid.Column> */}
     </Grid>
     )
 }
