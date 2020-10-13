@@ -1,32 +1,53 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import _ from 'lodash'
+import { useSelector, useDispatch } from 'react-redux';
 import { SET_SEARCH_TERM } from '../store/type';
+import { Search, Grid } from 'semantic-ui-react'
 // import useFormFields from '../hooks/useFormFields';
 
 const SearchIssue = props => {
 
-  const [ searchTerm, setSearchTerm ] = useState("")
   const dispatch = useDispatch()
 
-  const handleOnChange = event => {
-    setSearchTerm(event.target.value)
-    dispatch({ type: SET_SEARCH_TERM, payload: searchTerm })
+  const source = useSelector(state => state.issue.issues)
+  const [ isLoading, setIsLoading ] = useState(false)
+  const [ results, setResults ] = useState([])
+
+  const handleResultSelect = (e, { result }) => {
+    dispatch({ type: SET_SEARCH_TERM, payload: result.title })
   }
+
+  const handleOnChange = (e, { value })  => {
+    setIsLoading(true)
+    dispatch({ type: SET_SEARCH_TERM, payload: value })
+
+    setTimeout(() => {
+
+      if (value === "") {
+        dispatch({ type: SET_SEARCH_TERM, payload: "" }) 
+        setIsLoading(false)
+        setResults([])
+      } 
+        const re = new RegExp(_.escapeRegExp(value), 'i')
+        const isMatch = (res) => re.test(res.title)
   
+        setIsLoading(false)
+        setResults(_.filter(source, isMatch))
+    }, 200)
+  }
+
   return (
-    <div className="ui grid header">
-      <div className="three wide column">
-        <div className="ui search">
-          <div className="ui icon input">
-            <input type="text" name="searchTerm" value={searchTerm} onChange={handleOnChange} tabIndex="0" className="prompt" autoComplete="on" placeholder="Search keywords" />
-            <i aria-hidden="true" className="search icon"></i>
-          </div>
-          <div className="results transition">
-            <div className="message empty"><div className="header">No results found.</div></div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <Grid>
+      <Grid.Column width={6}>
+        <Search
+          aligned='right'
+          loading={isLoading}
+          onResultSelect={handleResultSelect}
+          onSearchChange={_.debounce(handleOnChange)}
+          results={results}
+        />
+      </Grid.Column>
+    </Grid>
     )
 }
 

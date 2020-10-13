@@ -11,6 +11,7 @@ const IssueContainer = props => {
   const issues = useSelector(state => state.issue.issues)
 
   const renderIssues = () => {
+    console.log("RENDER ISSUES ----->", searchTerm)
     const filteredIssues = issues.filter(issue => issue.title.toLowerCase().includes(searchTerm.toLowerCase()))
 
     return filteredIssues.map(issue => (

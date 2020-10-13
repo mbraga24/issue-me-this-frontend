@@ -16,12 +16,7 @@ import '../resources/App.css';
 
 const App = props => {
 
-  // const [ searchTerm, setSearchTerm ] = useState("")
-  const [ toggle, setToggle ] = useState(false)
-  // const [ active, setActive ] = useState(true)
-  // const [ issues, setIssues ] = useState([])
-  // const [ users, setUsers ] = useState([])
-  
+  const [ toggle, setToggle ] = useState(false)  
   const currentUser = useSelector(state => state.user.keyHolder)
   const dispatch = useDispatch()
 
