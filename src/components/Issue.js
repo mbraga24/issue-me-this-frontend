@@ -22,11 +22,7 @@ const Issue = props => {
       dispatch({ type: DELETE_ISSUE, payload: issue })
     })
   }
-
-  const updateIssue = () => {
-    console.log("EDIT ISSUE")
-  }
-
+  
   return (
     <Grid columns={1} divided id="Issue">
       <Grid.Row>
@@ -59,7 +55,7 @@ const Issue = props => {
                 currentUser && currentUser.id === user.id &&
                   <Card.Content extra>
                   <div className='ui two buttons'>
-                    <Button basic color='green' onClick={updateIssue}>
+                    <Button as={Link} to={'/home'} basic color='green'>
                       Edit
                     </Button>
                     <Button basic color='red' onClick={deleteIssue}>
