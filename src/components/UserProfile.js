@@ -25,12 +25,22 @@ const UserProfile = props => {
     ))
   }
 
-  const description = [
-    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe obcaecati necessitatibus in eligendi voluptas officia illum quibusdam corrupti repellat vitae.'
-  ].join(' ')
-  
-  // const { id, email, first_name, last_name, age, profession, avatar, issues } = userProfile
-  // const imgUrl = `https://semantic-ui.com/images/avatar/large/${userProfile.avatar}.jpg`  
+  const renderIssues = () => {
+    return userProfile.issues.map(issue => (
+      <Grid.Column>
+      <Card>
+        <Card.Content header={issue.title} />
+        <Card.Content description={issue.issue_body} />
+        <Card.Content extra>
+          <Grid columns={2} padded>
+            <Icon name='thumbs up' />4 Likes
+            <Icon name='comment' />{issue.comments.length} {issue.comments.length < 1 ? "Comment" : "Comments" }
+          </Grid>
+        </Card.Content>
+      </Card>
+    </Grid.Column>
+    ))
+  }
 
   return (
     userProfile ?
@@ -74,45 +84,10 @@ const UserProfile = props => {
             </Grid>
         </span>
         <span>
-          <Segment inverted size="large" textAlign="center" className="UserProfile-Skills-Header">Most Popular Issue</Segment>
+          <Segment inverted size="large" textAlign="center" className="UserProfile-Skills-Header">Popular Issue</Segment>
             <Grid columns='equal' className="UserProfile-Skills">
             <Grid columns={4} padded textAlign="center">
-              <Grid.Column>
-                <Card>
-                  <Card.Content header='Issue #' />
-                  <Card.Content description={description} />
-                  <Card.Content extra>
-                    <Icon name='thumbs up' />4 Likes
-                  </Card.Content>
-                </Card>
-              </Grid.Column>
-              <Grid.Column>
-                <Card>
-                  <Card.Content header='Issue #' />
-                  <Card.Content description={description} />
-                  <Card.Content extra>
-                    <Icon name='thumbs up' />4 Likes
-                  </Card.Content>
-                </Card>
-              </Grid.Column>
-              <Grid.Column>
-                <Card>
-                  <Card.Content header='Issue #' />
-                  <Card.Content description={description} />
-                  <Card.Content extra>
-                    <Icon name='thumbs up' />4 Likes
-                  </Card.Content>
-                </Card>
-              </Grid.Column>
-              <Grid.Column>
-                <Card>
-                  <Card.Content header='Issue #' />
-                  <Card.Content description={description} />
-                  <Card.Content extra>
-                    <Icon name='thumbs up' />4 Likes
-                  </Card.Content>
-                </Card>
-              </Grid.Column>
+              {renderIssues()}
             </Grid>
           </Grid>
         </span>
