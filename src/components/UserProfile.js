@@ -30,29 +30,41 @@ const UserProfile = props => {
   ].join(' ')
   
   // const { id, email, first_name, last_name, age, profession, avatar, issues } = userProfile
-  // const imgUrl = `https://semantic-ui.com/images/avatar/large/${userProfile.avatar}.jpg`
+  // const imgUrl = `https://semantic-ui.com/images/avatar/large/${userProfile.avatar}.jpg`  
 
   return (
-    userProfile && 
+    userProfile ?
       <Container className="UserProfile-Container">
         <Header as='h1' textAlign="center" className="UserProfile-Header">{(currentUser && currentUser.id === userId) ? `Hello, ${currentUser.first_name}! ` : `${userProfile.first_name} ${userProfile.last_name} Profile` }</Header>
-        <Card className="UserProfile-Card">
-          <Image src={`https://semantic-ui.com/images/avatar/large/${userProfile.avatar}.jpg`} wrapped ui={false} />
-          <Card.Content>
-            <Card.Header>{userProfile.first_name} {userProfile.last_name}</Card.Header>
-            <Card.Description>
-              {currentUser && <div className="description"><span className="date">Email: {userProfile.email}</span></div>}
-              <div className="description"><span className="date">Age: {userProfile.age}</span></div>
-              <div className="description">Profession: {userProfile.profession}</div>
-            </Card.Description>
-          </Card.Content>
-          <Card.Content extra>
-            <Link to="/pages">
-              <i aria-hidden="true" className="list alternate outline icon"></i>
-                {userProfile.issues.length} {userProfile.issues.length > 1 || userProfile.issues.length === 0 ? "Issues" : "Issue"}
-            </Link>
-          </Card.Content>
-        </Card>
+        <Grid columns={2} divided className="UserProfile-Profile-Details">
+          <Grid.Row stretched>
+            <Grid.Column>
+              <Card>
+                <Image src={`https://semantic-ui.com/images/avatar/large/${userProfile.avatar}.jpg`} wrapped ui={false} />
+                <Card.Content>
+                  <Card.Header>{userProfile.first_name} {userProfile.last_name}</Card.Header>
+                  <Card.Description>
+                    {currentUser && <div className="description"><span className="date">Email: {userProfile.email}</span></div>}
+                    <div className="description"><span className="date">Age: {userProfile.age}</span></div>
+                    <div className="description">Profession: {userProfile.profession}</div>
+                  </Card.Description>
+                </Card.Content>
+                <Card.Content extra>
+                  <Link to="/pages">
+                    <i aria-hidden="true" className="list alternate outline icon"></i>
+                      {userProfile.issues.length} {userProfile.issues.length > 1 || userProfile.issues.length === 0 ? "Issues" : "Issue"}
+                  </Link>
+                </Card.Content>
+              </Card>
+            </Grid.Column>
+            <Grid.Column>
+              <Segment>Personal Info</Segment>
+              <Segment>Skills</Segment>
+              <Segment>Manage Issues</Segment>
+              <Segment>Favorites</Segment>
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
         <span>
           <Segment inverted size="large" textAlign="center" className="UserProfile-Skills-Header">Top Skills</Segment>
             <Grid columns='equal' className="UserProfile-Skills">
@@ -104,7 +116,7 @@ const UserProfile = props => {
             </Grid>
           </Grid>
         </span>
-      </Container>
+      </Container> : null
     );
 }
 

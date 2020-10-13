@@ -2,8 +2,9 @@
   height: 100vh;
 } */
 
-.UserProfile-Container .UserProfile-Card {
+.UserProfile-Container .UserProfile-Profile-Details {
   margin: 0 auto;
+  width: 50vw;
 }
 
 .UserProfile-Container .UserProfile-Header {
