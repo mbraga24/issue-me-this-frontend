@@ -37,19 +37,15 @@ const SearchIssue = props => {
 
   return (
     <Grid id="SearchBar-Container">
-      {/* <Grid.Column width={8} > */}
-      {/* <div id="SearchBar-"> */}
-        <Search
-          className="SearchBar"
-          aligned='right'
-          loading={isLoading}
-          onResultSelect={handleResultSelect}
-          onSearchChange={_.debounce(handleOnChange)}
-          results={results}
-          placeholder="Search"
-        />
-      {/* </div> */}
-      {/* </Grid.Column> */}
+      <Search
+        className="SearchBar"
+        aligned='right'
+        loading={isLoading}
+        onResultSelect={handleResultSelect}
+        onSearchChange={_.debounce(handleOnChange)}
+        results={results}
+        placeholder="Search"
+      />
     </Grid>
     )
 }
