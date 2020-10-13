@@ -1,31 +1,17 @@
-.Issue-header {
-  display: flex;  
-  justify-content: space-between;
-  align-items: center;
+#Issue .Issue-Content {
+  padding: 23px;
 }
 
-.Issue-user-subheader {
-  display: grid;
-  grid-template-columns: 70px;
-  grid-template-rows: auto;
-} 
-
-.layer1 {
-  padding: 0 20px;
-  grid-column: 1;
-  grid-row: 1;
+#Issue .Issue-Inner-Wrap {
+  margin: 0 auto;
 }
 
-.layer2 {
-  text-align: center;
+#Issue .Issue-Comments {
+  font-size: 17px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+#Issue .Issue-Comment {
   font-size: 15px;
-  grid-column: 1;
-  grid-row: 2;
-}
-
-.Issue-extra-content {
-  display: flex!important;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 15px;
 }
