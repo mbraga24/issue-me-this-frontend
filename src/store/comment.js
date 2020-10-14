@@ -21,9 +21,10 @@ const store = (state = defaultState, action) => {
     case ADD_COMMENT:
       return {
         ...state,
-        comments: [...state.comments, action.payload]
+        comments: [action.payload, ...state.comments]
       }
     case DELETE_COMMENT:
+      console.log("DELETE_COMMENT STORE -->", action.payload)
       const filteredComments = state.comments.filter(comment => comment.id !== action.payload.id)
       return {
         ...state,

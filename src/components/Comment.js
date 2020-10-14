@@ -10,21 +10,20 @@ const Comment = props => {
 
   const currentUser = useSelector(state => state.user.keyHolder)
   const dispatch = useDispatch()
-  const deleteComment = commentId => {
-    fetch(`http://localhost:3000/comments/${commentId}`, {
+  const { comment_body } = props.comment
+  const { id, first_name, last_name, profession, avatar } = props.comment.user
+  const imgUrl = `https://semantic-ui.com/images/avatar/small/${avatar}.jpg`
+
+  const deleteComment = () => {
+    fetch(`http://localhost:3000/comments/${props.comment.id}`, {
       method: 'DELETE'
     })
     .then(r => r.json())
     .then(data => {
-      console.log("DELETE COMMENT --->", data)
       dispatch({ type: DELETE_COMMENT, payload: data.comment })
       dispatch({ type: UPDATE_ISSUE, payload: data.issue })
     })
   }
-
-  const { comment_body } = props.comment
-  const { id, first_name, last_name, profession, avatar } = props.comment.user
-  const imgUrl = `https://semantic-ui.com/images/avatar/small/${avatar}.jpg`
 
   return (
     <Card.Group id="Comment">

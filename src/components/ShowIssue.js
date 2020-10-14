@@ -21,8 +21,7 @@ const ShowIssue = props => {
 
   // const [ issue, setIssue ] = useState(null)
   const [ fields, handleFieldChange ] = useFormFields({
-    title: "",
-    comment: ""
+    commentBody: ""
   })
 
   const deleteIssue = () => {
@@ -40,7 +39,7 @@ const ShowIssue = props => {
     event.preventDefault()
     
     const newComent = {
-      comment_body: fields.comment
+      comment_body: fields.commentBody
     }
 
     fetch("http://localhost:3000/comments", {
@@ -59,13 +58,12 @@ const ShowIssue = props => {
       if (data.errorStatus) {
         handleMessages(data)
       } else {
-        console.log("POST COMMENT -->", data)
         dispatch({ type: ADD_COMMENT, payload: data.comment })
         dispatch({ type: UPDATE_ISSUE, payload: data.issue })
       }
     })
     // reset title and comment values on form to an empty string
-    event.target.comment.value = ""
+    event.target.commentBody.value = ""
   }
 
   const issueComments = () => {
@@ -155,7 +153,7 @@ const ShowIssue = props => {
               currentUser ? 
               <Form onSubmit={postComment}>
                 <Form.Field
-                  name="comment"
+                  name="commentBody"
                   control={TextArea}
                   label='Your Answer'
                   placeholder='The more details the better it is for others to understand.'
