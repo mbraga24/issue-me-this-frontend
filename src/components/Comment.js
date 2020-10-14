@@ -1,14 +1,16 @@
 import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import moment from 'moment';
-import { useDispatch } from 'react-redux';
+import { Button, Card, Image, Divider } from 'semantic-ui-react'
 import { DELETE_COMMENT, UPDATE_ISSUE } from '../store/type';
 import { Link } from 'react-router-dom';
 import '../resources/Comment.css';
 
 const Comment = props => {
 
+  const currentUser = useSelector(state => state.user.keyHolder)
   const dispatch = useDispatch()
-  const handleDelete = commentId => {
+  const deleteComment = commentId => {
     fetch(`http://localhost:3000/comments/${commentId}`, {
       method: 'DELETE'
     })
@@ -20,40 +22,49 @@ const Comment = props => {
     })
   }
 
-  const { title, comment_body } = props.comment
-  const { id, first_name, profession, avatar } = props.comment.user
+  const { comment_body } = props.comment
+  const { id, first_name, last_name, profession, avatar } = props.comment.user
   const imgUrl = `https://semantic-ui.com/images/avatar/small/${avatar}.jpg`
 
   return (
-    <div className="ui comment">
-      <div className="Comment-user-header">
-        <Link to={`/users/${id}`} className="author Comment-user-info"> 
-            {first_name} - {profession}
-        </Link>
-        <div className="metadata">
-          {moment().startOf('day').fromNow()}
-        </div>
-      </div>
-      <div className="avatar">
-        <img src={imgUrl} alt={first_name} />
-      </div>
-      <div className="content">
-        <div className="ui divider"></div>
-          <h3>{title}</h3>
-          <div className="text">{comment_body}</div>
-          <div className="Comment-extra-content">
-            { (props.currentUser && props.currentUser.id === id) &&
-              <div className="row">
-                <div>
-                  <button className="ui circular icon red button" onClick={handleDelete}><i aria-hidden="true" className="trash alternate outline icon"></i></button>
-                  <button className="ui circular icon blue button"><i aria-hidden="true" className="edit outline icon"></i></button>
-                </div>
-              </div>
-            }
-          </div>
-        </div>
-        <div className="ui divider"></div>
-      </div>
+    <Card.Group id="Comment">
+      <Card fluid>
+        <Card.Content>
+          <Link to={`/users/${id}`}>
+            <Image
+              floated='left'
+              avatar
+              size='big'
+              alt={`${first_name} ${profession}`}
+              src={imgUrl}
+            />
+          </Link>
+          <Link to={`/users/${id}`}> 
+            <Card.Header>{first_name} {last_name} - {profession}</Card.Header>
+          </Link>
+          <Card.Meta>
+            Answered {moment().startOf('day').fromNow()}
+          </Card.Meta>
+          <Divider clearing />
+          <Card.Description>
+            {comment_body}
+          </Card.Description>
+        </Card.Content>
+        {
+          currentUser && currentUser.id === id &&
+          <Card.Content extra>
+            <div className='ui two buttons'>
+              <Button as={Link} to={'/home'} basic color='green'>
+                Edit
+              </Button>
+              <Button basic color='red' onClick={deleteComment}>
+                Delete
+              </Button>
+            </div>
+          </Card.Content>
+        }
+      </Card>
+    </Card.Group>
   )
 }
 

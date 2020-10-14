@@ -57,6 +57,7 @@ const App = props => {
     fetch("http://localhost:3000/comments")
     .then(r => r.json())
     .then(comments => {
+      // console.log("COMMENT AFTER FETCH -->", comments)
       // set comments in the store
       dispatch({ type: SET_COMMENTS, payload: comments })
     })

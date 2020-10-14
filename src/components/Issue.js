@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Grid, Icon, Button, Card, Image  } from 'semantic-ui-react'
+import { Grid, Icon, Button, Card, Image, Divider  } from 'semantic-ui-react'
 import { Link } from 'react-router-dom';
 import { DELETE_ISSUE } from '../store/type';
 import '../resources/Issue.css';
@@ -43,6 +43,7 @@ const Issue = props => {
                     {title}
                   </Link>
                 </Card.Header>
+                <Divider clearing />
                 <Card.Meta className="Issue-Comments">
                   <Icon name='comment alternate icon'/>
                   <span>{totalComments} Comments</span>
@@ -53,7 +54,7 @@ const Issue = props => {
               </Card.Content>
               {
                 currentUser && currentUser.id === user.id &&
-                  <Card.Content extra>
+                <Card.Content extra>
                   <div className='ui two buttons'>
                     <Button as={Link} to={'/home'} basic color='green'>
                       Edit

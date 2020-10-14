@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { Container, Grid, Button, Card, Image, Header, Divider, Form, TextArea } from 'semantic-ui-react'
 import { Link, withRouter } from 'react-router-dom';
-import { Button } from 'semantic-ui-react';
 import Comment from './Comment';
 import useFormFields from '../hooks/useFormFields';
 import '../resources/ShowIssue.css';
-import { UPDATE_ISSUE } from '../store/type';
+import { UPDATE_ISSUE, ADD_COMMENT, DELETE_ISSUE } from '../store/type';
 
 const ShowIssue = props => {
 
@@ -13,6 +13,7 @@ const ShowIssue = props => {
   const issueId = parseInt(props.match.params.id)
   const issues = useSelector(state => state.issue.issues)
   const currentUser = useSelector(state => state.user.keyHolder)
+  const comments = useSelector(state => state.comment.comments)
   const currentIssue = issues.find(issue => issue.id === issueId)
   const [ alertHeader, setAlertHeader ] = useState("")
   const [ alertStatus, setAlertStatus ] = useState(false)
@@ -24,11 +25,21 @@ const ShowIssue = props => {
     comment: ""
   })
 
+  const deleteIssue = () => {
+    fetch(`http://localhost:3000/issues/${currentIssue.id}`, {
+      method: "DELETE"
+    })
+    .then(r => r.json())
+    .then(issue => {
+      dispatch({ type: DELETE_ISSUE, payload: issue })
+      props.history.push('/issues')
+    })
+  }
+
   const postComment = event => {
     event.preventDefault()
     
     const newComent = {
-      title: fields.title,
       comment_body: fields.comment
     }
 
@@ -49,20 +60,28 @@ const ShowIssue = props => {
         handleMessages(data)
       } else {
         console.log("POST COMMENT -->", data)
-        // dispatch({ type: ADD_COMMENT, payload: data.comment })
+        dispatch({ type: ADD_COMMENT, payload: data.comment })
         dispatch({ type: UPDATE_ISSUE, payload: data.issue })
       }
     })
     // reset title and comment values on form to an empty string
-    event.target.title.value = ""
     event.target.comment.value = ""
   }
 
+  const issueComments = () => {
+    return comments.filter(comment => comment.issue_id === currentIssue.id)
+  }
+
+  // return currentIssue.comments.map(comment => (
   const renderComments = () => {    
-    return currentIssue.comments.map(comment => (
-      <Comment 
-        key={comment.id} 
-        comment={comment} />
+    return issueComments().map(comment => (
+      <Grid.Row>
+        <Grid.Column width={10}>
+            <Comment 
+              key={comment.id} 
+              comment={comment} />
+        </Grid.Column>
+      </Grid.Row>
     ))
   }
 
@@ -90,69 +109,93 @@ const ShowIssue = props => {
     
   return (
     currentIssue ?
-      <div className="ui container" >
-        <h1 className="ui center aligned header">Issue</h1>
-        <div className="ui card fluid">
-          <div className="content">
-            <div className="header">
-              {currentIssue.title}
-            <Link to={`/users/${currentIssue.user.id}`}>
-              <img src={`https://semantic-ui.com/images/avatar/small/${currentIssue.user.avatar}.jpg`} alt={currentIssue.user.first_name} className="ui mini right floated image" />
-            </Link>
-            </div>
-          </div>
-          <div className="content">
-            <div className="description">
-              {currentIssue.issue_body}
-            </div>
-            <Link to={`/users/${currentIssue.user.id}`}>
-              <p className="ui right aligned">- {currentIssue.user.first_name}</p>
-            </Link>
-          </div>
-        </div>
-
-        <div className="ui comments">
-          <h3 className="ui dividing header">Comments</h3>
-          {renderComments()}
-          { 
-            currentUser ? 
-            <form className="ui reply form" onSubmit={postComment}>
-              <div className="field">
-                <input placeholder="Title" name="title" onChange={handleFieldChange}/>
-              </div>
-              <div className="field">
-                <textarea placeholder="Text" name="comment" rows="3" onChange={handleFieldChange}></textarea>
-              </div>
-              <button type="submit" className="ui icon secondary left labeled button">
-                <i aria-hidden="true" className="edit icon"></i>
-                Post Comment
-              </button>
-              {
-                (alertStatus && !!message) && 
-                  <div className="ui negative message">
-                    <i className="close icon" onClick={handleDismissOnClick}></i>
-                    <div className="header">
-                      {alertHeader}
+      <Container id="ShowIssue">
+        <Header as='h1' textAlign="center" className="ShowIssue-Header">Issue</Header>
+        <Grid columns="2" divided id="Issue">
+          <Grid.Row>
+            <Grid.Column className="ShowIssue-Wrap" width={12}>
+                <Card fluid raised>
+                  <Card.Content className="ShowIssue-Content">
+                    <Link to={`/users/${currentIssue.user.id}`}>
+                      <Image
+                        floated='right'
+                        size='big'
+                        avatar
+                        alt={`${currentIssue.user.first_name} ${currentIssue.user.last_name}`}
+                        src={`https://semantic-ui.com/images/avatar/small/${currentIssue.user.avatar}.jpg`}
+                      />
+                    </Link>
+                    <Card.Header>
+                      {currentIssue.title}
+                    </Card.Header>
+                    <Divider clearing />
+                    <Card.Description>
+                      <span className="ShowIssue-Issue-Body">{currentIssue.issue_body}</span>
+                    </Card.Description>
+                  </Card.Content>
+                  {
+                    currentUser && currentUser.id === currentIssue.user.id &&
+                      <Card.Content extra>
+                      <div className='ui two buttons'>
+                        <Button as={Link} to={'/home'} basic color='green'>
+                          Edit
+                        </Button>
+                        <Button basic color='red' onClick={deleteIssue}>
+                          Delete
+                        </Button>
+                      </div>
+                    </Card.Content>
+                  }
+                </Card>
+            </Grid.Column>
+          </Grid.Row>
+          <Grid.Row>
+            <Grid.Column className="ShowIssue-Wrap" width={12}>
+            { 
+              currentUser ? 
+              <Form onSubmit={postComment}>
+                <Form.Field
+                  name="comment"
+                  control={TextArea}
+                  label='Your Answer'
+                  placeholder='The more details the better it is for others to understand.'
+                  onChange={handleFieldChange}
+                />
+                <Form.Field control={Button}>Post Answers</Form.Field>
+                {
+                  (alertStatus && !!message) && 
+                    <div className="ui negative message">
+                      <i className="close icon" onClick={handleDismissOnClick}></i>
+                      <div className="header">
+                        {alertHeader}
+                      </div>
+                      <ul className="list">
+                        {message.length !== 0 ? renderAlertMessage() : null}
+                      </ul>
                     </div>
-                    <ul className="list">
-                      {message.length !== 0 ? renderAlertMessage() : null}
-                    </ul>
-                  </div>
-              }
-            </form>
-            : 
-              <Button.Group size='large'>
-                <Link to="/login">
-                  <Button color="green">Login</Button>
-                </Link>
-                <Button.Or />
-                <Link to="/signup">
-                  <Button color="blue">Sign up</Button>
-                </Link>
-              </Button.Group>
-          }
-        </div>
-      </div> : null
+                }
+              </Form>
+                : 
+                <Button.Group size='large'>
+                  <Link to="/login">
+                    <Button color="green">Login</Button>
+                  </Link>
+                  <Button.Or />
+                  <Link to="/signup">
+                    <Button color="blue">Sign up</Button>
+                  </Link>
+                </Button.Group>
+            }
+            </Grid.Column>
+          </Grid.Row>
+          <Grid.Row>
+            <Grid.Column className="ShowIssue-Wrap" width={12}>
+              <Header as='h1' textAlign="center" className="ShowIssue-Comment-Header">Answers</Header>
+              {renderComments()}
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
+      </Container> : null
   );
 }
 
