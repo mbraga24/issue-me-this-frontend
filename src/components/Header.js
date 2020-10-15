@@ -48,6 +48,14 @@ const Header = props => {
               className="TopMenu-Item"
             />     
           </Link>
+          <Link to={`/users`}>
+            <Menu.Item
+              name='users'
+              active={activeItem === 'users'}
+              onClick={handleItemClick}
+              className="TopMenu-Item"
+            />
+          </Link>
           <Link to={`/issues/new`}>
             <Menu.Item
               name='new issue'

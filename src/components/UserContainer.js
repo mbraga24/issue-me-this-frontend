@@ -1,32 +1,33 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import UserList from './UserList'
+import { Container, Header, Grid } from 'semantic-ui-react';
+import UserList from './UserList';
+import '../resources/UserContainer.css';
 
 const UserContainer = props => {
 
   const users = useSelector(state => state.user.users)
 
   const renderUsers = () => {
-    return <div className="row"> {
-      users.map(user => (
-        <div key={user.id} className="column">
+    return users.map(user => (
+        <Grid.Column key={user.id}>
           <UserList
             id={user.id}
             user={user}
           />
-        </div>
+        </Grid.Column>
       ))
-    }
-    </div>
   }
   return (
     users && 
-    <React.Fragment>
-      <h1 className="ui center aligned header">Users</h1>
-      <div className="ui divided four column grid container">
-        {renderUsers()}
-      </div>
-    </React.Fragment>
+      <Container id="Users-Container">
+        <Header as='h1' textAlign="center" className="Users-Header">Users</Header>
+        <Grid divided="vertically">
+          <Grid.Row columns={4}>
+            {renderUsers()}
+          </Grid.Row>
+        </Grid>
+      </Container>
   );
 }
 

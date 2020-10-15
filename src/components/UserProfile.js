@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
-import { Card, Image, Container, Segment, Grid, Header, Icon } from 'semantic-ui-react'
+import { Card, Image, Container, Segment, Grid, Header, Icon, List } from 'semantic-ui-react'
 import '../resources/UserProfile.css';
 
 const UserProfile = props => {
@@ -55,19 +55,18 @@ const UserProfile = props => {
 
   return (
     userProfile ?
-      <Container className="UserProfile-Container">
+      <Container id="UserProfile-Container">
         <Header as='h1' textAlign="center" className="UserProfile-Header">{(currentUser && currentUser.id === userId) ? `Hello, ${currentUser.first_name}! ` : `${userProfile.first_name} ${userProfile.last_name} Profile` }</Header>
-        <Grid columns={2} divided className="UserProfile-Profile-Details">
+        <Grid columns={2} stackable divided className="UserProfile-Profile-Details">
           <Grid.Row stretched>
-            <Grid.Column>
+            <Grid.Column width={10}>
               <Card>
                 <Image src={`https://semantic-ui.com/images/avatar/large/${userProfile.avatar}.jpg`} wrapped ui={false} />
                 <Card.Content>
                   <Card.Header>{userProfile.first_name} {userProfile.last_name}</Card.Header>
                   <Card.Description>
-                    {currentUser && <div className="description"><span className="date">Email: {userProfile.email}</span></div>}
-                    <div className="description"><span className="date">Age: {userProfile.age}</span></div>
                     <div className="description">Profession: {userProfile.profession}</div>
+                    {currentUser && <div className="description"><span className="date">Email: {userProfile.email}</span></div>}
                   </Card.Description>
                 </Card.Content>
                 <Card.Content extra>
@@ -78,25 +77,56 @@ const UserProfile = props => {
                 </Card.Content>
               </Card>
             </Grid.Column>
-            <Grid.Column>
-              <Segment>Personal Info</Segment>
-              <Segment>Skills</Segment>
-              <Segment>Manage Issues</Segment>
-              <Segment>Favorites</Segment>
+            <Grid.Column width={6} textAlign="center">
+              <List verticalAlign='middle' >
+                <Segment inverted color="teal" className="UserProfile-Account-Options">
+                  <List.Item>
+                    <Icon name='settings' size="huge"/>
+                    <List.Content className="UserProfile-Account-Items">
+                      <List.Header>Settings</List.Header>
+                    </List.Content>
+                  </List.Item>
+                </Segment>
+                <Segment inverted color="teal" className="UserProfile-Account-Options">
+                  <List.Item>
+                    <Icon name='star' size="huge"/>
+                    <List.Content className="UserProfile-Account-Items">
+                      <List.Header>Favorite Issues</List.Header>
+                    </List.Content>
+                  </List.Item>
+                </Segment>
+                <Segment inverted color="teal" className="UserProfile-Account-Options">
+                  <List.Item>
+                    <Icon name='boxes' size="huge"/>
+                    <List.Content className="UserProfile-Account-Items">
+                      <List.Header>Manage Issues</List.Header>
+                    </List.Content>
+                  </List.Item>
+                </Segment>
+                <Segment inverted color="teal" className="UserProfile-Account-Options">
+                  <List.Item>
+                    <Icon name='thumbs up' size="huge"/>
+                    <List.Content className="UserProfile-Account-Items">
+                      <List.Header>Issues Liked</List.Header>
+                    </List.Content>
+                  </List.Item>
+                </Segment>
+                
+              </List>
             </Grid.Column>
           </Grid.Row>
         </Grid>
         
         <Grid columns={1} padded>
           <Grid.Row>
-            <Segment inverted size="large" textAlign="center" className="UserProfile-Skills-Header">Top Skills</Segment>
+            <Segment inverted color="teal" size="large" textAlign="center" className="UserProfile-Skills-Header">Top Skills</Segment>
               <Grid columns={3} padded className="UserProfile-Skills" textAlign="center">
                 {renderSkills()}
               </Grid>
           </Grid.Row>
           <Grid.Row>
-            <Segment inverted size="large" textAlign="center" className="UserProfile-Skills-Header">Popular Issue</Segment>
-              <Grid columns={4} padded textAlign="center">
+            <Segment inverted color="teal" size="large" textAlign="center" className="UserProfile-Skills-Header">Popular Issues</Segment>
+              <Grid columns={3} stackable padded textAlign="center">
                 {renderIssues()}
               </Grid>
           </Grid.Row>

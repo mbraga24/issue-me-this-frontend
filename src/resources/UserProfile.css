@@ -1,26 +1,34 @@
-/* .UserProfile-Container {
-  height: 100vh;
-} */
+#UserProfile-Container {
+  height: 100%;
+}
 
-.UserProfile-Container .UserProfile-Profile-Details {
+#UserProfile-Container .UserProfile-Profile-Details {
   margin: 0 auto;
-  width: 50vw;
+  width: 47%;
 }
 
-.UserProfile-Container .UserProfile-Header {
-  margin-top: 25px!important;
-  margin-bottom: 25px!important;
-  font-size: 32px!important;
+#UserProfile-Container .UserProfile-Header {
+  margin-top: 25px;
+  margin-bottom: 25px;
+  font-size: 32px;
 }
 
-.UserProfile-Container .UserProfile-Skills-Header {
+#UserProfile-Container .UserProfile-Skills-Header {
   width: 50vw;
-  margin: 15px auto!important;
+  margin: 15px auto;
   font-weight: bold;
 }
 
-.UserProfile-Container .UserProfile-Skills {
+#UserProfile-Container .UserProfile-Skills {
   width: 75vw;
   margin: 15px auto;
   font-weight: bold;
+}
+
+#UserProfile-Container .UserProfile-Account-Options {
+  cursor: pointer;
+}
+
+#UserProfile-Container .UserProfile-Account-Items {
+  padding: 5px;
 }
