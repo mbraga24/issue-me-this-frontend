@@ -68,7 +68,7 @@ const Login = props => {
   }
 
   return (
-      <Container className="LogIn-Container">
+      <Container id="LogIn-Container">
       <Segment raised className="LogIn-Segment">
         <Form onSubmit={handleSubmit}>
           <Header as='h1' textAlign="center" className="LogIn-Header">Log In</Header>

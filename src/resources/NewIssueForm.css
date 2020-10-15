@@ -1,0 +1,13 @@
+#NewIssue-Container {
+  height: 100vh;
+}
+
+#NewIssue-Container .NewIssue-Header {
+  margin-top: 10px;
+  margin-bottom: 25px;
+  font-size: 38px;
+}
+
+#NewIssue-Container .NewIssue-Grid-Wrapper {
+  margin: 0 auto;
+}

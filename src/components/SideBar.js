@@ -18,14 +18,11 @@ const SideBar = props => {
 
   const currentUser = useSelector(state => state.user.keyHolder)
   const [ visible, setVisible ] = useState(false)
-  // const [ toggle, setToggle ] = useState(false)  
   const dispatch = useDispatch()
 
 
   const handleLogout = () => {
-    // remove token from localStorage
     localStorage.removeItem("token")
-    // set currentUser state back to null
     dispatch({ type: SET_KEY_HOLDER, payload: null })
   }
 
@@ -93,7 +90,7 @@ const SideBar = props => {
               }
             </Sidebar>
             <Sidebar.Pusher dimmed={visible}>
-              <Header onToggleMenu={toggleMenu} />
+              <Header toggleMenu={toggleMenu} />
                 <Switch>  
                   <Route path="/login" render={routeProps => <Login {...routeProps} />} />
                   <Route path="/signup" render={routeProps => <SignUp {...routeProps} />} />

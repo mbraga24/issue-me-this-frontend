@@ -26,7 +26,7 @@ const Header = props => {
     <Menu color="teal" inverted id="Top-Menu-Bar">
       <Menu.Item
         active={activeItem === 'more'}
-        onClick={props.onToggleMenu}
+        onClick={props.toggleMenu}
       >
         <Icon name='content' size="large"/>
       </Menu.Item>
@@ -65,7 +65,6 @@ const Header = props => {
             />
           </Menu.Item>
         </>
-        
       }
     </Menu>
   );

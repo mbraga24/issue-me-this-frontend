@@ -1,4 +1,4 @@
-import { SET_USERS, ADD_USER, SET_KEY_HOLDER } from './type';
+import { SET_USERS, ADD_USER, UPDATE_USER, SET_KEY_HOLDER } from './type';
 
 const defaultState = {
   keyHolder: null,
@@ -22,6 +22,12 @@ const reducer = (state = defaultState, action) => {
       return {
         ...state,
         users: [...state.users, action.payload]
+      }
+    case UPDATE_USER:
+      const updatedUser = state.users.map(user => user.id !== action.payload.id ? user : action.payload)
+      return {
+        ...state,
+        users: [...updatedUser]
       }
     default: 
       return state

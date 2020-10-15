@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { Container, Grid, Form, Header } from 'semantic-ui-react'
 import useFormFields from '../hooks/useFormFields';
-import { ADD_ISSUE } from '../store/type';
+import { ADD_ISSUE, UPDATE_USER } from '../store/type';
+import '../resources/NewIssueForm.css';
 
 const NewIssueForm = props => {
 
@@ -31,19 +33,18 @@ const NewIssueForm = props => {
       body: JSON.stringify({issue: newIssue, id: currentUser.id})
     })
       .then(r => r.json())
-      .then(issue => {
-        if (issue.errorStatus) {
-          console.log("NEW ISSUE ERROR -->", issue)
-          handleMessages(issue)
+      .then(data => {
+        if (data.errorStatus) {
+          handleMessages(data)
         } else {
-          dispatch({ type: ADD_ISSUE, payload: issue })
+          dispatch({ type: ADD_ISSUE, payload: data.issue })
+          dispatch({ type: UPDATE_USER, payload: data.user })
           props.history.push(`/issues`)
         }
       })
   }
 
   const handleMessages = data => {
-    console.log("HANDLE MESSAGES DATA -->", data)
     setAlertHeader(data.header)
     setAlertStatus(true)
     handleDismissCountDown()
@@ -65,45 +66,38 @@ const NewIssueForm = props => {
   }
 
   return (
-    <div className="ui container">
-      <h1 className="ui center aligned header">New Issue</h1>
-      <form className="ui large form" onSubmit={addIssue}>
-        <div className="equal width fields">
-          <div className="field">
-            <label>Title</label>
-            <input
-              name="title" placeholder="Issue title"
-              onChange={handleFieldChange}
-              value={fields.title}
-            />
-          </div>
-        </div>
-        <div className="five field">
-          <label>Issue</label>
-          <textarea
-            placeholder="Share your issue and let others in our community help you find a solution"
-            name="issueBody"
-            rows="10"
-            onChange={handleFieldChange}
-            value={fields.issueBody}
-          />
-        </div>
-        <button type="submit" className="ui button">Post Issue</button>
-        <div className="ui hidden divider"></div>
-        {
-          (alertStatus && !!message) && 
-            <div className="ui negative message">
-              <i className="close icon" onClick={handleDismissOnClick}></i>
-              <div className="header">
-                {alertHeader}
-              </div>
-              <ul className="list">
-                {message.length !== 0 ? renderAlertMessage() : null}
-              </ul>
-            </div>
-        }
-      </form>
-    </div>
+    <Container id="NewIssue-Container">
+      <Header as='h1' textAlign="center" className="NewIssue-Header">Tell others your issue</Header>
+      <Grid>
+        <Grid.Row>
+          <Grid.Column width={12} className="NewIssue-Grid-Wrapper">
+            <Form onSubmit={addIssue}>
+              <Form.Group widths='equal'>
+                <Form.Input fluid name="title" placeholder='Title' onChange={handleFieldChange}/>
+              </Form.Group>
+              <Form.TextArea 
+                name="issueBody" 
+                style={{height: "250px"}}
+                onChange={handleFieldChange}
+                placeholder='Share your issue and let others in our community help you find a solution.' />
+              <Form.Button>Post Issue</Form.Button>
+              {
+                (alertStatus && !!message) && 
+                  <div className="ui negative message">
+                    <i className="close icon" onClick={handleDismissOnClick}></i>
+                    <div className="header">
+                      {alertHeader}
+                    </div>
+                    <ul className="list">
+                      {message.length !== 0 ? renderAlertMessage() : null}
+                    </ul>
+                  </div>
+              }
+            </Form>
+          </Grid.Column>
+        </Grid.Row>
+      </Grid>
+    </Container>
   );
 }
 

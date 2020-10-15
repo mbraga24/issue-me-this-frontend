@@ -1,15 +1,15 @@
-.LogIn-Container {
+#LogIn-Container {
   height: 100vh;
 }
 
-.LogIn-Container .LogIn-Segment {
+#LogIn-Container .LogIn-Segment {
   width: 35%;
   margin: 0 auto;
-  margin-top: 12vh!important;
+  margin-top: 12vh;
 }
 
-.LogIn-Container .LogIn-Header {
-  margin-top: 10px!important;
+#LogIn-Container .LogIn-Header {
+  margin-top: 10px;
   margin-bottom: 25px;
 }
 

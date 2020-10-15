@@ -2,6 +2,7 @@
 export const SET_USERS = "SET_USERS";
 export const SET_KEY_HOLDER = "SET_KEY_HOLDER";
 export const ADD_USER = "ADD_USER";
+export const UPDATE_USER = "UPDATE_USER";
 
 // search term store
 export const SET_SEARCH_TERM = "SET_SEARCH_TERM";
