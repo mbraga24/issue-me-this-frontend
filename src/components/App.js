@@ -1,23 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { Route, Switch, withRouter } from 'react-router-dom';
-import  { useSelector, useDispatch } from 'react-redux';
+import React, { useEffect } from 'react';
+import  { useDispatch } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import { SET_USERS, SET_ISSUES, SET_KEY_HOLDER, SET_COMMENTS, SET_SKILLS } from '../store/type';
-import Home from './Home';
-import Login from './Login';
-import SignUp from './SignUp';
-import IssueContainer from './IssueContainer';
-import UserContainer from './UserContainer';
 import SideBar from './SideBar';
-import Header from './Header';
-import NewIssueForm from './NewIssueForm';
-import ShowIssue from './ShowIssue';
-import UserProfile from './UserProfile';
 import '../resources/App.css';
 
 const App = props => {
-
-  const [ toggle, setToggle ] = useState(false)  
-  const currentUser = useSelector(state => state.user.keyHolder)
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -72,37 +60,9 @@ const App = props => {
 
   }, [dispatch])
 
-  const toggleMenu = () => {
-    setToggleRefactor()
-  }
-
-  const setToggleRefactor = () => {
-    setToggle(!toggle)
-  }
-
-  const closeSidebarOnClick = () => {
-    toggle && setToggleRefactor()
-  }
-
   return (
     <div>
-      <Header onToggleMenu={toggleMenu} currentUser={currentUser}/>
-        <div className="ui attached pushable App-sidebar">
-          <SideBar toggleMenu={toggle} />
-            <div className={`ui pusher ${toggle ? 'dimmed' : ''}`} onClick={closeSidebarOnClick}>
-              <Switch>  
-                <Route path="/login" render={routeProps => <Login {...routeProps} />} />
-                <Route path="/signup" render={routeProps => <SignUp {...routeProps} />} />
-                <Route exact path="/issues" render={() => ( <IssueContainer /> )} />
-                <Route path="/users/:id" render={() => <UserProfile />} />
-                {/* handleNewIssue={addIssue} */}
-                <Route path="/issues/new" render={routeProps => <NewIssueForm {...routeProps} />} />
-                <Route path="/issues/:id" render={() => <ShowIssue />} />
-                <Route exact path="/users" render={() => ( <UserContainer /> )} />
-                <Route exact path="/home" render={routeProps => <Home {...routeProps} />} />
-            </Switch>
-          </div>
-      </div>
+      <SideBar />
     </div>
   );
 }

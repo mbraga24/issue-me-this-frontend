@@ -4,10 +4,10 @@ import '../resources/Home.css';
 
 const Home = (props) => {
   return (
-      <Segment placeholder className="Home-container">
+      <Segment placeholder id="Home-Container">
         <Header icon>
-          <Icon name='question circle outline' className="Home-icon"/>
-          <Header className="Home-title">Issue Me This</Header>
+          <Icon name='question circle outline' className="Home-Icon"/>
+          <Header className="Home-Title">Issue Me This</Header>
         </Header>
       </Segment>
   )

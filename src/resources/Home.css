@@ -1,11 +1,12 @@
-.Home-container {
-  height: 100vh;
+#Home-Container {
+  height: 100vh;;
+  border-radius: 0%;
 }
 
-.Home-icon {
-  font-size: 200px!important;
+#Home-Container .Home-Icon {
+  font-size: 200px;
 }
 
-.Home-title {
-  font-size: 50px!important;
+#Home-Container .Home-Title {
+  font-size: 50px;
 }
