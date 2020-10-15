@@ -10,10 +10,8 @@ const sortedComments = data => {
 } 
 
 const store = (state = defaultState, action) => {
-  // console.log("COMMENT STORE BEFORE ACTION -->", action.payload)
   switch(action.type) {
     case SET_COMMENTS:
-      // console.log("COMMENT STORE -->", action.payload)
       return {
         ...state,
         comments: [...sortedComments(action.payload)]
@@ -24,7 +22,6 @@ const store = (state = defaultState, action) => {
         comments: [action.payload, ...state.comments]
       }
     case DELETE_COMMENT:
-      console.log("DELETE_COMMENT STORE -->", action.payload)
       const filteredComments = state.comments.filter(comment => comment.id !== action.payload.id)
       return {
         ...state,
