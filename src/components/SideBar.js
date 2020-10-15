@@ -38,7 +38,6 @@ const SideBar = props => {
     visible && setVisibilityStatus()
   }
 
-  console.log("TOOGLE STATUS --->", currentUser && currentUser.id)
   return (
       <Grid columns={1}>
         <Grid.Column>

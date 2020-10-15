@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Grid, Icon, Button, Card, Image, Divider  } from 'semantic-ui-react'
+import { Grid, Icon, Button, Card, Image, Divider } from 'semantic-ui-react'
 import { Link } from 'react-router-dom';
 import { DELETE_ISSUE } from '../store/type';
 import '../resources/Issue.css';
@@ -43,11 +43,11 @@ const Issue = props => {
                     {title}
                   </Link>
                 </Card.Header>
-                <Divider clearing />
                 <Card.Meta className="Issue-Comments">
                   <Icon name='comment alternate icon'/>
                   <span>{totalComments} Comments</span>
                 </Card.Meta>
+                <Divider clearing />
                 <Card.Description>
                   <span className="Issue-Comment">{issue_body}</span>
                 </Card.Description>
@@ -70,6 +70,6 @@ const Issue = props => {
       </Grid.Row>
     </Grid>
   );
-}
+} 
 
 export default Issue;

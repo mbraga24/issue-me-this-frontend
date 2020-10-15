@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import Issue from './Issue';
 import { Container, Header } from 'semantic-ui-react'
+import Issue from './Issue';
 import SearchIssue from './SearchIssue';
 import '../resources/IssueContainer.css';
 
@@ -12,7 +12,7 @@ const IssueContainer = props => {
 
   const renderIssues = () => {
     const filteredIssues = issues.filter(issue => issue.title.toLowerCase().includes(searchTerm.toLowerCase()))
-
+  
     return filteredIssues.map(issue => (
       <Issue key={issue.id} issue={issue} currentUser={props.currentUser} />
     ))
