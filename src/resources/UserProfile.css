@@ -26,9 +26,11 @@
 }
 
 #UserProfile-Container .UserProfile-Account-Options {
-  cursor: pointer;
+  height: 115px;
+  width: 140px;
+  margin-bottom: 5px;
 }
 
 #UserProfile-Container .UserProfile-Account-Items {
-  padding: 5px;
+  padding: 7px;
 }
