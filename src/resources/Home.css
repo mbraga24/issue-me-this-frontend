@@ -1,8 +1,22 @@
 #Home-Container {
-  border: 2px solid black;
-  background-color: #f9fafb;
+  /* background-color: #f9fafb; */
   height: 100vh;
-  /* width: 100vw; */
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: stretch;
+  -ms-flex-align: stretch;
+  align-items: stretch;
+  /* max-width: initial; */
+  -webkit-animation: none;
+  animation: none;
+  padding: 1em 1em;
+  /* min-height: 18rem; */
 }
 
 #Home-Container .Home-Icon {
