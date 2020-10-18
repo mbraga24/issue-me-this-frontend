@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Popup, Menu, Icon } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
-import '../resources/TopMenu.css';
+import '../resources/TopMenuBar.css';
 
-const Header = props => {
+const TopMenuBar = props => {
 
   const currentUser = useSelector(state => state.user.keyHolder)
   const [ activeItem, setActiveItem ] = useState("home")
@@ -78,4 +78,4 @@ const Header = props => {
   );
 } 
 
-export default Header;
+export default TopMenuBar;

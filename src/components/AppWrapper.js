@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Grid, Icon, Menu, Sidebar } from 'semantic-ui-react'
+import { Container, Grid, Icon, Menu, Sidebar } from 'semantic-ui-react'
 import { Route, Switch, withRouter, Link } from 'react-router-dom';
-import Header from './Header';
+import TopMenuBar from './TopMenuBar';
 import Home from './Home';
 import Login from './Login';
 import SignUp from './SignUp';
@@ -11,10 +11,10 @@ import UserContainer from './UserContainer';
 import NewIssueForm from './NewIssueForm';
 import ShowIssue from './ShowIssue';
 import UserProfile from './UserProfile';
-import '../resources/SideBar.css';
+import '../resources/AppWrapper.css';
 import { SET_KEY_HOLDER } from '../store/type';
 
-const SideBar = props => {
+const AppWrapper = props => {
 
   const currentUser = useSelector(state => state.user.keyHolder)
   const [ visible, setVisible ] = useState(false)
@@ -89,16 +89,18 @@ const SideBar = props => {
               }
             </Sidebar>
             <Sidebar.Pusher dimmed={visible}>
-              <Header toggleMenu={toggleMenu} />
+              <TopMenuBar toggleMenu={toggleMenu} />
                 <Switch>  
-                  <Route path="/login" render={routeProps => <Login {...routeProps} />} />
-                  <Route path="/signup" render={routeProps => <SignUp {...routeProps} />} />
-                  <Route exact path="/issues" render={() => ( <IssueContainer /> )} />
-                  <Route path="/users/:id" render={() => <UserProfile />} />
-                  <Route path="/issues/new" render={routeProps => <NewIssueForm {...routeProps} />} />
-                  <Route path="/issues/:id" render={() => <ShowIssue />} />
-                  <Route exact path="/users" render={() => ( <UserContainer /> )} />
-                  <Route exact path="/home" render={routeProps => <Home {...routeProps} />} />
+                    <Container id="AppWrapper-Container">  
+                      <Route path="/login" render={routeProps => <Login {...routeProps} />} />
+                      <Route path="/signup" render={routeProps => <SignUp {...routeProps} />} />
+                      <Route exact path="/issues" render={() => ( <IssueContainer /> )} />
+                      <Route path="/users/:id" render={() => <UserProfile />} />
+                      <Route path="/issues/new" render={routeProps => <NewIssueForm {...routeProps} />} />
+                      <Route path="/issues/:id" render={() => <ShowIssue />} />
+                      <Route exact path="/users" render={() => ( <UserContainer /> )} />
+                      <Route exact path="/home" render={routeProps => <Home {...routeProps} />} />
+                    </Container>
                 </Switch>
             </Sidebar.Pusher>
           </Sidebar.Pushable>
@@ -107,4 +109,4 @@ const SideBar = props => {
   );
 }
 
-export default withRouter(SideBar);
+export default withRouter(AppWrapper);

@@ -1,6 +1,8 @@
 #Home-Container {
-  height: 100vh;;
-  border-radius: 0%;
+  border: 2px solid black;
+  background-color: #f9fafb;
+  height: 100vh;
+  /* width: 100vw; */
 }
 
 #Home-Container .Home-Icon {

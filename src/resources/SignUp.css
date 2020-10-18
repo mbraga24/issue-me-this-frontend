@@ -1,14 +1,13 @@
-.SignUp-Container {
-  height: 100vh;
+#SignUp-Container {
+  border: 2px solid black;
 }
 
-.SignUp-Container .SignUp-Segment {
-  width: 40vw;
-  margin: 0 auto;
-  margin-top: 12vh!important;
+#SignUp-Container .SignUp-Segment {
+  width: 50%;
+  margin: 75px auto;
 }
 
-.SignUp-Container .SignUp-Header {
-  margin-top: 10px!important;
+#SignUp-Container .SignUp-Header {
+  margin-top: 10px;
   margin-bottom: 25px;
 }

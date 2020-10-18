@@ -3,9 +3,9 @@ import _ from 'lodash';
 import { useSelector, useDispatch } from 'react-redux';
 import { SET_SEARCH_TERM } from '../store/type';
 import { Search, Grid } from 'semantic-ui-react';
-import '../resources/SearchBar.css';
+import '../resources/SearchField.css';
 
-const SearchIssue = props => {
+const SearchField = props => {
 
   const dispatch = useDispatch()
 
@@ -50,4 +50,4 @@ const SearchIssue = props => {
     )
 }
 
-export default SearchIssue;
+export default SearchField;

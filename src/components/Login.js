@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import useFormFields from '../hooks/useFormFields';
-import { Container, Form, Button, Segment, Header } from 'semantic-ui-react'
+import { Form, Button, Segment, Header } from 'semantic-ui-react'
 import { SET_KEY_HOLDER } from '../store/type';
 import '../resources/Login.css';
 
@@ -68,7 +68,7 @@ const Login = props => {
   }
 
   return (
-      <Container id="LogIn-Container">
+    <div id="LogIn-Container">
       <Segment raised className="LogIn-Segment">
         <Form onSubmit={handleSubmit}>
           <Header as='h1' textAlign="center" className="LogIn-Header">Log In</Header>
@@ -93,7 +93,7 @@ const Login = props => {
             }
         </Form>
       </Segment>
-    </Container>
+    </div>
   );
 }
 

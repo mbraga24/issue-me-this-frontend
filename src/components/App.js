@@ -2,8 +2,9 @@ import React, { useEffect } from 'react';
 import  { useDispatch } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { SET_USERS, SET_ISSUES, SET_KEY_HOLDER, SET_COMMENTS, SET_SKILLS } from '../store/type';
-import SideBar from './SideBar';
+import AppWrapper from './AppWrapper';
 import '../resources/App.css';
+// import { Container } from 'semantic-ui-react';
 
 const App = props => {
   const dispatch = useDispatch()
@@ -60,11 +61,7 @@ const App = props => {
 
   }, [dispatch])
 
-  return (
-    <div>
-      <SideBar />
-    </div>
-  );
+  return ( <div id="App-Container"><AppWrapper /></div> );
 }
 
 export default withRouter(App);

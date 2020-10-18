@@ -1,11 +1,11 @@
 #LogIn-Container {
+  border: 2px solid black;
   height: 100vh;
 }
 
 #LogIn-Container .LogIn-Segment {
-  width: 35%;
-  margin: 0 auto;
-  margin-top: 12vh;
+  width: 30%;
+  margin: 75px auto;
 }
 
 #LogIn-Container .LogIn-Header {

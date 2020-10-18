@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Container, Grid, Form, Header } from 'semantic-ui-react'
+import { Grid, Form, Header } from 'semantic-ui-react'
 import useFormFields from '../hooks/useFormFields';
 import { ADD_ISSUE, UPDATE_USER } from '../store/type';
 import '../resources/NewIssueForm.css';
@@ -66,7 +66,7 @@ const NewIssueForm = props => {
   }
 
   return (
-    <Container id="NewIssue-Container">
+    <div id="NewIssue-Container">
       <Header as='h1' textAlign="center" className="NewIssue-Header">Tell others your issue</Header>
       <Grid>
         <Grid.Row>
@@ -97,7 +97,7 @@ const NewIssueForm = props => {
           </Grid.Column>
         </Grid.Row>
       </Grid>
-    </Container>
+    </div>
   );
 }
 

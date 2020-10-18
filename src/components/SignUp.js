@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { Container, Form, Button, Segment, Dropdown, Label, Header } from 'semantic-ui-react'
+import { Form, Button, Segment, Dropdown, Label, Header } from 'semantic-ui-react'
 import { avatarOptions } from '../helpers/avatar';
 import useFormFields from '../hooks/useFormFields';
 import '../resources/SignUp.css';
@@ -114,7 +114,7 @@ const SignUp = props => {
   }
 
   return (
-    <Container className="SignUp-Container">
+    <div id="SignUp-Container">
       <Segment raised className="SignUp-Segment">
         <Form onSubmit={handleSubmit}>
           <Header as='h1' textAlign="center" className="SignUp-Header">Create Account</Header>
@@ -185,7 +185,7 @@ const SignUp = props => {
             }
         </Form>
       </Segment>
-    </Container>
+    </div>
   );
 }
 
