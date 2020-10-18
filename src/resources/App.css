@@ -1,5 +1,5 @@
 #App-Container {
   background-color: #f9fafb;
-  -webkit-box-shadow: 0 2px 25px 0 rgba(34,36,38,.05) inset;
-  box-shadow: 0 65px 65px 0 rgba(34,36,38,1.05) inset;
+  /* -webkit-box-shadow: 0 65px 65px 0 rgba(34,36,38,.05) inset;
+  box-shadow: 0 60px 45px 0 rgba(34,36,38,1.05) inset; */
 }
