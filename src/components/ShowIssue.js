@@ -4,6 +4,7 @@ import { Container, Grid, Button, Card, Image, Header, Divider, Form, TextArea }
 import { Link, withRouter } from 'react-router-dom';
 import Comment from './Comment';
 import useFormFields from '../hooks/useFormFields';
+import { Highlight } from 'react-fast-highlight';
 import '../resources/ShowIssue.css';
 import { UPDATE_ISSUE, ADD_COMMENT, DELETE_ISSUE } from '../store/type';
 
@@ -21,7 +22,8 @@ const ShowIssue = props => {
 
   // const [ issue, setIssue ] = useState(null)
   const [ fields, handleFieldChange ] = useFormFields({
-    commentBody: ""
+    commentArea: "",
+    codeArea: ""
   })
 
   const deleteIssue = () => {
@@ -39,7 +41,9 @@ const ShowIssue = props => {
     event.preventDefault()
     
     const newComent = {
-      comment_body: fields.commentBody
+      comment_body: fields.commentArea,
+      code_body: fields.codeArea,
+      syntax: "javascript"
     }
 
     fetch("http://localhost:3000/comments", {
@@ -63,7 +67,7 @@ const ShowIssue = props => {
       }
     })
     // reset title and comment values on form to an empty string
-    event.target.commentBody.value = ""
+    event.target.commentArea.value = ""
   }
 
   const issueComments = () => {
@@ -104,7 +108,9 @@ const ShowIssue = props => {
       setAlertStatus(false)
     }, 4000)
   }
-    
+
+  console.log("ShowIssue -->", currentIssue && currentIssue.code_body)
+
   return (
     currentIssue ?
       <Container id="ShowIssue">
@@ -127,8 +133,14 @@ const ShowIssue = props => {
                       {currentIssue.title}
                     </Card.Header>
                     <Divider clearing />
-                    <Card.Description>
-                      <span className="ShowIssue-Issue-Body">{currentIssue.issue_body}</span>
+                    {/* <span className="ShowIssue-Issue-Body">{currentIssue.issue_body}</span> */}
+                    <Card.Description className="ShowIssue-Issue-Body">
+                      {currentIssue.issue_body}
+                      <Highlight
+                        languages={[`${currentIssue.syntax ? currentIssue.syntax : "plaintext"}`]}
+                      >
+                        {currentIssue.code_body}
+                      </Highlight>
                     </Card.Description>
                   </Card.Content>
                   {
@@ -153,13 +165,23 @@ const ShowIssue = props => {
               currentUser ? 
               <Form onSubmit={postComment}>
                 <Form.Field
-                  name="commentBody"
+                  name="commentArea"
                   control={TextArea}
                   label='Your Answer'
                   placeholder='The more details the better it is for others to understand.'
                   onChange={handleFieldChange}
                 />
-                <Form.Field control={Button}>Post Answers</Form.Field>
+                <Form.Field
+                  name="codeArea"
+                  control={TextArea}
+                  label='Code Snippet'
+                  placeholder='Write or paste your code.'
+                  onChange={handleFieldChange}
+                />
+                <Form.Group>
+                  <Form.Field control={Button}>Post Answer</Form.Field>
+                  <Form.Field control={Button}>Add Snippet</Form.Field>
+                </Form.Group>
                 {
                   (alertStatus && !!message) && 
                     <div className="ui negative message">

@@ -12,6 +12,7 @@ const sortedIssues = data => {
 const store = (state = defaultState, action) => {
   switch(action.type) {
     case SET_ISSUES:
+      console.log("SET ISSUES -->", action.payload)
       return {
         ...state,
         issues: [...sortedIssues(action.payload)]
