@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Container, Grid, Button, Card, Image, Header, Divider, Form, TextArea } from 'semantic-ui-react'
+import { Container, Grid, Button, Card, Image, Header, Divider, Form, TextArea, Transition } from 'semantic-ui-react'
 import { Link, withRouter } from 'react-router-dom';
 import Comment from './Comment';
 import useFormFields from '../hooks/useFormFields';
@@ -17,6 +17,8 @@ const ShowIssue = props => {
   const comments = useSelector(state => state.comment.comments)
   const currentIssue = issues.find(issue => issue.id === issueId)
   const [ alertHeader, setAlertHeader ] = useState("")
+  const [ duration ] = useState(1000)
+  const [ formVisible, setFormVisible ] = useState(false)
   const [ alertStatus, setAlertStatus ] = useState(false)
   const [ message, setMessage ] = useState([])
 
@@ -88,7 +90,6 @@ const ShowIssue = props => {
   }
 
   const handleMessages = data => {
-    console.log("HANDLE MESSAGES DATA -->", data)
     setAlertHeader(data.header)
     setAlertStatus(true)
     handleDismissCountDown()
@@ -107,6 +108,10 @@ const ShowIssue = props => {
     setTimeout(() => {
       setAlertStatus(false)
     }, 4000)
+  }
+
+  const handleVisibility = () => {
+    setFormVisible(!formVisible)
   }
 
   console.log("ShowIssue -->", currentIssue && currentIssue.code_body)
@@ -133,12 +138,9 @@ const ShowIssue = props => {
                       {currentIssue.title}
                     </Card.Header>
                     <Divider clearing />
-                    {/* <span className="ShowIssue-Issue-Body">{currentIssue.issue_body}</span> */}
                     <Card.Description className="ShowIssue-Issue-Body">
                       {currentIssue.issue_body}
-                      <Highlight
-                        languages={[`${currentIssue.syntax ? currentIssue.syntax : "plaintext"}`]}
-                      >
+                      <Highlight languages={[`${currentIssue.syntax ? currentIssue.syntax : "plaintext"}`]}>
                         {currentIssue.code_body}
                       </Highlight>
                     </Card.Description>
@@ -171,16 +173,20 @@ const ShowIssue = props => {
                   placeholder='The more details the better it is for others to understand.'
                   onChange={handleFieldChange}
                 />
-                <Form.Field
-                  name="codeArea"
-                  control={TextArea}
-                  label='Code Snippet'
-                  placeholder='Write or paste your code.'
-                  onChange={handleFieldChange}
-                />
+                <Transition.Group animation="fade down" duration={duration}>
+                  {formVisible && (
+                    <Form.Field
+                      name="codeArea"
+                      control={TextArea}
+                      label='Code Snippet'
+                      placeholder='Write or paste your code.'
+                      onChange={handleFieldChange}
+                    />
+                  )}
+                </Transition.Group>
                 <Form.Group>
                   <Form.Field control={Button}>Post Answer</Form.Field>
-                  <Form.Field control={Button}>Add Snippet</Form.Field>
+                  <Button type="button" content={formVisible ? 'Hide Snippet' : 'Add Snippet'} onClick={handleVisibility} />
                 </Form.Group>
                 {
                   (alertStatus && !!message) && 
@@ -209,6 +215,8 @@ const ShowIssue = props => {
             </Grid.Column>
           </Grid.Row>
           <Grid.Row>
+            {/* smooth transition  */}
+          {/* style={{transition: "0.3s ease-in-out", transform: "translateY(50%)"}} */}
             <Grid.Column className="ShowIssue-Wrap" width={12}>
               <Header as='h1' textAlign="center" className="ShowIssue-Comment-Header">Answers</Header>
               {renderComments()}
