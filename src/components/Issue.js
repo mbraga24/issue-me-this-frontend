@@ -9,7 +9,7 @@ const Issue = props => {
   
   const dispatch = useDispatch() 
   const currentUser = useSelector(state => state.user.keyHolder)
-  const { id, title, issue_body, comments, user } = props.issue
+  const { id, title, comments, user } = props.issue
   const totalComments = comments.length
   const imgUrl = `https://semantic-ui.com/images/avatar/small/${user.avatar}.jpg`
 
@@ -43,14 +43,11 @@ const Issue = props => {
                     {title}
                   </Link>
                 </Card.Header>
+                <Divider clearing />
                 <Card.Meta className="Issue-Comments">
                   <Icon name='comment alternate icon'/>
                   <span>{totalComments} Comments</span>
                 </Card.Meta>
-                <Divider clearing />
-                <Card.Description>
-                  <span className="Issue-Comment">{issue_body}</span>
-                </Card.Description>
               </Card.Content>
               {
                 currentUser && currentUser.id === user.id &&

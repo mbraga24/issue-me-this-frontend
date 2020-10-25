@@ -10,6 +10,7 @@ import CreateHighlight from '../helpers/CreateHighlight';
 
 const ShowIssue = props => {
 
+  const instructionPost = "Leave your answer here to help others.\nWhen you post a code snippet please add the special characters ``` before and after your code snippet.\nThis way the code can be displayed on the proper format of the language of your choice:\n```\n const sample = () => {\n    console.log('Issue me this?')\n }\n\n ``` \nThank you for helping!"
   const dispatch = useDispatch()
   const issueId = parseInt(props.match.params.id)
   const issues = useSelector(state => state.issue.issues)
@@ -156,9 +157,10 @@ const ShowIssue = props => {
               <Form onSubmit={postComment}>
                 <Form.Field
                   name="commentArea"
+                  style={{height: "200px"}}
                   control={TextArea}
                   label='Your Answer'
-                  placeholder='The more details the better it is for others to understand.'
+                  placeholder={instructionPost}
                   onChange={handleFieldChange}
                 />
                 <Form.Group>

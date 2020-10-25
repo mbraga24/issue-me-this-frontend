@@ -8,13 +8,16 @@ import '../resources/NewIssueForm.css';
 const NewIssueForm = props => {
 
   const dispatch = useDispatch()
+  const instructionTitle = "Be very descriptive with the title of your question."
+  const instructionPost = "Share your issue with others here.\nWhen you post a code snippet please add the special characters ``` before and after your code snippet.\nThis way the code can be displayed on the proper format of the language of your choice:\n```\n const sample = () => {\n    console.log('Issue me this?')\n }\n\n ``` \nThank you for sharing!"
   const currentUser = useSelector(state => state.user.keyHolder)
   const [ alertHeader, setAlertHeader ] = useState("")
   const [ alertStatus, setAlertStatus ] = useState(false)
   const [ message, setMessage ] = useState([])
   const [ fields, handleFieldChange ] = useFormFields({
     title: "",
-    issueBody: ""
+    issueArea: "",
+    syntax: "" 
   })
 
   const addIssue = (event) => {
@@ -22,7 +25,8 @@ const NewIssueForm = props => {
     
     const newIssue = {
       title: fields.title,
-      issue_body: fields.issueBody
+      issue_body: fields.issueArea,
+      syntax: 'javascript'
     }
 
     fetch("http://localhost:3000/issues", {
@@ -73,13 +77,13 @@ const NewIssueForm = props => {
           <Grid.Column width={12} className="NewIssue-Grid-Wrapper">
             <Form onSubmit={addIssue}>
               <Form.Group widths='equal'>
-                <Form.Input fluid name="title" placeholder='Title' onChange={handleFieldChange}/>
+                <Form.Input fluid name="title" placeholder={instructionTitle} onChange={handleFieldChange}/>
               </Form.Group>
               <Form.TextArea 
-                name="issueBody" 
+                name="issueArea" 
                 style={{height: "250px"}}
                 onChange={handleFieldChange}
-                placeholder='Share your issue and let others in our community help you find a solution.' />
+                placeholder={instructionPost} />
               <Form.Button>Post Issue</Form.Button>
               {
                 (alertStatus && !!message) && 
