@@ -4,14 +4,14 @@ import moment from 'moment';
 import { Button, Card, Image, Divider } from 'semantic-ui-react'
 import { DELETE_COMMENT, UPDATE_ISSUE } from '../store/type';
 import { Link } from 'react-router-dom';
-import { Highlight } from 'react-fast-highlight';
+import CreateHighlight from '../helpers/CreateHighlight';
 import '../resources/Comment.css';
 
 const Comment = props => {
 
   const currentUser = useSelector(state => state.user.keyHolder)
   const dispatch = useDispatch()
-  const { comment_body, code_body, syntax } = props.comment
+  const { comment_body, syntax } = props.comment
   const { id, first_name, last_name, profession, avatar } = props.comment.user
   const imgUrl = `https://semantic-ui.com/images/avatar/small/${avatar}.jpg`
 
@@ -46,11 +46,10 @@ const Comment = props => {
             Answered {moment().startOf('day').fromNow()}
           </Card.Meta>
           <Divider clearing />
-          <Card.Description>
-            {comment_body}
-            <Highlight languages={[`${syntax ? syntax : "plaintext"}`]}>
-            {code_body}
-            </Highlight>
+          <Card.Description id="some-id">
+            {
+              <CreateHighlight dataString={comment_body} syntax={syntax} />
+            }
           </Card.Description>
         </Card.Content>
         {

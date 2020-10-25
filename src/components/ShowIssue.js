@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Container, Grid, Button, Card, Image, Header, Divider, Form, TextArea, Transition } from 'semantic-ui-react'
+import { Container, Grid, Button, Card, Image, Header, Divider, Form, TextArea } from 'semantic-ui-react'
 import { Link, withRouter } from 'react-router-dom';
 import Comment from './Comment';
 import useFormFields from '../hooks/useFormFields';
-import { Highlight } from 'react-fast-highlight';
 import '../resources/ShowIssue.css';
 import { UPDATE_ISSUE, ADD_COMMENT, DELETE_ISSUE } from '../store/type';
+import CreateHighlight from '../helpers/CreateHighlight';
 
 const ShowIssue = props => {
 
@@ -17,15 +17,13 @@ const ShowIssue = props => {
   const comments = useSelector(state => state.comment.comments)
   const currentIssue = issues.find(issue => issue.id === issueId)
   const [ alertHeader, setAlertHeader ] = useState("")
-  const [ duration ] = useState(1000)
-  const [ formVisible, setFormVisible ] = useState(false)
   const [ alertStatus, setAlertStatus ] = useState(false)
   const [ message, setMessage ] = useState([])
 
   // const [ issue, setIssue ] = useState(null)
   const [ fields, handleFieldChange ] = useFormFields({
     commentArea: "",
-    codeArea: ""
+    syntax: ""
   })
 
   const deleteIssue = () => {
@@ -44,7 +42,6 @@ const ShowIssue = props => {
     
     const newComent = {
       comment_body: fields.commentArea,
-      code_body: fields.codeArea,
       syntax: "javascript"
     }
 
@@ -110,12 +107,6 @@ const ShowIssue = props => {
     }, 4000)
   }
 
-  const handleVisibility = () => {
-    setFormVisible(!formVisible)
-  }
-
-  console.log("ShowIssue -->", currentIssue && currentIssue.code_body)
-
   return (
     currentIssue ?
       <Container id="ShowIssue">
@@ -139,10 +130,9 @@ const ShowIssue = props => {
                     </Card.Header>
                     <Divider clearing />
                     <Card.Description className="ShowIssue-Issue-Body">
-                      {currentIssue.issue_body}
-                      <Highlight languages={[`${currentIssue.syntax ? currentIssue.syntax : "plaintext"}`]}>
-                        {currentIssue.code_body}
-                      </Highlight>
+                      {
+                        <CreateHighlight dataString={currentIssue.issue_body} syntax={currentIssue.syntax} />
+                      }
                     </Card.Description>
                   </Card.Content>
                   {
@@ -173,20 +163,8 @@ const ShowIssue = props => {
                   placeholder='The more details the better it is for others to understand.'
                   onChange={handleFieldChange}
                 />
-                <Transition.Group animation="fade down" duration={duration}>
-                  {formVisible && (
-                    <Form.Field
-                      name="codeArea"
-                      control={TextArea}
-                      label='Code Snippet'
-                      placeholder='Write or paste your code.'
-                      onChange={handleFieldChange}
-                    />
-                  )}
-                </Transition.Group>
                 <Form.Group>
                   <Form.Field control={Button}>Post Answer</Form.Field>
-                  <Button type="button" content={formVisible ? 'Hide Snippet' : 'Add Snippet'} onClick={handleVisibility} />
                 </Form.Group>
                 {
                   (alertStatus && !!message) && 
