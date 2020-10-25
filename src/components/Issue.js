@@ -1,21 +1,26 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Grid, Icon, Button, Card, Image, Divider, Modal } from 'semantic-ui-react'
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { DELETE_ISSUE, UPDATE_ISSUE, UPDATE_TITLE, UPDATE_BODY } from '../store/type';
 import IssueForm from './IssueForm';
+import CreateHighlight from '../helpers/CreateHighlight';
 import '../resources/Issue.css';
 
 const Issue = props => {
   
   const dispatch = useDispatch() 
   const [ open, setOpen ] = useState(false)
+
   const currentUser = useSelector(state => state.user.keyHolder)
   const issueTitle = useSelector(state => state.issue.issueTitle)
   const issueBody = useSelector(state => state.issue.issueBody)
-  const { id, title, comments, user } = props.issue
+
+  const { id, title, comments, issue_body, syntax, user } = props.issue
   const totalComments = comments.length
   const imgUrl = `https://semantic-ui.com/images/avatar/small/${user.avatar}.jpg`
+
+  console.log(props.history)
 
   const deleteIssue = () => {
     fetch(`http://localhost:3000/issues/${id}`, {
@@ -24,6 +29,8 @@ const Issue = props => {
     .then(r => r.json())
     .then(issue => {
       dispatch({ type: DELETE_ISSUE, payload: issue })
+
+      props.history.push('/issues')
     })
   }
 
@@ -58,7 +65,6 @@ const Issue = props => {
   }
   
   return (
-    <Grid columns={1} divided id="Issue">
       <Grid.Row>
         <Grid.Column className="Issue-Inner-Wrap" width={12}>
             <Card fluid raised>
@@ -84,6 +90,13 @@ const Issue = props => {
                     />
                   </Card.Meta>
                 </Card.Meta>
+                { props.displayBody &&
+                  <Card.Description className="ShowIssue-Issue-Body">
+                    {
+                      <CreateHighlight dataString={issue_body} syntax={syntax} />
+                    }
+                  </Card.Description>
+                }
                 <Divider clearing />
                 <Card.Meta className="Issue-Item-Wrapper">
                   <Card.Meta className="Issue-Icon-Comment">
@@ -124,8 +137,7 @@ const Issue = props => {
             </Card>
         </Grid.Column>
       </Grid.Row>
-    </Grid>
   );
 } 
 
-export default Issue;
+export default withRouter(Issue);

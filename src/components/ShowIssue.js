@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Container, Grid, Button, Card, Image, Header, Divider, Form, TextArea } from 'semantic-ui-react'
-import { Link, withRouter } from 'react-router-dom';
+import { Container, Grid, Button, Header, Form, TextArea } from 'semantic-ui-react'
+import { Link } from 'react-router-dom';
 import Comment from './Comment';
+import Issue from './Issue';
 import useFormFields from '../hooks/useFormFields';
 import '../resources/ShowIssue.css';
-import { UPDATE_ISSUE, ADD_COMMENT, DELETE_ISSUE } from '../store/type';
-import CreateHighlight from '../helpers/CreateHighlight';
+import { UPDATE_ISSUE, ADD_COMMENT } from '../store/type';
 
 const ShowIssue = props => {
 
@@ -24,17 +24,6 @@ const ShowIssue = props => {
     commentArea: "",
     syntax: ""
   })
-
-  const deleteIssue = () => {
-    fetch(`http://localhost:3000/issues/${currentIssue.id}`, {
-      method: "DELETE"
-    })
-    .then(r => r.json())
-    .then(issue => {
-      dispatch({ type: DELETE_ISSUE, payload: issue })
-      props.history.push('/issues')
-    })
-  }
 
   const postComment = event => {
     event.preventDefault()
@@ -111,45 +100,7 @@ const ShowIssue = props => {
       <Container id="ShowIssue">
         <Header as='h1' textAlign="center" className="ShowIssue-Header">Issue</Header>
         <Grid columns="2" divided id="Issue">
-          <Grid.Row>
-            <Grid.Column className="ShowIssue-Wrap" width={12}>
-                <Card fluid raised>
-                  <Card.Content className="ShowIssue-Content">
-                    <Link to={`/users/${currentIssue.user.id}`}>
-                      <Image
-                        floated='right'
-                        size='big'
-                        avatar
-                        alt={`${currentIssue.user.first_name} ${currentIssue.user.last_name}`}
-                        src={`https://semantic-ui.com/images/avatar/small/${currentIssue.user.avatar}.jpg`}
-                      />
-                    </Link>
-                    <Card.Header>
-                      {currentIssue.title}
-                    </Card.Header>
-                    <Divider clearing />
-                    <Card.Description className="ShowIssue-Issue-Body">
-                      {
-                        <CreateHighlight dataString={currentIssue.issue_body} syntax={currentIssue.syntax} />
-                      }
-                    </Card.Description>
-                  </Card.Content>
-                  {
-                    currentUser && currentUser.id === currentIssue.user.id &&
-                      <Card.Content extra>
-                      <div className='ui two buttons'>
-                        <Button as={Link} to={'/home'} inverted color='green'>
-                          Edit
-                        </Button>
-                        <Button inverted color='red' onClick={deleteIssue}>
-                          Delete
-                        </Button>
-                      </div>
-                    </Card.Content>
-                  }
-                </Card>
-            </Grid.Column>
-          </Grid.Row>
+          <Issue issue={currentIssue} displayBody={true}/>
           <Grid.Row>
             <Grid.Column className="ShowIssue-Wrap" width={12}>
             { 
@@ -203,4 +154,4 @@ const ShowIssue = props => {
   );
 }
 
-export default withRouter(ShowIssue);
+export default ShowIssue;
