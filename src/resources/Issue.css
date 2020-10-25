@@ -22,11 +22,10 @@
   width: 15%;
 }
 
-#Issue .Issue-Icon-Comment {
-  font-size: 17px;
-  margin-top: 10px;
+#Issue .Issue-Item-Extra {
+  margin: auto 0;
 }
 
 #Issue .Issue-Comment {
-  font-size: 15px;
+  font-size: 17px;
 }

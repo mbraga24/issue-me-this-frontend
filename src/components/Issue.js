@@ -99,13 +99,13 @@ const Issue = props => {
                 }
                 <Divider clearing />
                 <Card.Meta className="Issue-Item-Wrapper">
-                  <Card.Meta className="Issue-Icon-Comment">
-                    <Icon name='comment alternate'/>
-                    <span>{totalComments} Comments</span>
+                  <Card.Meta className="Issue-Item-Extra">
+                    <Icon name='comment alternate' size="large" />
+                    <span className="Issue-Comment">{totalComments} Comments</span>
                   </Card.Meta>
-                  <Card.Content extra className="Issue-Item-Circle">
-                    <Button circular icon='thumbs up outline' />
-                    <Button circular icon='star outline' />
+                  <Card.Content extra className="Issue-Item-Extra">
+                    <Button circular color="teal" icon='thumbs up outline' size="large" />
+                    <Button circular color="teal" icon='star outline' size="large" />
                   </Card.Content>
                 </Card.Meta>
               </Card.Content>
