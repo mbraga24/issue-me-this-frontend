@@ -3,11 +3,11 @@ import { Highlight } from 'react-fast-highlight';
 
 const CreateHighlight = props => {
   let arrayString = props.dataString.split("```")
-
+  
   const returnHighlight = () => {
     return arrayString.map((element, index) => {
       if(index % 2 !== 0) {
-        return <Highlight language="javascript">{element}</Highlight>
+        return <Highlight languages={[`${props.syntax}`]}>{element}</Highlight>
       } else {
         return element
       }

@@ -47,9 +47,7 @@ const Comment = props => {
           </Card.Meta>
           <Divider clearing />
           <Card.Description id="some-id">
-            {
-              <CreateHighlight dataString={comment_body} syntax={syntax} />
-            }
+            <CreateHighlight dataString={comment_body} syntax={syntax} />
           </Card.Description>
         </Card.Content>
         {

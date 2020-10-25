@@ -19,8 +19,6 @@ const ShowIssue = props => {
   const [ alertHeader, setAlertHeader ] = useState("")
   const [ alertStatus, setAlertStatus ] = useState(false)
   const [ message, setMessage ] = useState([])
-
-  // const [ issue, setIssue ] = useState(null)
   const [ fields, handleFieldChange ] = useFormFields({
     commentArea: "",
     syntax: ""
