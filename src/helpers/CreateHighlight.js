@@ -7,7 +7,7 @@ const CreateHighlight = props => {
   const returnHighlight = () => {
     return arrayString.map((element, index) => {
       if(index % 2 !== 0) {
-        return <Highlight className="javascript" language={"javascript"}>{element}</Highlight>
+        return <Highlight language="javascript">{element}</Highlight>
       } else {
         return element
       }
