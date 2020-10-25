@@ -67,11 +67,11 @@ const AppWrapper = props => {
                     Account
                   </Menu.Item>
                   <Menu.Item as={Link} to="/issues/new">
-                    <Icon name='pen square icon' size="large" />
+                    <Icon name='pen square' size="large" />
                     New Issue
                   </Menu.Item>
                   <Menu.Item onClick={handleLogout}>
-                    <Icon name='sign-out alternate icon' size="large" />
+                    <Icon name='sign-out alternate' size="large" />
                     Log out
                   </Menu.Item>
                 </> 
@@ -92,15 +92,14 @@ const AppWrapper = props => {
               <TopMenuBar toggleMenu={toggleMenu} />
                 <Switch>  
                     <Container id="AppWrapper-Container">  
-                      <Route path="/login" render={routeProps => <Login {...routeProps} />} />
-                      <Route path="/signup" render={routeProps => <SignUp {...routeProps} />} />
-                      <Route exact path="/issues" render={() => ( <IssueContainer /> )} />
-                      <Route path="/users/:id" render={() => <UserProfile />} />
-                      <Route path="/issues/update/:id" render={routeProps => <NewIssueForm {...routeProps} />} />
-                      <Route path="/issues/new" render={routeProps => <NewIssueForm {...routeProps} />} />
-                      <Route path="/issues/:id" render={() => <ShowIssue />} />
-                      <Route exact path="/users" render={() => ( <UserContainer /> )} />
-                      <Route exact path="/home" render={routeProps => <Home {...routeProps} />} />
+                      <Route path="/login" component={Login} />
+                      <Route path="/signup" component={SignUp} />
+                      <Route exact path="/issues" component={IssueContainer} />
+                      <Route path="/users/:id" component={UserProfile} />
+                      <Route path="/issues/new" component={NewIssueForm} />
+                      <Route path="/issues/:id" component={ShowIssue} />
+                      <Route exact path="/users" component={UserContainer} />
+                      <Route exact path="/home" component={Home} />
                     </Container>
                 </Switch>
             </Sidebar.Pusher>

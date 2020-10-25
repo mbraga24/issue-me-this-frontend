@@ -98,7 +98,7 @@ const Issue = props => {
                         <IssueForm displayContent={false} isUpdateForm={true} issueData={props.issue} />
                       </Modal.Content>
                       <Modal.Actions>
-                        <Button onClick={() => setOpen(false)}>Cancel</Button>
+                        <Button onClick={() => setOpen(false)} color='teal'>Cancel</Button>
                         <Button onClick={updateIssue} positive>Update</Button>
                       </Modal.Actions>
                     </Modal>

@@ -138,10 +138,10 @@ const ShowIssue = props => {
                     currentUser && currentUser.id === currentIssue.user.id &&
                       <Card.Content extra>
                       <div className='ui two buttons'>
-                        <Button as={Link} to={'/home'} basic color='green'>
+                        <Button as={Link} to={'/home'} inverted color='green'>
                           Edit
                         </Button>
-                        <Button basic color='red' onClick={deleteIssue}>
+                        <Button inverted color='red' onClick={deleteIssue}>
                           Delete
                         </Button>
                       </div>
@@ -164,7 +164,7 @@ const ShowIssue = props => {
                   onChange={handleFieldChange}
                 />
                 <Form.Group>
-                  <Form.Field control={Button}>Post Answer</Form.Field>
+                  <Form.Field control={Button} positive>Post Answer</Form.Field>
                 </Form.Group>
                 {
                   (alertStatus && !!message) && 
@@ -193,8 +193,6 @@ const ShowIssue = props => {
             </Grid.Column>
           </Grid.Row>
           <Grid.Row>
-            {/* smooth transition  */}
-          {/* style={{transition: "0.3s ease-in-out", transform: "translateY(50%)"}} */}
             <Grid.Column className="ShowIssue-Wrap" width={12}>
               <Header as='h1' textAlign="center" className="ShowIssue-Comment-Header">Answers</Header>
               {renderComments()}

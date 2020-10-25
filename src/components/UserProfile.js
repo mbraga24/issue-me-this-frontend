@@ -28,7 +28,7 @@ const UserProfile = props => {
 
   const renderIssues = () => {
     return userProfile.issues.map(issue => (
-      <Grid.Column>
+      <Grid.Column key={issue.id}>
         <Grid.Row>
           <Card fluid>
             <Card.Content>

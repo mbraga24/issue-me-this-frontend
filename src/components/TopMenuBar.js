@@ -30,43 +30,43 @@ const TopMenuBar = props => {
       >
         <Icon name='content' size="large"/>
       </Menu.Item>
-      <Link to="/home">
         <Menu.Item
+          as={Link}
+          to={`/home`}
           name='home'
           active={activeItem === 'home'}
           onClick={handleItemClick}
           className="TopMenu-Item"
         />
-      </Link>
       {currentUser &&
         <>
-          <Link to={`/issues`}>
             <Menu.Item
+              as={Link}
+              to={`/issues`}
               name='issues'
               active={activeItem === 'issues'}
               onClick={handleItemClick}
               className="TopMenu-Item"
             />     
-          </Link>
-          <Link to={`/users`}>
             <Menu.Item
+              as={Link}
+              to={`/users`}
               name='users'
               active={activeItem === 'users'}
               onClick={handleItemClick}
               className="TopMenu-Item"
             />
-          </Link>
-          <Link to={`/issues/new`}>
             <Menu.Item
+              as={Link}
+              to={`/issues/new`}
               name='new issue'
               active={activeItem === 'new issue'}
               onClick={handleItemClick}
               className="TopMenu-Item"
             />
-          </Link>
           <Menu.Item>
             <Popup
-              trigger={<Icon name='pied piper alternate icon' size="big" />}
+              trigger={<Icon name='pied piper alternate' size="big" />}
               content={() => richardQuotes()}
               hideOnScroll
               size="small"
