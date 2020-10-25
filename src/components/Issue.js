@@ -1,13 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Grid, Icon, Button, Card, Image, Divider } from 'semantic-ui-react'
+import { Grid, Icon, Button, Card, Image, Divider, Modal } from 'semantic-ui-react'
 import { Link } from 'react-router-dom';
 import { DELETE_ISSUE } from '../store/type';
+import IssueForm from './IssueForm';
 import '../resources/Issue.css';
 
 const Issue = props => {
   
   const dispatch = useDispatch() 
+  const [ open, setOpen ] = useState(false)
   const currentUser = useSelector(state => state.user.keyHolder)
   const { id, title, comments, user } = props.issue
   const totalComments = comments.length
@@ -21,6 +23,10 @@ const Issue = props => {
     .then(issue => {
       dispatch({ type: DELETE_ISSUE, payload: issue })
     })
+  }
+
+  const handleUpdate = () => {
+    setOpen(false)
   }
   
   return (
@@ -53,10 +59,22 @@ const Issue = props => {
                 currentUser && currentUser.id === user.id &&
                 <Card.Content extra>
                   <div className='ui two buttons'>
-                    <Button as={Link} to={'/home'} basic color='green'>
-                      Edit
-                    </Button>
-                    <Button basic color='red' onClick={deleteIssue}>
+                    <Modal
+                      onClose={() => setOpen(false)}
+                      onOpen={() => setOpen(true)}
+                      open={open}
+                      trigger={<Button inverted color='green'> Edit </Button>}
+                    >
+                      <Modal.Header>Update Issue</Modal.Header>
+                      <Modal.Content>
+                        <IssueForm displayBtn={false} displayHeader={false} issueData={props.issue} />
+                      </Modal.Content>
+                      <Modal.Actions>
+                        <Button onClick={() => setOpen(false)}>Cancel</Button>
+                        <Button onClick={handleUpdate} positive>Update</Button>
+                      </Modal.Actions>
+                    </Modal>
+                    <Button inverted color='red' onClick={deleteIssue}>
                       Delete
                     </Button>
                   </div>

@@ -96,6 +96,7 @@ const AppWrapper = props => {
                       <Route path="/signup" render={routeProps => <SignUp {...routeProps} />} />
                       <Route exact path="/issues" render={() => ( <IssueContainer /> )} />
                       <Route path="/users/:id" render={() => <UserProfile />} />
+                      <Route path="/issues/update/:id" render={routeProps => <NewIssueForm {...routeProps} />} />
                       <Route path="/issues/new" render={routeProps => <NewIssueForm {...routeProps} />} />
                       <Route path="/issues/:id" render={() => <ShowIssue />} />
                       <Route exact path="/users" render={() => ( <UserContainer /> )} />

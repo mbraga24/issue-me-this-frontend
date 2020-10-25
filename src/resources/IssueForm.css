@@ -1,0 +1,9 @@
+#IssueForm-Container .IssueForm-Header {
+  margin-top: 10px;
+  margin-bottom: 25px;
+  font-size: 38px;
+}
+
+#IssueForm-Container .IssueForm-Grid-Wrapper {
+  margin: 0 auto;
+}
