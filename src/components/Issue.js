@@ -63,24 +63,37 @@ const Issue = props => {
         <Grid.Column className="Issue-Inner-Wrap" width={12}>
             <Card fluid raised>
               <Card.Content className="Issue-Content">
-                <Link to={`/users/${user.id}`}>
-                  <Image
-                    floated='right'
-                    size='big'
-                    avatar
-                    alt={`${user.first_name} ${user.last_name}`}
-                    src={imgUrl}
-                  />
-                </Link>
                 <Card.Header>
-                  <Link to={`/issues/${id}`}>
-                    {title}
-                  </Link>
+
                 </Card.Header>
+                <Card.Meta className="Issue-Item-Wrapper">
+                  <Card.Meta className="Issue-Icon-Title">
+                    <Link to={`/issues/${id}`}>
+                      {title}
+                    </Link>
+                  </Card.Meta>
+                  <Card.Meta className="Issue-Icon-Avatar" textAlign='right'>
+                    <Image
+                      as={Link}
+                      to={`/users/${user.id}`}
+                      className="Image"
+                      size='big'
+                      avatar
+                      alt={`${user.first_name} ${user.last_name}`}
+                      src={imgUrl}
+                    />
+                  </Card.Meta>
+                </Card.Meta>
                 <Divider clearing />
-                <Card.Meta className="Issue-Comments">
-                  <Icon name='comment alternate'/>
-                  <span>{totalComments} Comments</span>
+                <Card.Meta className="Issue-Item-Wrapper">
+                  <Card.Meta className="Issue-Icon-Comment">
+                    <Icon name='comment alternate'/>
+                    <span>{totalComments} Comments</span>
+                  </Card.Meta>
+                  <Card.Content extra className="Issue-Item-Circle">
+                    <Button circular icon='thumbs up outline' />
+                    <Button circular icon='star outline' />
+                  </Card.Content>
                 </Card.Meta>
               </Card.Content>
               {

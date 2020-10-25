@@ -6,10 +6,27 @@
   margin: 0 auto;
 }
 
-#Issue .Issue-Comments {
+
+
+#Issue .Issue-Item-Wrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
+#Issue .Issue-Icon-Title {
+  font-size: 21px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  width: 85%;
+ 
+}
+#Issue .Issue-Icon-Avatar {
+  width: 15%;
+}
+
+#Issue .Issue-Icon-Comment {
   font-size: 17px;
   margin-top: 10px;
-  margin-bottom: 10px;
 }
 
 #Issue .Issue-Comment {
