@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Container, Grid, Icon, Menu, Sidebar } from 'semantic-ui-react'
-import { Route, Switch, withRouter, Link } from 'react-router-dom';
+import { Route, Switch, Link } from 'react-router-dom';
 import TopMenuBar from './TopMenuBar';
 import Home from './Home';
 import Login from './Login';
@@ -57,7 +57,7 @@ const AppWrapper = props => {
                 Home
               </Menu.Item>
               <Menu.Item as={Link} to="/users">
-                <Icon name='users icon' size="large" />
+                <Icon name='users' size="large" />
                 Users
               </Menu.Item>
               { currentUser ?
@@ -78,11 +78,11 @@ const AppWrapper = props => {
                 :
                 <>
                   <Menu.Item as={Link} to="/signup">
-                    <Icon name='write square icon' size="large" />
+                    <Icon name='write square' size="large" />
                     Sign up
                   </Menu.Item>
                   <Menu.Item as={Link} to="/login">
-                    <Icon name='sign-in alternate icon' size="large" />
+                    <Icon name='sign-in alternate' size="large" />
                     Sign in
                   </Menu.Item>
                 </>
@@ -110,4 +110,4 @@ const AppWrapper = props => {
   );
 }
 
-export default withRouter(AppWrapper);
+export default AppWrapper;

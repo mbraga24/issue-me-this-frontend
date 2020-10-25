@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Grid, Form, Header } from 'semantic-ui-react'
 import useFormFields from '../hooks/useFormFields';
-import { ADD_ISSUE, UPDATE_USER } from '../store/type';
+import { ADD_ISSUE, UPDATE_USER, UPDATE_TITLE, UPDATE_BODY } from '../store/type';
 import '../resources/IssueForm.css';
 import { withRouter } from 'react-router-dom';
 
@@ -15,17 +15,37 @@ const IssueForm = props => {
   const [ alertHeader, setAlertHeader ] = useState("")
   const [ alertStatus, setAlertStatus ] = useState(false)
   const [ message, setMessage ] = useState([])
+
   const [ fields, handleFieldChange ] = useFormFields({
     title: "",
-    issueArea: ""
+    issueBody: ""
+    // syntax: ""
   })
+
+  const updateFields = () => {
+    if (fields.title === "") {
+      fields.title = props.issueData.title
+    } 
+    if (fields.issueBody === "") {
+      fields.issueBody = props.issueData.issue_body
+    } 
+    // if (fields.syntax === "") {
+    //   fields.syntax = props.issueData.syntax
+    // } 
+
+    dispatch({ type: UPDATE_TITLE, payload: fields.title })
+    dispatch({ type: UPDATE_BODY, payload: fields.issueBody })
+    // dispatch({ type: UPDATE_SYNTAX, payload: fields.syntax })
+  }
+
+  if (props.isUpdateForm) { updateFields() } 
 
   const addIssue = (event) => {
     event.preventDefault()
     
     const newIssue = {
       title: fields.title,
-      issue_body: fields.issueArea,
+      issue_body: fields.issueBody,
       syntax: 'javascript'
     }
 
@@ -69,27 +89,24 @@ const IssueForm = props => {
     }, 4000)
   }
 
-  console.log("ISSUE FORM TITLE-->", fields.title)
-  console.log("ISSUE FORM ISSUE BODY-->", fields.issue_body)
-
   return (
     <div id="IssueForm-Container">
-      { props.displayHeader && <Header as='h1' textAlign="center" className="IssueForm-Header">What's your issue?</Header> }
+      { props.displayContent && <Header as='h1' textAlign="center" className="IssueForm-Header">What's your issue?</Header> }
       <Grid>
         <Grid.Row>
           <Grid.Column width={12} className="IssueForm-Grid-Wrapper">
-            <Form onSubmit={addIssue}>
+            <Form onSubmit={props.displayContent ? addIssue : null}>
               <Form.Group widths='equal'>
                 <Form.Input fluid name="title" defaultValue={props.issueData ? props.issueData.title : undefined} placeholder={instructionTitle} onChange={handleFieldChange}/>
               </Form.Group>
               <Form.TextArea 
-                name="issueArea" 
+                name="issueBody" 
                 style={{height: "250px"}}
                 onChange={handleFieldChange}
                 defaultValue={props.issueData ? props.issueData.issue_body : undefined}
                 placeholder={instructionPost} />
               { 
-                props.showBtn &&
+                props.displayContent &&
                 <Form.Button positive>Post Issue</Form.Button>
               }
               {

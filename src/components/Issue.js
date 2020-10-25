@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Grid, Icon, Button, Card, Image, Divider, Modal } from 'semantic-ui-react'
 import { Link } from 'react-router-dom';
-import { DELETE_ISSUE } from '../store/type';
+import { DELETE_ISSUE, UPDATE_ISSUE, UPDATE_TITLE, UPDATE_BODY } from '../store/type';
 import IssueForm from './IssueForm';
 import '../resources/Issue.css';
 
@@ -11,6 +11,8 @@ const Issue = props => {
   const dispatch = useDispatch() 
   const [ open, setOpen ] = useState(false)
   const currentUser = useSelector(state => state.user.keyHolder)
+  const issueTitle = useSelector(state => state.issue.issueTitle)
+  const issueBody = useSelector(state => state.issue.issueBody)
   const { id, title, comments, user } = props.issue
   const totalComments = comments.length
   const imgUrl = `https://semantic-ui.com/images/avatar/small/${user.avatar}.jpg`
@@ -25,7 +27,33 @@ const Issue = props => {
     })
   }
 
-  const handleUpdate = () => {
+  const updateIssue = () => {
+    const data = {
+      title: issueTitle,
+      issue_body: issueBody
+      // syntax: "javascript"
+    }
+
+    // console.log("UPDATE ISSUE --->", data)
+    
+    fetch(`http://localhost:3000/issues/${id}`, {
+      method: "PATCH",
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+    .then(r => r.json())
+    .then(data => {
+      console.log("UPDATED ISSUE -->", data.issue)
+      if (data.errorStatus) {
+        console.log("ERROR --->", data.error)
+      } else {
+        dispatch({ type: UPDATE_ISSUE , payload: data.issue })
+        dispatch({ type: UPDATE_TITLE , payload: "" })
+        dispatch({ type: UPDATE_BODY , payload: "" })
+      }
+    })  
     setOpen(false)
   }
   
@@ -51,7 +79,7 @@ const Issue = props => {
                 </Card.Header>
                 <Divider clearing />
                 <Card.Meta className="Issue-Comments">
-                  <Icon name='comment alternate icon'/>
+                  <Icon name='comment alternate'/>
                   <span>{totalComments} Comments</span>
                 </Card.Meta>
               </Card.Content>
@@ -67,11 +95,11 @@ const Issue = props => {
                     >
                       <Modal.Header>Update Issue</Modal.Header>
                       <Modal.Content>
-                        <IssueForm displayBtn={false} displayHeader={false} issueData={props.issue} />
+                        <IssueForm displayContent={false} isUpdateForm={true} issueData={props.issue} />
                       </Modal.Content>
                       <Modal.Actions>
                         <Button onClick={() => setOpen(false)}>Cancel</Button>
-                        <Button onClick={handleUpdate} positive>Update</Button>
+                        <Button onClick={updateIssue} positive>Update</Button>
                       </Modal.Actions>
                     </Modal>
                     <Button inverted color='red' onClick={deleteIssue}>

@@ -12,6 +12,8 @@ export const SET_ISSUES = "SET_ISSUES";
 export const ADD_ISSUE = "ADD_ISSUE";
 export const UPDATE_ISSUE = "UPDATE_ISSUE";
 export const DELETE_ISSUE = "DELETE_ISSUE";
+export const UPDATE_TITLE = "UPDATE_TITLE";
+export const UPDATE_BODY = "UPDATE_BODY";
 
 // comment store
 export const SET_COMMENTS = "SET_COMMENTS";

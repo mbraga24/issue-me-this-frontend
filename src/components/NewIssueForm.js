@@ -6,7 +6,7 @@ const NewIssueForm = props => {
 
   return (
     <div id="NewIssue-Container">
-      <IssueForm showBtn={true} displayHeader={true} />
+      <IssueForm displayContent={true} isUpdateForm={false} />
     </div>
   );
 }

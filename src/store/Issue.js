@@ -1,7 +1,9 @@
-import { SET_ISSUES, ADD_ISSUE, UPDATE_ISSUE, DELETE_ISSUE } from './type';
+import { SET_ISSUES, ADD_ISSUE, UPDATE_ISSUE, DELETE_ISSUE, UPDATE_TITLE, UPDATE_BODY } from './type';
 
 const defaultState = {
-  issues: []
+  issues: [],
+  issueTitle: "",
+  issueBody: ""
 }
 
 // sort issues from greatest to least
@@ -34,6 +36,16 @@ const store = (state = defaultState, action) => {
       return {
         ...state,
         issues: [...filteredIssues]
+      }
+    case UPDATE_TITLE:
+      return {
+        ...state,
+        issueTitle: action.payload
+      }
+    case UPDATE_BODY:
+      return {
+        ...state,
+        issueBody: action.payload
       }
     default:
       return state
