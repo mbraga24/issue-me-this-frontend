@@ -11,6 +11,10 @@ const Issue = props => {
   
   const dispatch = useDispatch() 
   const [ open, setOpen ] = useState(false)
+  const [ issueLiked, setIssueLiked ] = useState(false)
+  const [ likeThis, setLikeThis ] = useState(false)
+
+  const likeStore = useSelector(state => state.like.likes)
 
   const currentUser = useSelector(state => state.user.keyHolder)
   const issueTitle = useSelector(state => state.issue.issueTitle)
@@ -20,7 +24,16 @@ const Issue = props => {
   const totalComments = comments.length
   const imgUrl = `https://semantic-ui.com/images/avatar/small/${user.avatar}.jpg`
 
-  console.log(props.history)
+  const findIssueLiked = () => {
+    for (let issue of currentUser.like_issues) {
+      if (likeStore.includes(issue.id)) {
+        setLikeThis(!likeThis)
+        setIssueLiked(!issueLiked)
+      }
+    }
+  }
+
+  // console.log("ALL LIKES -->", likeStore)
 
   const deleteIssue = () => {
     fetch(`http://localhost:3000/issues/${id}`, {
@@ -29,8 +42,7 @@ const Issue = props => {
     .then(r => r.json())
     .then(issue => {
       dispatch({ type: DELETE_ISSUE, payload: issue })
-
-      props.history.push('/issues')
+      props.match.path === "/issues/:id" && props.history.push('/issues')
     })
   }
 
@@ -40,8 +52,6 @@ const Issue = props => {
       issue_body: issueBody
       // syntax: "javascript"
     }
-
-    // console.log("UPDATE ISSUE --->", data)
     
     fetch(`http://localhost:3000/issues/${id}`, {
       method: "PATCH",
@@ -63,7 +73,23 @@ const Issue = props => {
     })  
     setOpen(false)
   }
-  
+
+  const likeBtn = () => {
+    console.log("LIKE")
+    // set up an association between the currentUser and the issue clicked
+  }
+
+  const dislikeBtn = () => {
+    console.log("DISLIKE")
+    // set up an association between the currentUser and the issue clicked
+  }
+
+  const favoriteBtn = () => {
+    console.log("FAVORITE")
+    // set up an association between the currentUser and the issue clicked
+  }
+
+  findIssueLiked()
   return (
       <Grid.Row>
         <Grid.Column className="Issue-Inner-Wrap" width={12}>
@@ -104,8 +130,13 @@ const Issue = props => {
                     <span className="Issue-Comment">{totalComments} Comments</span>
                   </Card.Meta>
                   <Card.Content extra className="Issue-Item-Extra">
-                    <Button circular color="teal" icon='thumbs up outline' size="large" />
-                    <Button circular color="teal" icon='star outline' size="large" />
+                    { (currentUser && !issueLiked && !likeThis) && 
+                      <React.Fragment>
+                        <Button circular color="teal" icon='thumbs up outline' size="large" onClick={likeBtn} />
+                        <Button circular color="teal" icon='thumbs down outline' size="large" onClick={dislikeBtn} />
+                      </React.Fragment>
+                    }
+                    <Button circular color="teal" icon='star outline' size="large" onClick={favoriteBtn} />
                   </Card.Content>
                 </Card.Meta>
               </Card.Content>
