@@ -1,4 +1,4 @@
-import { SET_ISSUES, ADD_ISSUE, UPDATE_ISSUE, DELETE_ISSUE, UPDATE_TITLE, UPDATE_BODY } from './type';
+import { SET_ISSUES, ADD_ISSUE, UPDATE_ISSUE, DELETE_ISSUE, UPDATE_TITLE, UPDATE_BODY, UPDATE_ISSUE_LIKE } from './type';
 
 const defaultState = {
   issues: [],
@@ -30,6 +30,17 @@ const store = (state = defaultState, action) => {
       return {
         ...state,
         issues: [...updatedIssues]
+      }
+    case UPDATE_ISSUE_LIKE:
+      // I NEED TO RETURN THE ISSUE ID AND THE ID OF THE LIKE_ISSUE DELETED
+      console.log("STORE - ISSUE LIKES ->", state.issues)
+      console.log("STORE - ISSUE ID ->", action.payload)
+      const updateIssueLike = state.issues.find(issue => issue.id === action.payload.issueId)
+      const updatedIssueLikes = updateIssueLike.like_issues.filter(issue => issue.issue_id !== action.payload.like.id)
+      console.log("STORE - ISSUE", updateIssueLike)
+      console.log("STORE - UPDATED LIKES", updatedIssueLikes)
+      return {
+        ...state
       }
     case DELETE_ISSUE:
       const filteredIssues = state.issues.filter(issue => issue.id !== action.payload.id)

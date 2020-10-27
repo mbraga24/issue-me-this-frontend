@@ -14,6 +14,7 @@ export const UPDATE_ISSUE = "UPDATE_ISSUE";
 export const DELETE_ISSUE = "DELETE_ISSUE";
 export const UPDATE_TITLE = "UPDATE_TITLE";
 export const UPDATE_BODY = "UPDATE_BODY";
+export const UPDATE_ISSUE_LIKE = "UPDATE_ISSUE_LIKE";
 
 // comment store
 export const SET_COMMENTS = "SET_COMMENTS";
