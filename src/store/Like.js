@@ -1,8 +1,9 @@
-import { SET_LIKES } from './type'
+import { SET_LIKES, UPDATE_LIKES } from './type'
 
 const defaultState = {
   likes: []
 }
+
 
 const store = (state = defaultState, action) => {
   switch(action.type) {
@@ -11,6 +12,13 @@ const store = (state = defaultState, action) => {
       return {
         ...state,
         likes: [...action.payload]
+      }
+      case UPDATE_LIKES:
+        const updatedLikes = state.likes.filter(like => like.id !== action.payload.id)
+        console.log("UPDATE LIKES -->", updatedLikes)
+      return {
+        ...state,
+        likes: [...updatedLikes]
       }
     default: 
       return state

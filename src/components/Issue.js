@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Grid, Icon, Button, Card, Image, Divider, Modal } from 'semantic-ui-react'
 import { Link, withRouter } from 'react-router-dom';
-import { DELETE_ISSUE, UPDATE_ISSUE, UPDATE_TITLE, UPDATE_BODY, UPDATE_ISSUE_LIKE } from '../store/type';
+import { DELETE_ISSUE, UPDATE_ISSUE, UPDATE_TITLE, UPDATE_BODY, SET_KEY_HOLDER, UPDATE_LIKES } from '../store/type';
 import IssueForm from './IssueForm';
 import CreateHighlight from '../helpers/CreateHighlight';
 import '../resources/Issue.css';
@@ -11,8 +11,8 @@ const Issue = props => {
   
   const dispatch = useDispatch() 
   const [ open, setOpen ] = useState(false)
-  const [ issueLiked, setIssueLiked ] = useState(false)
-  // const [ likedThis, setLikedThis ] = useState(false)
+  const [ displayLikeStatus, setDislayLikeStatus ] = useState(false)
+  const [ thumbsUpOrDown, setThumbsUpOrDown ] = useState(false)
 
   const likeStore = useSelector(state => state.like.likes)
 
@@ -20,19 +20,24 @@ const Issue = props => {
   const issueTitle = useSelector(state => state.issue.issueTitle)
   const issueBody = useSelector(state => state.issue.issueBody)
 
-  const { id, title, comments, issue_body, syntax, user, like_issues } = props.issue
+  const { id, title, comments, issue_body, syntax, user } = props.issue
   const totalComments = comments.length
   const imgUrl = `https://semantic-ui.com/images/avatar/small/${user.avatar}.jpg`
 
 
   useEffect(() => {
-    setIssueLiked(currentUser.like_issues.some(like => like.issue_id === id))
-  }, [dispatch])
+    setDislayLikeStatus(currentUser && currentUser.like_issues.some(issue => issue.issue_id === id))
+    setThumbsUpOrDown(likeStore && likeStore.some(like => like.issue.id === id && like.is_like === true))
 
+  }, [currentUser, id, likeStore])
+
+  console.log("ThumbsUpOrDown BY USER --->", thumbsUpOrDown)
+  console.log("displayLikeStatus --->", displayLikeStatus)
+  console.log("THE CURRENT USER: ---->", currentUser && currentUser)
+  
+  // console.log("ISSUE STORE --->", likeStore)
   // console.log("FOUND THIS ISSUE LIKE --->", currentUser.like_issues.some(like => like.issue_id === id))
   // console.log("THIS ISSUE ID --->", id)
-  // console.log("THIS ISSUE LIKES: --->", like_issues)
-  // console.log("THE CURRENT USER'S ID: ---->", currentUser && currentUser.id)
   // console.log("THE CURRENT USER'S LIKE: ---->", currentUser && currentUser.like_issues)
 
   const deleteIssue = () => {
@@ -77,16 +82,20 @@ const Issue = props => {
   const unlike = () => {
     console.log("UNLIKE")
     // delete association from the database
-    fetch(`http://localhost:3000/like_issues/${id}`, {
+    fetch(`http://localhost:3000/like_issues/${id}/user/${currentUser.id}`, {
       method: "DELETE"
     })
     .then(r => r.json())
     .then(data => {
-      console.log("DELETE FETCH ->", data)
+      console.log("DELETE UNLIKE FETCH ------>", data)
+      // console.log("LIKE STORE FROM FETCH ->", likeStore)
       // const issueId = id
       // const like = data.like
-      // dispatch({ type: UPDATE_ISSUE_LIKE, payload: [like, issueId] })
-      // console.log("DELETED ISSUE", data)
+      dispatch({ type: SET_KEY_HOLDER, payload: data.user })
+      
+      dispatch({ type: UPDATE_LIKES, payload: data.like })
+      dispatch({ type: UPDATE_ISSUE, payload: data.issue })
+      setDislayLikeStatus(!displayLikeStatus)
     })
   }
 
@@ -146,10 +155,10 @@ const Issue = props => {
                   </Card.Meta>
                   <Card.Content extra className="Issue-Item-Extra">
                     { 
-                      issueLiked ? // has the user liked or disliked this issue? (true or false) - 
+                      displayLikeStatus ? // has the user liked or disliked this issue? (true or false) - 
                       // if you find an association between the user and this issue set a 
                       // variable to true and false if no association is found
-                      <Button circular color="teal" icon={ issueLiked ? "thumbs up" : "thumbs down"} size="large" onClick={unlike} />
+                      <Button circular color="teal" icon={ thumbsUpOrDown ? "thumbs up" : "thumbs down"} size="large" onClick={unlike} />
                       // if is_like column for this issue's association is true set icon thumbs up else set icon thumbs down
                       :
                       <React.Fragment>
