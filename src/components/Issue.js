@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Grid, Icon, Button, Card, Image, Divider, Modal } from 'semantic-ui-react'
 import { Link, withRouter } from 'react-router-dom';
-import { DELETE_ISSUE, UPDATE_ISSUE, UPDATE_TITLE, UPDATE_BODY, SET_KEY_HOLDER, UPDATE_LIKES } from '../store/type';
+import { DELETE_ISSUE, UPDATE_ISSUE, UPDATE_TITLE, UPDATE_BODY, REMOVE_KEY_HOLDER_LIKE, ADD_KEY_HOLDER_LIKE, ADD_LIKE, REMOVE_LIKE } from '../store/type';
 import IssueForm from './IssueForm';
 import CreateHighlight from '../helpers/CreateHighlight';
 import '../resources/Issue.css';
@@ -13,6 +13,7 @@ const Issue = props => {
   const [ open, setOpen ] = useState(false)
   const [ displayLikeStatus, setDislayLikeStatus ] = useState(false)
   const [ thumbsUpOrDown, setThumbsUpOrDown ] = useState(false)
+  const [ issueLike, setIssueLike ] = useState({})
 
   const likeStore = useSelector(state => state.like.likes)
 
@@ -26,19 +27,12 @@ const Issue = props => {
 
 
   useEffect(() => {
-    setDislayLikeStatus(currentUser && currentUser.like_issues.some(issue => issue.issue_id === id))
-    setThumbsUpOrDown(likeStore && likeStore.some(like => like.issue.id === id && like.is_like === true))
-
-  }, [currentUser, id, likeStore])
-
-  console.log("ThumbsUpOrDown BY USER --->", thumbsUpOrDown)
-  console.log("displayLikeStatus --->", displayLikeStatus)
-  console.log("THE CURRENT USER: ---->", currentUser && currentUser)
-  
-  // console.log("ISSUE STORE --->", likeStore)
-  // console.log("FOUND THIS ISSUE LIKE --->", currentUser.like_issues.some(like => like.issue_id === id))
-  // console.log("THIS ISSUE ID --->", id)
-  // console.log("THE CURRENT USER'S LIKE: ---->", currentUser && currentUser.like_issues)
+    const issueFound = currentUser && currentUser.like_issues.find(issue => issue.issue_id === id)
+    setDislayLikeStatus(!!issueFound)
+    setIssueLike(issueFound)
+    setThumbsUpOrDown(issueLike && issueLike.is_like ? true : false)
+    
+  }, [currentUser, likeStore, issueLike, id])
 
   const deleteIssue = () => {
     fetch(`http://localhost:3000/issues/${id}`, {
@@ -80,32 +74,48 @@ const Issue = props => {
   }
 
   const unlike = () => {
-    console.log("UNLIKE")
-    // delete association from the database
-    fetch(`http://localhost:3000/like_issues/${id}/user/${currentUser.id}`, {
+    fetch(`http://localhost:3000/like_issues/${issueLike.id}`, {
       method: "DELETE"
     })
     .then(r => r.json())
     .then(data => {
-      console.log("DELETE UNLIKE FETCH ------>", data)
-      // console.log("LIKE STORE FROM FETCH ->", likeStore)
-      // const issueId = id
-      // const like = data.like
-      dispatch({ type: SET_KEY_HOLDER, payload: data.user })
-      
-      dispatch({ type: UPDATE_LIKES, payload: data.like })
+      dispatch({ type: REMOVE_KEY_HOLDER_LIKE, payload: data.like })
+      dispatch({ type: REMOVE_LIKE, payload: data.like })
       dispatch({ type: UPDATE_ISSUE, payload: data.issue })
-      setDislayLikeStatus(!displayLikeStatus)
     })
   }
 
   const likeBtn = () => {
-    console.log("LIKE")
-    // set up an association between the currentUser and the issue clicked
+    fetch(`http://localhost:3000/like_issues`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "Application/json"
+      },
+      body: JSON.stringify({ user_id: currentUser.id, issue_id: id, like_status: true })
+    })
+    .then(r => r.json())
+    .then(data => {
+      // console.log("POST LIKE FETCH ------>", data)
+      dispatch({ type: ADD_KEY_HOLDER_LIKE, payload: data.like })
+      dispatch({ type: ADD_LIKE, payload: data.like })
+      dispatch({ type: UPDATE_ISSUE, payload: data.issue })
+    })
   }
 
   const dislikeBtn = () => {
-    console.log("DISLIKE")
+    fetch(`http://localhost:3000/like_issues`, {
+      method: "POST",
+      headers: {
+        'Content-Type': "Application/json"
+      },
+      body: JSON.stringify({ user_id: currentUser.id, issue_id: id, like_status: false })
+    })
+    .then(r => r.json())
+    .then(data => {
+      dispatch({ type: ADD_KEY_HOLDER_LIKE, payload: data.like })
+      dispatch({ type: ADD_LIKE, payload: data.like })
+      dispatch({ type: UPDATE_ISSUE, payload: data.issue })
+    })
 
   }
 

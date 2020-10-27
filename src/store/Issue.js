@@ -25,8 +25,9 @@ const store = (state = defaultState, action) => {
         issues: [action.payload,...state.issues]
       }
     case UPDATE_ISSUE:
-      // console.log("UPDATE ISSUE --->", action.payload)
+      console.log("UPDATE ISSUE --->", action.payload)
       const updatedIssues = state.issues.map(issue => issue.id !== action.payload.id ? issue : action.payload)
+      // console.log("UPDATEDISSUES --->", updatedIssues)
       return {
         ...state,
         issues: [...updatedIssues]

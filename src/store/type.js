@@ -3,6 +3,8 @@ export const SET_USERS = "SET_USERS";
 export const SET_KEY_HOLDER = "SET_KEY_HOLDER";
 export const ADD_USER = "ADD_USER";
 export const UPDATE_USER = "UPDATE_USER";
+export const REMOVE_KEY_HOLDER_LIKE = "REMOVE_KEY_HOLDER_LIKE";
+export const ADD_KEY_HOLDER_LIKE = "ADD_KEY_HOLDER_LIKE";
 
 // search term store
 export const SET_SEARCH_TERM = "SET_SEARCH_TERM";
@@ -25,4 +27,5 @@ export const SET_SKILLS = "SET_SKILLS";
 
 // like store
 export const SET_LIKES = "SET_LIKES";
-export const UPDATE_LIKES = "UPDATE_LIKES";
+export const ADD_LIKE = "ADD_LIKE";
+export const REMOVE_LIKE = "REMOVE_LIKE";

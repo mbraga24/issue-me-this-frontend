@@ -63,6 +63,7 @@ const App = props => {
     fetch("http://localhost:3000/like_issues")
     .then(r => r.json())
     .then(likes => {
+      console.log("SET LIKES FETCH -->", likes)
       // set likes in the store
       dispatch({ type: SET_LIKES, payload: likes })
     })
