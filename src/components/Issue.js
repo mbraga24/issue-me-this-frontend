@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Grid, Icon, Button, Card, Image, Divider, Modal } from 'semantic-ui-react'
 import { Link, withRouter } from 'react-router-dom';
-import { DELETE_ISSUE, UPDATE_ISSUE, UPDATE_TITLE, UPDATE_BODY, REMOVE_KEY_HOLDER_LIKE, ADD_KEY_HOLDER_LIKE, ADD_LIKE, REMOVE_LIKE } from '../store/type';
+import { DELETE_ISSUE, UPDATE_ISSUE, UPDATE_TITLE, UPDATE_BODY, REMOVE_KEY_HOLDER_LIKE, ADD_KEY_HOLDER_LIKE, ADD_LIKE, REMOVE_LIKE, ADD_KEY_HOLDER_FAVORITE, REMOVE_KEY_HOLDER_FAVORITE } from '../store/type';
 import IssueForm from './IssueForm';
 import CreateHighlight from '../helpers/CreateHighlight';
 import '../resources/Issue.css';
@@ -14,6 +14,8 @@ const Issue = props => {
   const [ displayLikeStatus, setDislayLikeStatus ] = useState(false)
   const [ thumbsUpOrDown, setThumbsUpOrDown ] = useState(false)
   const [ issueLike, setIssueLike ] = useState({})
+  const [ issueFavorite, setIssueFavorite ] = useState({})
+  const [ favoriteStatus, setFavoriteStatus ] = useState(false)
 
   const likeStore = useSelector(state => state.like.likes)
 
@@ -28,11 +30,19 @@ const Issue = props => {
 
   useEffect(() => {
     const issueFound = currentUser && currentUser.like_issues.find(issue => issue.issue_id === id)
+    const favoriteFound = currentUser && currentUser.favorites.find(issue => issue.issue_id === id)
+
+    console.log("USE EFFECT -->", favoriteFound)
+
     setDislayLikeStatus(!!issueFound)
     setIssueLike(issueFound)
+    setFavoriteStatus(!!favoriteFound)
+    setIssueFavorite(favoriteFound)
     setThumbsUpOrDown(issueLike && issueLike.is_like ? true : false)
     
-  }, [currentUser, likeStore, issueLike, id])
+  }, [currentUser, likeStore, issueLike, id, setIssueFavorite])
+
+  console.log("FAVORITE --->", favoriteStatus)
 
   const deleteIssue = () => {
     fetch(`http://localhost:3000/issues/${id}`, {
@@ -116,12 +126,33 @@ const Issue = props => {
       dispatch({ type: ADD_LIKE, payload: data.like })
       dispatch({ type: UPDATE_ISSUE, payload: data.issue })
     })
-
   }
 
   const favoriteBtn = () => {
-    console.log("FAVORITE")
-    // set up an association between the currentUser and the issue clicked
+    
+    if (!issueFavorite) {
+      fetch(`http://localhost:3000/favorites`, {
+        method: "POST",
+        headers: {
+          'Content-Type': "Application/json"
+        },
+        body: JSON.stringify({ user_id: currentUser.id, issue_id: id })
+      })
+      .then(r => r.json())
+      .then(data => {
+        dispatch({ type: ADD_KEY_HOLDER_FAVORITE, payload: data.favorite })
+        dispatch({ type: UPDATE_ISSUE, payload: data.issue })
+      })
+    } else {
+      fetch(`http://localhost:3000/favorites/${issueFavorite.id}`, {
+        method: "DELETE"
+      })
+      .then(r => r.json())
+      .then(data => {
+        dispatch({ type: REMOVE_KEY_HOLDER_FAVORITE, payload: data.favorite })
+        dispatch({ type: UPDATE_ISSUE, payload: data.issue })
+      })
+    }
   }
 
   return (
@@ -165,18 +196,15 @@ const Issue = props => {
                   </Card.Meta>
                   <Card.Content extra className="Issue-Item-Extra">
                     { 
-                      displayLikeStatus ? // has the user liked or disliked this issue? (true or false) - 
-                      // if you find an association between the user and this issue set a 
-                      // variable to true and false if no association is found
-                      <Button circular color="teal" icon={ thumbsUpOrDown ? "thumbs up" : "thumbs down"} size="large" onClick={unlike} />
-                      // if is_like column for this issue's association is true set icon thumbs up else set icon thumbs down
+                      displayLikeStatus ? 
+                      <Button circular color={thumbsUpOrDown ? "blue" : "grey"} icon={ thumbsUpOrDown ? "thumbs up" : "thumbs down"} size="large" onClick={unlike} />
                       :
                       <React.Fragment>
                         <Button circular color="teal" icon='thumbs up outline' size="large" onClick={likeBtn} />
                         <Button circular color="teal" icon='thumbs down outline' size="large" onClick={dislikeBtn} />
                       </React.Fragment>
                     }
-                    <Button circular color="teal" icon='star outline' size="large" onClick={favoriteBtn} />
+                    <Button circular color={favoriteStatus ? "olive" : "teal"} icon={favoriteStatus ? "star" : "star outline"} size="large" onClick={favoriteBtn} />
                   </Card.Content>
                 </Card.Meta>
               </Card.Content>

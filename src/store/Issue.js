@@ -6,7 +6,6 @@ const defaultState = {
   issueBody: ""
 }
 
-// sort issues from greatest to least
 const sortedIssues = data => {
   return data.sort((a, b) => b.id - a.id)
 }
@@ -14,7 +13,6 @@ const sortedIssues = data => {
 const store = (state = defaultState, action) => {
   switch(action.type) {
     case SET_ISSUES:
-      // console.log("SET ISSUES -->", action.payload)
       return {
         ...state,
         issues: [...sortedIssues(action.payload)]

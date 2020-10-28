@@ -14,13 +14,11 @@ const store = (state = defaultState, action) => {
       }
       case REMOVE_LIKE:
         const remainingLikes = state.likes.filter(like => like.id !== action.payload.id)
-        // console.log("UPDATE LIKES -->", remainingLikes)
       return {
         ...state,
         likes: [...remainingLikes]
       }
       case ADD_LIKE:
-        // console.log("STORE ADD LIKE -->", action.payload)
       return {
         ...state,
         likes: [ action.payload, ...state.likes ]
