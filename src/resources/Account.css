@@ -1,5 +1,5 @@
 #Account-Container .Account-Profile-Details {
-  width: 100%;
+  width: 90%;
 }
 
 #Account-Container .Account-Header {
@@ -29,15 +29,8 @@
 }
 
 #Account-Container .Account-Account-Options {
-  width: 45%;
+  width: 40%;
   margin-bottom: 5px;
-}
-
-/* FUTURE REFACTORING - MEDIA QUERY SHOULD REMOVE THIS CLASS */
-#Account-Container .Account-Content-Settings {
-  /* border: 2px solid red; */
-  width: 45%;
-  padding-bottom: 26px;
 }
 
 #Account-Container .Account-Item-Name {

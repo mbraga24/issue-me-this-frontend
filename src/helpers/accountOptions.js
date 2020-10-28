@@ -2,7 +2,7 @@ const accountOptions = [
   {
      color: "blue",
      iconName: "settings",
-     listHeader: "Settings"
+     listHeader: "Update Account"
   },
   {
      color: "blue",
@@ -17,7 +17,7 @@ const accountOptions = [
   {
     color: "blue",
     iconName: "thumbs up",
-    listHeader: "Issues Liked"
+    listHeader: "Liked Issues"
   }
 ]
 

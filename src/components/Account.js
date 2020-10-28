@@ -80,14 +80,14 @@ const Account = props => {
                 </Card.Content>
               </Card>
             </Grid.Column>
-            <Grid.Column width={4} textAlign="center">
+            <Grid.Column width={5} textAlign="center">
               <List verticalAlign='middle' >
                 { 
                   accountOptions.map(option => (
-                    <Button color={option.color} className={`Account-Account-Options ${option.iconName === "settings" && "Account-Content-Settings"}`}>
+                    <Button color={option.color} className="Account-Account-Options" >
                       <List.Item>
                         <List.Content>
-                          <Icon name={option.iconName} size="huge"/>
+                          <Icon name={option.iconName} size="big"/>
                           <List.Header className="Account-Item-Name">{option.listHeader}</List.Header>
                         </List.Content>
                       </List.Item>
@@ -96,7 +96,7 @@ const Account = props => {
                 }
               </List>
             </Grid.Column>
-            <Grid.Column width={2}>
+            <Grid.Column width={3}>
               <Grid.Row className="Row-Skills-Wrapper">
                 <Segment inverted color="grey" size="large" textAlign="center" className="Account-Header-Details">Top Skills</Segment>
                   <Grid columns={2} padded className="Account-Skills">
