@@ -10,7 +10,7 @@ import IssueContainer from './IssueContainer';
 import UserContainer from './UserContainer';
 import NewIssueForm from './NewIssueForm';
 import ShowIssue from './ShowIssue';
-import UserProfile from './UserProfile';
+import Account from './Account';
 import '../resources/AppWrapper.css';
 import { SET_KEY_HOLDER } from '../store/type';
 
@@ -95,7 +95,7 @@ const AppWrapper = props => {
                       <Route path="/login" component={Login} />
                       <Route path="/signup" component={SignUp} />
                       <Route exact path="/issues" component={IssueContainer} />
-                      <Route path="/users/:id" component={UserProfile} />
+                      <Route path="/users/:id" component={Account} />
                       <Route path="/issues/new" component={NewIssueForm} />
                       <Route path="/issues/:id" component={ShowIssue} />
                       <Route exact path="/users" component={UserContainer} />

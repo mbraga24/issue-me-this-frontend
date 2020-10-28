@@ -4,7 +4,7 @@ import { Grid, Icon, Button, Card, Image, Divider, Modal } from 'semantic-ui-rea
 import { Link, withRouter } from 'react-router-dom';
 import { DELETE_ISSUE, UPDATE_ISSUE, UPDATE_TITLE, UPDATE_BODY, REMOVE_KEY_HOLDER_LIKE, ADD_KEY_HOLDER_LIKE, ADD_KEY_HOLDER_FAVORITE, REMOVE_KEY_HOLDER_FAVORITE } from '../store/type';
 import IssueForm from './IssueForm';
-import CreateHighlight from '../helpers/CreateHighlight';
+import CreateHighlight from './CreateHighlight';
 import '../resources/Issue.css';
 
 const Issue = props => {

@@ -13,7 +13,7 @@ const CreateHighlight = props => {
       }
     })
   }
-
+  
   return ( returnHighlight() )
 }
 

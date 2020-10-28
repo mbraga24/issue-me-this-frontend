@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
 import { Card, Image, Container, Segment, Grid, Header, Icon, List, Button } from 'semantic-ui-react'
-import '../resources/UserProfile.css';
+import accountOptions from '../helpers/accountOptions';
+import '../resources/Account.css';
 
-const UserProfile = props => {
+const Account = props => {
 
   const users = useSelector(state => state.user.users)
   const currentUser = useSelector(state => state.user.keyHolder)
@@ -57,12 +58,12 @@ const UserProfile = props => {
 
   return (
     userProfile ?
-      <Container id="UserProfile-Container">
-        <Header as='h1' textAlign="center" className="UserProfile-Header">{(currentUser && currentUser.id === userId) ? `Hello, ${currentUser.first_name}! ` : `${userProfile.first_name} ${userProfile.last_name} Profile` }</Header>
-        <Grid columns={2} stackable divided className="UserProfile-Profile-Details">
-          <Grid.Row stretched>
-            <Grid.Column width={10}>
-              <Card>
+      <Container id="Account-Container">
+        <Header as='h1' textAlign="center" className="Account-Header">{(currentUser && currentUser.id === userId) ? `Hello, ${currentUser.first_name}! ` : `${userProfile.first_name} ${userProfile.last_name} Profile` }</Header>
+        <Grid columns={3} stackable divided className="Account-Profile-Details">
+          <Grid.Row>
+            <Grid.Column width={6}>
+              <Card className="Card-Wrapper">
                 <Image src={`https://semantic-ui.com/images/avatar/large/${userProfile.avatar}.jpg`} wrapped ui={false} />
                 <Card.Content>
                   <Card.Header>{userProfile.first_name} {userProfile.last_name}</Card.Header>
@@ -79,55 +80,36 @@ const UserProfile = props => {
                 </Card.Content>
               </Card>
             </Grid.Column>
-            <Grid.Column width={6} textAlign="center">
+            <Grid.Column width={4} textAlign="center">
               <List verticalAlign='middle' >
-                <Button color="teal" className="UserProfile-Account-Options">
-                  <List.Item>
-                    <Icon name='settings' size="huge"/>
-                    <List.Content className="UserProfile-Account-Items">
-                      <List.Header>Settings</List.Header>
-                    </List.Content>
-                  </List.Item>
-                </Button>
-                <Button color="teal" className="UserProfile-Account-Options">
-                  <List.Item>
-                    <Icon name='star' size="huge"/>
-                    <List.Content className="UserProfile-Account-Items">
-                      <List.Header>Favorite Issues</List.Header>
-                    </List.Content>
-                  </List.Item>
-                </Button>
-                <Button color="teal" className="UserProfile-Account-Options">
-                  <List.Item>
-                    <Icon name='boxes' size="huge"/>
-                    <List.Content className="UserProfile-Account-Items">
-                      <List.Header>Manage Issues</List.Header>
-                    </List.Content>
-                  </List.Item>
-                </Button>
-                <Button color="teal" className="UserProfile-Account-Options">
-                  <List.Item>
-                    <Icon name='thumbs up' size="huge"/>
-                    <List.Content className="UserProfile-Account-Items">
-                      <List.Header>Issues Liked</List.Header>
-                    </List.Content>
-                  </List.Item>
-                </Button>
-                
+                { 
+                  accountOptions.map(option => (
+                    <Button color={option.color} className={`Account-Account-Options ${option.iconName === "settings" && "Account-Content-Settings"}`}>
+                      <List.Item>
+                        <List.Content>
+                          <Icon name={option.iconName} size="huge"/>
+                          <List.Header className="Account-Item-Name">{option.listHeader}</List.Header>
+                        </List.Content>
+                      </List.Item>
+                    </Button>     
+                  ))
+                }
               </List>
+            </Grid.Column>
+            <Grid.Column width={2}>
+              <Grid.Row className="Row-Skills-Wrapper">
+                <Segment inverted color="grey" size="large" textAlign="center" className="Account-Header-Details">Top Skills</Segment>
+                  <Grid columns={2} padded className="Account-Skills">
+                    {renderSkills()}
+                  </Grid>
+              </Grid.Row>
             </Grid.Column>
           </Grid.Row>
         </Grid>
         
         <Grid columns={1} padded>
           <Grid.Row>
-            <Segment inverted color="teal" size="large" textAlign="center" className="UserProfile-Skills-Header">Top Skills</Segment>
-              <Grid columns={3} padded className="UserProfile-Skills">
-                {renderSkills()}
-              </Grid>
-          </Grid.Row>
-          <Grid.Row>
-            <Segment inverted color="teal" size="large" textAlign="center" className="UserProfile-Skills-Header">Popular Issues</Segment>
+            <Segment inverted color="grey" size="large" textAlign="center" className="Account-Header-Details">Popular Issues</Segment>
               <Grid columns={2} stackable padded>
                 {renderIssues()}
               </Grid>
@@ -137,4 +119,4 @@ const UserProfile = props => {
     );
 }
 
-export default withRouter(UserProfile);
+export default withRouter(Account);

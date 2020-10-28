@@ -4,7 +4,7 @@ import moment from 'moment';
 import { Button, Card, Image, Divider } from 'semantic-ui-react'
 import { DELETE_COMMENT, UPDATE_ISSUE } from '../store/type';
 import { Link } from 'react-router-dom';
-import CreateHighlight from '../helpers/CreateHighlight';
+import CreateHighlight from './CreateHighlight';
 import '../resources/Comment.css';
 
 const Comment = props => {

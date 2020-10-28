@@ -1,0 +1,46 @@
+#Account-Container .Account-Profile-Details {
+  width: 100%;
+}
+
+#Account-Container .Account-Header {
+  margin-top: 25px;
+  margin-bottom: 25px;
+  font-size: 32px;
+}
+
+#Account-Container .Card-Wrapper {
+  margin: 0 auto;
+}
+
+#Account-Container .Row-Skills-Wrapper {
+  width: 400px;
+}
+
+#Account-Container .Account-Header-Details {
+  width: 95%;
+  margin: 0 auto;
+  font-weight: bold;
+}
+
+#Account-Container .Account-Skills {
+  width: 100%;
+  margin: 15px auto;
+  font-weight: bold;
+}
+
+#Account-Container .Account-Account-Options {
+  width: 45%;
+  margin-bottom: 5px;
+}
+
+/* FUTURE REFACTORING - MEDIA QUERY SHOULD REMOVE THIS CLASS */
+#Account-Container .Account-Content-Settings {
+  /* border: 2px solid red; */
+  width: 45%;
+  padding-bottom: 26px;
+}
+
+#Account-Container .Account-Item-Name {
+  margin-top: 7px;
+  line-height: 1.2;
+}
