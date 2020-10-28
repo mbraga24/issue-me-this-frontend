@@ -20,7 +20,7 @@ const IssueContainer = props => {
 
   return (
       <div id="IssueContainer">
-        <Header as='h1' textAlign="center" className="IssueContainer-Header">All Issues</Header>
+        <Header as='h1' textAlign="center" color="grey" className="IssueContainer-Header">All Issues</Header>
         <SearchField setSearchTerm={props.setSearchTerm} />
         <Grid columns={1} divided id="Issue">
           {renderIssues()}

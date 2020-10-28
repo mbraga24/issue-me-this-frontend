@@ -21,7 +21,7 @@ const UserContainer = props => {
   return (
     users && 
       <div id="Users-Container">
-        <Header as='h1' textAlign="center" className="Users-Header">Users</Header>
+        <Header as='h1' textAlign="center" color="grey" className="Users-Header">Users</Header>
         <Grid divided="vertically">
           <Grid.Row columns={4}>
             {renderUsers()}

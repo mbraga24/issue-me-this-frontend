@@ -91,7 +91,7 @@ const IssueForm = props => {
 
   return (
     <div id="IssueForm-Container">
-      { props.displayContent && <Header as='h1' textAlign="center" className="IssueForm-Header">What's your issue?</Header> }
+      { props.displayContent && <Header as='h1' textAlign="center" color="grey" className="IssueForm-Header">What's your issue?</Header> }
       <Grid>
         <Grid.Row>
           <Grid.Column width={12} className="IssueForm-Grid-Wrapper">

@@ -59,7 +59,7 @@ const Account = props => {
   return (
     userProfile ?
       <Container id="Account-Container">
-        <Header as='h1' textAlign="center" className="Account-Header">{(currentUser && currentUser.id === userId) ? `Hello, ${currentUser.first_name}! ` : `${userProfile.first_name} ${userProfile.last_name} Profile` }</Header>
+        <Header as='h1' textAlign="center" color="grey" className="Account-Header">{(currentUser && currentUser.id === userId) ? `Hello, ${currentUser.first_name}! ` : `${userProfile.first_name} ${userProfile.last_name} Profile` }</Header>
         <Grid columns={3} stackable divided className="Account-Profile-Details">
           <Grid.Row>
             <Grid.Column width={6}>
