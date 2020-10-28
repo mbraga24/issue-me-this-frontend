@@ -4,15 +4,13 @@ import term from './SearchTerm';
 import issue from './Issue';
 import comment from './Comment';
 import skill from './Skill';
-import like from './Like';
 
 const rootReducer = combineReducers({
   user,
   issue,
   term,
   comment,
-  skill,
-  like
+  skill
 })
 
 const store = createStore(rootReducer)

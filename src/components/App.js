@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import  { useDispatch } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { SET_USERS, SET_ISSUES, SET_KEY_HOLDER, SET_COMMENTS, SET_SKILLS, SET_LIKES } from '../store/type';
+import { SET_USERS, SET_ISSUES, SET_KEY_HOLDER, SET_COMMENTS, SET_SKILLS } from '../store/type';
 import AppWrapper from './AppWrapper';
 import '../resources/App.css';
 // import { Container } from 'semantic-ui-react';
@@ -57,15 +57,6 @@ const App = props => {
     .then(skills => {
       // set skills in the store
       dispatch({ type: SET_SKILLS, payload: skills })
-    })
-
-    // fetch likes
-    fetch("http://localhost:3000/like_issues")
-    .then(r => r.json())
-    .then(likes => {
-      console.log("SET LIKES FETCH -->", likes)
-      // set likes in the store
-      dispatch({ type: SET_LIKES, payload: likes })
     })
 
   }, [dispatch])

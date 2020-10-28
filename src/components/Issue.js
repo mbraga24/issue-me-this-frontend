@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Grid, Icon, Button, Card, Image, Divider, Modal } from 'semantic-ui-react'
 import { Link, withRouter } from 'react-router-dom';
-import { DELETE_ISSUE, UPDATE_ISSUE, UPDATE_TITLE, UPDATE_BODY, REMOVE_KEY_HOLDER_LIKE, ADD_KEY_HOLDER_LIKE, ADD_LIKE, REMOVE_LIKE, ADD_KEY_HOLDER_FAVORITE, REMOVE_KEY_HOLDER_FAVORITE } from '../store/type';
+import { DELETE_ISSUE, UPDATE_ISSUE, UPDATE_TITLE, UPDATE_BODY, REMOVE_KEY_HOLDER_LIKE, ADD_KEY_HOLDER_LIKE, ADD_KEY_HOLDER_FAVORITE, REMOVE_KEY_HOLDER_FAVORITE } from '../store/type';
 import IssueForm from './IssueForm';
 import CreateHighlight from '../helpers/CreateHighlight';
 import '../resources/Issue.css';
@@ -17,7 +17,7 @@ const Issue = props => {
   const [ issueFavorite, setIssueFavorite ] = useState({})
   const [ favoriteStatus, setFavoriteStatus ] = useState(false)
 
-  const likeStore = useSelector(state => state.like.likes)
+  // const likeStore = useSelector(state => state.like.likes)
 
   const currentUser = useSelector(state => state.user.keyHolder)
   const issueTitle = useSelector(state => state.issue.issueTitle)
@@ -32,17 +32,15 @@ const Issue = props => {
     const issueFound = currentUser && currentUser.like_issues.find(issue => issue.issue_id === id)
     const favoriteFound = currentUser && currentUser.favorites.find(issue => issue.issue_id === id)
 
-    console.log("USE EFFECT -->", favoriteFound)
-
     setDislayLikeStatus(!!issueFound)
     setIssueLike(issueFound)
     setFavoriteStatus(!!favoriteFound)
     setIssueFavorite(favoriteFound)
     setThumbsUpOrDown(issueLike && issueLike.is_like ? true : false)
     
-  }, [currentUser, likeStore, issueLike, id, setIssueFavorite])
+  }, [currentUser, issueLike, id, setIssueFavorite])
 
-  console.log("FAVORITE --->", favoriteStatus)
+  // console.log("FAVORITE --->", favoriteStatus)
 
   const deleteIssue = () => {
     fetch(`http://localhost:3000/issues/${id}`, {
@@ -90,7 +88,6 @@ const Issue = props => {
     .then(r => r.json())
     .then(data => {
       dispatch({ type: REMOVE_KEY_HOLDER_LIKE, payload: data.like })
-      dispatch({ type: REMOVE_LIKE, payload: data.like })
       dispatch({ type: UPDATE_ISSUE, payload: data.issue })
     })
   }
@@ -105,9 +102,7 @@ const Issue = props => {
     })
     .then(r => r.json())
     .then(data => {
-      // console.log("POST LIKE FETCH ------>", data)
       dispatch({ type: ADD_KEY_HOLDER_LIKE, payload: data.like })
-      dispatch({ type: ADD_LIKE, payload: data.like })
       dispatch({ type: UPDATE_ISSUE, payload: data.issue })
     })
   }
@@ -123,7 +118,6 @@ const Issue = props => {
     .then(r => r.json())
     .then(data => {
       dispatch({ type: ADD_KEY_HOLDER_LIKE, payload: data.like })
-      dispatch({ type: ADD_LIKE, payload: data.like })
       dispatch({ type: UPDATE_ISSUE, payload: data.issue })
     })
   }
