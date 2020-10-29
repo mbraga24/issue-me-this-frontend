@@ -2,22 +2,22 @@ const accountOptions = [
   {
      color: "blue",
      iconName: "settings",
-     listHeader: "Update Account"
+     listHeader: "Update account"
   },
   {
      color: "blue",
      iconName: "star",
-     listHeader: "Favorite Issues"
+     listHeader: "Favorite issues"
   },
   {
      color: "blue",
      iconName: "boxes",
-     listHeader: "Manage Issues"
+     listHeader: "Manage issues"
   },
   {
     color: "blue",
     iconName: "thumbs up",
-    listHeader: "Liked Issues"
+    listHeader: "Issues you liked"
   }
 ]
 

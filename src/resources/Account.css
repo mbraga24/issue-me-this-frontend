@@ -1,5 +1,6 @@
 #Account-Container .Account-Profile-Details {
-  width: 90%;
+  width: 100%;
+  margin: 0 auto;
 }
 
 #Account-Container .Account-Header {
@@ -36,4 +37,8 @@
 #Account-Container .Account-Item-Name {
   margin-top: 7px;
   line-height: 1.2;
+}
+
+#Account-Container .Account-Not-Loggedin-User {
+  display: none;
 }

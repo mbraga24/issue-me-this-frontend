@@ -30,12 +30,12 @@ const Issue = props => {
 
   useEffect(() => {
     const issueFound = currentUser && currentUser.like_issues.find(issue => issue.issue_id === id)
-    const favoriteFound = currentUser && currentUser.favorites.find(issue => issue.issue_id === id)
+    // const favoriteFound = currentUser && currentUser.favorites.find(issue => issue.issue_id === id)
 
     setDislayLikeStatus(!!issueFound)
     setIssueLike(issueFound)
-    setFavoriteStatus(!!favoriteFound)
-    setIssueFavorite(favoriteFound)
+    // setFavoriteStatus(!!favoriteFound)
+    // setIssueFavorite(favoriteFound)
     setThumbsUpOrDown(issueLike && issueLike.is_like ? true : false)
     
   }, [currentUser, issueLike, id, setIssueFavorite])
@@ -154,9 +154,6 @@ const Issue = props => {
         <Grid.Column className="Issue-Inner-Wrap" width={12}>
             <Card fluid raised>
               <Card.Content className="Issue-Content">
-                <Card.Header>
-
-                </Card.Header>
                 <Card.Meta className="Issue-Item-Wrapper">
                   <Card.Meta className="Issue-Icon-Title">
                     <Link to={`/issues/${id}`}>
