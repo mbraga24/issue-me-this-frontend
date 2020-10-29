@@ -62,9 +62,6 @@ const Account = props => {
     ))
   }
 
-  
-  // console.log(popularIssues.length === 0)
-
   return (
     userProfile ?
       <React.Fragment>
@@ -89,11 +86,11 @@ const Account = props => {
               </Card>
             </Grid.Column>
             { 
-              <Grid.Column width={5} textAlign="center" className={`${(currentUser && !(currentUser.id === userId)) && "Account-Not-Loggedin-User"}`}>
+              <Grid.Column width={5} textAlign="center" className={`Account-Options-Wrapper ${(currentUser && !(currentUser.id === userId)) && "Account-Not-Loggedin-User"}`}>
                 <List verticalAlign='middle' >
                   { 
                     accountOptions.map(option => (
-                      <Button color={option.color} className="Account-Account-Options" >
+                      <Button as={Link} to={option.link} color={option.color} className="Account-Account-Options" >
                         <List.Item>
                           <List.Content>
                             <Icon name={option.iconName} size="big"/>

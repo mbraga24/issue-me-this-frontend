@@ -11,6 +11,7 @@ import UserContainer from './UserContainer';
 import NewIssueForm from './NewIssueForm';
 import ShowIssue from './ShowIssue';
 import Account from './Account';
+import FavoriteIssues from './FavoriteIssues';
 import '../resources/AppWrapper.css';
 import { SET_KEY_HOLDER } from '../store/type';
 
@@ -99,6 +100,7 @@ const AppWrapper = props => {
                       <Route path="/issues/new" component={NewIssueForm} />
                       <Route path="/issues/:id" component={ShowIssue} />
                       <Route exact path="/users" component={UserContainer} />
+                      <Route exact path="/favorite-issues" component={FavoriteIssues} />
                       <Route exact path="/home" component={Home} />
                     </Container>
                 </Switch>

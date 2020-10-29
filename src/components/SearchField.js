@@ -5,7 +5,7 @@ import { SET_SEARCH_TERM } from '../store/type';
 import { Search, Grid } from 'semantic-ui-react';
 import '../resources/SearchField.css';
 
-const SearchField = props => {
+const SearchField = () => {
 
   const dispatch = useDispatch()
 

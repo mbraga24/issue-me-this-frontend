@@ -1,0 +1,8 @@
+#FavoriteIssue-Container {
+  height: 100%;
+}
+
+#FavoriteIssue-Container .FavoriteIssue-Header {
+  margin: 20px;
+  font-size: 42px;
+}

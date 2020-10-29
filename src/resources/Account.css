@@ -1,3 +1,7 @@
+#Account-Container {
+  height: 100%;
+}
+
 #Account-Container .Account-Profile-Details {
   width: 100%;
   margin: 0 auto;
@@ -30,8 +34,13 @@
 }
 
 #Account-Container .Account-Account-Options {
-  width: 40%;
+  width: 35%;
   margin-bottom: 5px;
+}
+
+#Account-Container .Account-Options-Wrapper {
+  padding: 0;
+  margin: 0;
 }
 
 #Account-Container .Account-Item-Name {
