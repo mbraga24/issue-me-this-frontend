@@ -1,3 +1,7 @@
-#AppWrapper-Container {
-  /* height: 100%; */
+#Pushable-Sidebar {
+  /* height: 100vh; this is an option - pushbar retrieves on scroll */
+  height: 100vh;
 }
+/* #AppWrapper-Container {
+
+} */

@@ -6,14 +6,13 @@ import SearchField from './SearchField';
 import { findFavoriteIssues } from '../Library/Helpers';
 import '../resources/FavoriteIssues.css';
 
-const FavoriteIssues = props => {
-
+const IssuesLike = () => {
   const searchTerm = useSelector(state => state.term.searchTerm)
   const issues = useSelector(state => state.issue.issues)
   const currentUser = useSelector(state => state.user.keyHolder)
 
   const renderIssues = () => {
-    const filteredIssues = findFavoriteIssues(issues, currentUser.favorites).filter(issue => issue.title.toLowerCase().includes(searchTerm.toLowerCase()))
+    const filteredIssues = findFavoriteIssues(issues, currentUser.like_issues).filter(issue => issue.title.toLowerCase().includes(searchTerm.toLowerCase()))
   
     return filteredIssues.map(issue => (
       <Issue key={issue.id} issue={issue} displayBody={false} />
@@ -22,7 +21,7 @@ const FavoriteIssues = props => {
 
   return (
     <div id="FavoriteIssue-Container">
-      <Header as='h1' textAlign="center" color="grey" className="FavoriteIssue-Header">Your Favorite Issues</Header>
+      <Header as='h1' textAlign="center" color="grey" className="FavoriteIssue-Header">Issues You Like</Header>
       <SearchField />
       <Grid columns={1} divided id="Issue">
         {currentUser && renderIssues()}
@@ -31,4 +30,4 @@ const FavoriteIssues = props => {
   )
 }
 
-export default FavoriteIssues;
+export default IssuesLike;

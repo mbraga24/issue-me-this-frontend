@@ -69,7 +69,7 @@ const Account = props => {
         <Header as='h1' textAlign="center" color="grey" className="Account-Header">{(currentUser && currentUser.id === userId) ? `Hello, ${currentUser.first_name}! ` : `${userProfile.first_name} ${userProfile.last_name} Profile` }</Header>
         <Grid columns={3} stackable divided className="Account-Profile-Details">
           <Grid.Row>
-            <Grid.Column width={5}>
+            <Grid.Column width={4}>
               <Card className="Card-Wrapper">
                 <Image src={`https://semantic-ui.com/images/avatar/large/${userProfile.avatar}.jpg`} wrapped ui={false} />
                 <Card.Content>
@@ -103,21 +103,21 @@ const Account = props => {
                 </List>
               </Grid.Column>
             }
-            <Grid.Column width={3}>
-              <Grid.Row className="Row-Skills-Wrapper">
+            <Grid.Column width={7}>
+              <Grid.Row>
                 <Segment inverted color="grey" size="large" textAlign="center" className="Account-Header-Details">Top Skills</Segment>
-                  <Grid columns={2} padded className="Account-Skills">
-                    {renderSkills()}
-                  </Grid>
+                <Grid columns={2} padded className="Account-Skills">
+                  {renderSkills()}
+                </Grid>
               </Grid.Row>
             </Grid.Column>
           </Grid.Row>
         </Grid>
         
-        <Grid columns={1} padded className={`${currentUser && popularIssues.length > 0 ? "" : "Account-Not-Loggedin-User"}`}>
+        <Grid columns={1} stackable className={`${currentUser && popularIssues.length > 0 ? "" : "Account-Not-Loggedin-User"}`}>
           <Grid.Row>
-            <Segment inverted color="grey" size="large" textAlign="center" className="Account-Header-Details">Popular Issues</Segment>
-              <Grid columns={2} stackable padded>
+              <Grid columns={3} stackable padded>
+                <Segment inverted color="grey" size="large" textAlign="center" className="Account-Header-Details">Popular Issues</Segment>
                 {renderIssues()}
               </Grid>
           </Grid.Row>

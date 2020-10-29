@@ -1,5 +1,6 @@
 #Account-Container {
   height: 100%;
+  margin-left: 20px;
 }
 
 #Account-Container .Account-Profile-Details {
@@ -17,19 +18,12 @@
   margin: 0 auto;
 }
 
-#Account-Container .Row-Skills-Wrapper {
-  width: 400px;
-}
-
 #Account-Container .Account-Header-Details {
-  width: 95%;
-  margin: 0 auto;
+  width: 100%;
   font-weight: bold;
 }
 
 #Account-Container .Account-Skills {
-  width: 100%;
-  margin: 15px auto;
   font-weight: bold;
 }
 

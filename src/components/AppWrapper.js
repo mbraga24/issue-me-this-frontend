@@ -12,6 +12,7 @@ import NewIssueForm from './NewIssueForm';
 import ShowIssue from './ShowIssue';
 import Account from './Account';
 import FavoriteIssues from './FavoriteIssues';
+import IssuesLike from './IssuesLike';
 import '../resources/AppWrapper.css';
 import { SET_KEY_HOLDER } from '../store/type';
 
@@ -42,7 +43,7 @@ const AppWrapper = props => {
   return (
       <Grid columns={1}>
         <Grid.Column>
-          <Sidebar.Pushable>
+          <Sidebar.Pushable id="Pushable-Sidebar">
             <Sidebar
               color="teal"
               as={Menu}
@@ -100,7 +101,8 @@ const AppWrapper = props => {
                       <Route path="/issues/new" component={NewIssueForm} />
                       <Route path="/issues/:id" component={ShowIssue} />
                       <Route exact path="/users" component={UserContainer} />
-                      <Route exact path="/favorite-issues" component={FavoriteIssues} />
+                      <Route path="/favorite-issues" component={FavoriteIssues} />
+                      <Route path="/issues-like" component={IssuesLike} />
                       <Route exact path="/home" component={Home} />
                     </Container>
                 </Switch>
