@@ -26,7 +26,7 @@ const Account = props => {
 
   const renderSkills = () => {
     return userProfile.skills.map(skill => (
-      <Grid.Column>
+      <Grid.Column key={skill.id}>
         <Grid.Row>
           <Segment textAlign="center" key={`${skill.key}`} color={`${skill.color}`}>{skill.text}</Segment> 
         </Grid.Row>
@@ -86,11 +86,11 @@ const Account = props => {
               </Card>
             </Grid.Column>
             { 
-              <Grid.Column width={5} textAlign="center" className={`Account-Options-Wrapper ${(currentUser && !(currentUser.id === userId)) && "Account-Not-Loggedin-User"}`}>
+              <Grid.Column width={5} textAlign="center" className={`Account-Options-Wrapper ${(currentUser && currentUser.id === userId) ? "" : "Account-Not-Loggedin-User"}`}>
                 <List verticalAlign='middle' >
                   { 
                     accountOptions.map(option => (
-                      <Button as={Link} to={option.link} color={option.color} className="Account-Account-Options" >
+                      <Button key={option.iconName} as={Link} to={option.link} color={option.color} className="Account-Account-Options" >
                         <List.Item>
                           <List.Content>
                             <Icon name={option.iconName} size="big"/>

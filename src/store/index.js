@@ -4,13 +4,15 @@ import term from './SearchTerm';
 import issue from './Issue';
 import comment from './Comment';
 import skill from './Skill';
+import updateForm from './UpdateForm';
 
 const rootReducer = combineReducers({
   user,
   issue,
   term,
   comment,
-  skill
+  skill,
+  updateForm
 })
 
 const store = createStore(rootReducer)

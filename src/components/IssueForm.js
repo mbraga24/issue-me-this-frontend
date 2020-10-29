@@ -12,6 +12,7 @@ const IssueForm = props => {
   const instructionTitle = "Be very descriptive with the title of your question."
   const instructionPost = "Share your issue with others here.\nWhen you post a code snippet please add the special characters ``` before and after your code snippet.\nThis way the code can be displayed on the proper format of the language of your choice:\n```\n const sample = () => {\n    console.log('Issue me this?')\n }\n\n ``` \nThank you for sharing!"
   const currentUser = useSelector(state => state.user.keyHolder)
+
   const [ alertHeader, setAlertHeader ] = useState("")
   const [ alertStatus, setAlertStatus ] = useState(false)
   const [ message, setMessage ] = useState([])
@@ -24,13 +25,13 @@ const IssueForm = props => {
 
   const updateFields = () => {
     if (fields.title === "") {
-      fields.title = props.issueData.title
+      fields.title = props.dataTitle
     } 
     if (fields.issueBody === "") {
-      fields.issueBody = props.issueData.issue_body
+      fields.issueBody = props.dataBody
     } 
     // if (fields.syntax === "") {
-    //   fields.syntax = props.issueData.syntax
+    //   fields.syntax = props.dataSyntax
     // } 
 
     dispatch({ type: UPDATE_TITLE, payload: fields.title })
@@ -96,14 +97,22 @@ const IssueForm = props => {
         <Grid.Row>
           <Grid.Column width={12} className="IssueForm-Grid-Wrapper">
             <Form onSubmit={props.displayContent ? addIssue : null}>
-              <Form.Group widths='equal'>
-                <Form.Input fluid name="title" defaultValue={props.issueData ? props.issueData.title : undefined} placeholder={instructionTitle} onChange={handleFieldChange}/>
-              </Form.Group>
+              {
+                props.dataTitle ? 
+                <Form.Group widths='equal'>
+                  <Form.Input 
+                    fluid name="title" 
+                    defaultValue={props.dataTitle} 
+                    placeholder={instructionTitle} 
+                    onChange={handleFieldChange}
+                  />
+                </Form.Group> : null
+              }
               <Form.TextArea 
                 name="issueBody" 
                 style={{height: "250px"}}
                 onChange={handleFieldChange}
-                defaultValue={props.issueData ? props.issueData.issue_body : undefined}
+                defaultValue={props.dataBody ? props.dataBody : undefined}
                 placeholder={instructionPost} />
               { 
                 props.displayContent &&

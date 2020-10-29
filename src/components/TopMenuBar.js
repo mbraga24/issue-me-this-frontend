@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Menu, Icon } from 'semantic-ui-react';
-import { Link } from 'react-router-dom';
+import { Menu, Icon, Dropdown } from 'semantic-ui-react';
+import { Link, withRouter } from 'react-router-dom';
 import '../resources/TopMenuBar.css';
 
 const TopMenuBar = props => {
-
+  const pathName = props.location.pathname.split("/")[1]
   const currentUser = useSelector(state => state.user.keyHolder)
-  const [ activeItem, setActiveItem ] = useState("home")
+  const [ activeItem, setActiveItem ] = useState(`${pathName}`)
   const handleItemClick = (e, { name }) => {
     setActiveItem(name)
   }
@@ -28,44 +28,35 @@ const TopMenuBar = props => {
           onClick={handleItemClick}
           className="TopMenu-Item"
         />
-      {currentUser &&
+      {
+        currentUser &&
         <>
-            <Menu.Item
-              as={Link}
-              to={`/issues`}
-              name='issues'
-              active={activeItem === 'issues'}
-              onClick={handleItemClick}
-              className="TopMenu-Item"
-            />     
-            <Menu.Item
-              as={Link}
-              to={`/users`}
-              name='users'
-              active={activeItem === 'users'}
-              onClick={handleItemClick}
-              className="TopMenu-Item"
-            />
-            <Menu.Item
-              as={Link}
-              to={`/issues/new`}
-              name='new issue'
-              active={activeItem === 'new issue'}
-              onClick={handleItemClick}
-              className="TopMenu-Item"
-            />
-            <Menu.Item
-              as={Link}
-              to={`/users/${currentUser.id}`}
-              name='account'
-              active={activeItem === 'account'}
-              onClick={handleItemClick}
-              className="TopMenu-Item"
-            />
+          <Dropdown text='More' pointing className='TopMenu-Item link item'>
+            <Dropdown.Menu>
+              <Dropdown.Item as={Link} to={`/issues`}>Issues</Dropdown.Item>
+              <Dropdown.Item as={Link} to={`/users`}>Users</Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
+          <Menu.Item
+            as={Link}
+            to={`/account/${currentUser.id}`}
+            name='account'
+            active={activeItem === 'account'}
+            onClick={handleItemClick}
+            className="TopMenu-Item"
+          /> 
+          <Menu.Item
+            as={Link}
+            to={`/new/issue`}
+            name='new issue'
+            active={activeItem === 'new issue'}
+            onClick={handleItemClick}
+            className="TopMenu-Item"
+          />
         </>
       }
     </Menu>
   );
 } 
 
-export default TopMenuBar;
+export default withRouter(TopMenuBar);

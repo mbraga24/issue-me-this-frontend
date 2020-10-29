@@ -65,11 +65,11 @@ const AppWrapper = props => {
               </Menu.Item>
               { currentUser ?
                 <>
-                  <Menu.Item as={Link} to={`/users/${currentUser.id}`}>
+                  <Menu.Item as={Link} to={`/account/${currentUser.id}`}>
                     <Icon name='id badge' size="large" />
                     Account
                   </Menu.Item>
-                  <Menu.Item as={Link} to="/issues/new">
+                  <Menu.Item as={Link} to="/new/issue">
                     <Icon name='pen square' size="large" />
                     New Issue
                   </Menu.Item>
@@ -98,8 +98,8 @@ const AppWrapper = props => {
                       <Route path="/login" component={Login} />
                       <Route path="/signup" component={SignUp} />
                       <Route exact path="/issues" component={IssueContainer} />
-                      <Route path="/users/:id" component={Account} />
-                      <Route path="/issues/new" component={NewIssueForm} />
+                      <Route path="/account/:id" component={Account} />
+                      <Route path="/new/issue" component={NewIssueForm} />
                       <Route path="/issues/:id" component={ShowIssue} />
                       <Route exact path="/users" component={UserContainer} />
                       <Route path="/favorite-issues" component={FavoriteIssues} />

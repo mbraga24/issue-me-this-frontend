@@ -17,9 +17,14 @@ const Issue = props => {
   const [ issueFavorite, setIssueFavorite ] = useState({})
   const [ favoriteStatus, setFavoriteStatus ] = useState(false)
 
+  const [ alertHeader, setAlertHeader ] = useState("")
+  const [ alertStatus, setAlertStatus ] = useState(false)
+  const [ message, setMessage ] = useState([])
+
   const currentUser = useSelector(state => state.user.keyHolder)
-  const issueTitle = useSelector(state => state.issue.issueTitle)
-  const issueBody = useSelector(state => state.issue.issueBody)
+  const updateTitle = useSelector(state => state.updateForm.updateTitle)
+  const updateBody = useSelector(state => state.updateForm.updateBody)
+  // const updateSyntax = useSelector(state => state.updateForm.updateSyntax)
 
   const { id, title, comments, issue_body, syntax, user } = props.issue
   const totalComments = comments.length
@@ -51,9 +56,9 @@ const Issue = props => {
 
   const updateIssue = () => {
     const data = {
-      title: issueTitle,
-      issue_body: issueBody
-      // syntax: "javascript"
+      title: updateTitle,
+      issue_body: updateBody
+      // syntax: updateSyntax
     }
     
     fetch(`http://localhost:3000/issues/${id}`, {
@@ -65,16 +70,15 @@ const Issue = props => {
     })
     .then(r => r.json())
     .then(data => {
-      console.log("UPDATED ISSUE -->", data.issue)
       if (data.errorStatus) {
-        console.log("ERROR --->", data.error)
+        handleMessages(data)
       } else {
         dispatch({ type: UPDATE_ISSUE , payload: data.issue })
-        dispatch({ type: UPDATE_TITLE , payload: "" })
-        dispatch({ type: UPDATE_BODY , payload: "" })
+        setOpen(false)
       }
     })  
-    setOpen(false)
+    dispatch({ type: UPDATE_TITLE , payload: "" })
+    dispatch({ type: UPDATE_BODY , payload: "" })
   }
 
   const unlike = () => {
@@ -145,6 +149,27 @@ const Issue = props => {
     }
   }
 
+  const handleMessages = data => {
+    setAlertHeader(data.header)
+    setAlertStatus(true)
+    handleDismissCountDown()
+    setMessage(data.error)
+  }
+
+  const renderAlertMessage = () => {
+    return message.map(message => <li className="content">{message}</li> )
+  }
+
+  const handleDismissOnClick = () => {
+    setAlertStatus(false)
+  }
+
+  const handleDismissCountDown = () => {
+    setTimeout(() => {
+      setAlertStatus(false)
+    }, 4000)
+  }
+
   return (
       <Grid.Row>
         <Grid.Column className="Issue-Inner-Wrap" width={12}>
@@ -159,7 +184,7 @@ const Issue = props => {
                   <Card.Meta className="Issue-Icon-Avatar" textAlign='right'>
                     <Image
                       as={Link}
-                      to={`/users/${user.id}`}
+                      to={`/account/${user.id}`}
                       className="Image"
                       size='big'
                       avatar
@@ -207,7 +232,25 @@ const Issue = props => {
                     >
                       <Modal.Header>Update Issue</Modal.Header>
                       <Modal.Content>
-                        <IssueForm displayContent={false} isUpdateForm={true} issueData={props.issue} />
+                        <IssueForm 
+                          displayContent={false} 
+                          isUpdateForm={true} 
+                          dataTitle={title} 
+                          dataBody={issue_body} 
+                          dataSyntax={syntax} 
+                        />
+                        {
+                          (alertStatus && !!message) && 
+                            <div className="ui negative message">
+                              <i className="close icon" onClick={handleDismissOnClick}></i>
+                              <div className="header">
+                                {alertHeader}
+                              </div>
+                              <ul className="list">
+                                {message.length !== 0 ? renderAlertMessage() : null}
+                              </ul>
+                            </div>
+                        }
                       </Modal.Content>
                       <Modal.Actions>
                         <Button onClick={() => setOpen(false)} color='teal'>Cancel</Button>

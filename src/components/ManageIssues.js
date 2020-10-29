@@ -20,9 +20,6 @@ const ManageIssues = props => {
     ))
   }
 
-  console.log("MY ISSUES -->",currentUser && currentUser.issues)
-  console.log("ISSUES -->",issues)
-
   return (
     <div id="FavoriteIssue-Container">
       <Header as='h1' textAlign="center" color="grey" className="FavoriteIssue-Header">Manage Issues</Header>

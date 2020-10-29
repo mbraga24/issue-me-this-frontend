@@ -1,4 +1,4 @@
-import { SET_COMMENTS, ADD_COMMENT, DELETE_COMMENT } from './type';
+import { SET_COMMENTS, ADD_COMMENT, UPDATE_COMMENT, DELETE_COMMENT } from './type';
 
 const defaultState = {
   comments: []
@@ -20,6 +20,12 @@ const store = (state = defaultState, action) => {
       return {
         ...state,
         comments: [action.payload, ...state.comments]
+      }
+    case UPDATE_COMMENT:
+      const updateComments = state.comments.map(comment => comment.id !== action.payload.id ? comment : action.payload)
+      return {
+        ...state,
+        comments: [...updateComments]
       }
     case DELETE_COMMENT:
       const filteredComments = state.comments.filter(comment => comment.id !== action.payload.id)
