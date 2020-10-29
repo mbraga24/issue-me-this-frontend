@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Form, Button, Segment, Dropdown, Label, Header } from 'semantic-ui-react'
-import { avatarOptions } from '../helpers/avatar';
+import { avatarOptions } from '../Library/avatar';
 import useFormFields from '../hooks/useFormFields';
 import '../resources/SignUp.css';
 import { ADD_USER, SET_KEY_HOLDER } from '../store/type';

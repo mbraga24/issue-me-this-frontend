@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
 import { Card, Image, Segment, Grid, Header, Icon, List, Button } from 'semantic-ui-react'
-import accountOptions from '../helpers/accountOptions';
+import accountOptions from '../Library/accountOptions';
 import '../resources/Account.css';
 
 const Account = props => {

@@ -54,6 +54,14 @@ const TopMenuBar = props => {
               onClick={handleItemClick}
               className="TopMenu-Item"
             />
+            <Menu.Item
+              as={Link}
+              to={`/users/${currentUser.id}`}
+              name='account'
+              active={activeItem === 'account'}
+              onClick={handleItemClick}
+              className="TopMenu-Item"
+            />
         </>
       }
     </Menu>

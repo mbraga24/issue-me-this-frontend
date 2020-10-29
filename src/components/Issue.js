@@ -17,8 +17,6 @@ const Issue = props => {
   const [ issueFavorite, setIssueFavorite ] = useState({})
   const [ favoriteStatus, setFavoriteStatus ] = useState(false)
 
-  // const likeStore = useSelector(state => state.like.likes)
-
   const currentUser = useSelector(state => state.user.keyHolder)
   const issueTitle = useSelector(state => state.issue.issueTitle)
   const issueBody = useSelector(state => state.issue.issueBody)
