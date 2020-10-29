@@ -30,17 +30,15 @@ const Issue = props => {
 
   useEffect(() => {
     const issueFound = currentUser && currentUser.like_issues.find(issue => issue.issue_id === id)
-    // const favoriteFound = currentUser && currentUser.favorites.find(issue => issue.issue_id === id)
+    const favoriteFound = currentUser && currentUser.favorites.find(issue => issue.issue_id === id)
 
     setDislayLikeStatus(!!issueFound)
     setIssueLike(issueFound)
-    // setFavoriteStatus(!!favoriteFound)
-    // setIssueFavorite(favoriteFound)
+    setFavoriteStatus(!!favoriteFound)
+    setIssueFavorite(favoriteFound)
     setThumbsUpOrDown(issueLike && issueLike.is_like ? true : false)
     
   }, [currentUser, issueLike, id, setIssueFavorite])
-
-  // console.log("FAVORITE --->", favoriteStatus)
 
   const deleteIssue = () => {
     fetch(`http://localhost:3000/issues/${id}`, {
