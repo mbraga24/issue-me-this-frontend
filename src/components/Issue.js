@@ -208,15 +208,19 @@ const Issue = props => {
                   </Card.Meta>
                   <Card.Content extra className="Issue-Item-Extra">
                     { 
-                      displayLikeStatus ? 
+                      currentUser && displayLikeStatus ? 
                       <Button circular color={thumbsUpOrDown ? "blue" : "grey"} icon={ thumbsUpOrDown ? "thumbs up" : "thumbs down"} size="large" onClick={unlike} />
                       :
+                      (currentUser && currentUser.id !== user.id) && 
                       <React.Fragment>
-                        <Button circular color="teal" icon='thumbs up outline' size="large" onClick={likeBtn} />
-                        <Button circular color="teal" icon='thumbs down outline' size="large" onClick={dislikeBtn} />
-                      </React.Fragment>
+                          <Button circular color="teal" icon='thumbs up outline' size="large" onClick={likeBtn} />
+                          <Button circular color="teal" icon='thumbs down outline' size="large" onClick={dislikeBtn} />
+                        </React.Fragment>
                     }
-                    <Button circular color={favoriteStatus ? "olive" : "teal"} icon={favoriteStatus ? "star" : "star outline"} size="large" onClick={favoriteBtn} />
+                    {
+                      (currentUser && currentUser.id !== user.id) && 
+                        <Button circular color={favoriteStatus ? "olive" : "teal"} icon={favoriteStatus ? "star" : "star outline"} size="large" onClick={favoriteBtn} />
+                    }
                   </Card.Content>
                 </Card.Meta>
               </Card.Content>
