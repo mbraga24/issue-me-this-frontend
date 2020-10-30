@@ -1,4 +1,4 @@
-const findIssueIds = userList => {
+export const findIds = userList => {
     return userList.map(item => item.issue_id)
 }
 
@@ -7,6 +7,6 @@ const findIssueIds = userList => {
 
 // currentUser.like_issues
 // currentUser.favorites
-export const findIssues = (issues, userList) => {
-  return issues.filter(issue => (findIssueIds(userList).includes(issue.id)))
+export const findIssues = (issues, issueIds) => {
+  return issues.filter(issue => (issueIds.includes(issue.id)))
 }

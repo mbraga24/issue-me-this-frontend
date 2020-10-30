@@ -104,9 +104,9 @@ const AppWrapper = props => {
                       <Route path="/issues/:id" component={ShowIssue} />
                       <Route exact path="/users" component={UserContainer} />
                       <Route path="/favorite-issues" component={FavoriteIssues} />
-                      <Route path="/issues-liked" component={IssuesLiked} />
-                      <Route path="/manage-issues" component={ManageIssues} />
-                      <Route path="/issues/user/:id" component={UserIssues} />
+                      <Route path="/liked-issues" component={IssuesLiked} />
+                      {/* <Route path="/manage-issues" component={ManageIssues} /> */}
+                      <Route path="/view-issues/user/:id" component={UserIssues} />
                       <Route exact path="/home" component={Home} />
                     </Container>
                 </Switch>

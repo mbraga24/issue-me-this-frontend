@@ -12,8 +12,16 @@ const ManageIssues = props => {
   const currentUser = useSelector(state => state.user.keyHolder)
 
   const findIssueIds = (userIssues) => {
-    return userIssues.map(issue => (issue.id))
+    return userIssues.map(issue => issue.id)
   }
+
+  // export const findIds = userList => {
+  //   return userList.map(item => item.issue_id)
+  // }
+
+  // const findIssues = () => {
+  //   return issues.filter(issue => (issueIds.includes(issue.id)))
+  // }
 
   const findIssues = () => {
     return issues.filter(issue => (findIssueIds(currentUser.issues).includes(issue.id)))

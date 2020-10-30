@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Header, Grid } from 'semantic-ui-react'
 import Issue from './Issue';
 import SearchField from './SearchField';
-import { findIssues } from '../Library/Helpers';
+import { findIds } from '../Library/Helpers';
 import '../resources/FavoriteIssues.css';
 
 const IssuesLiked = () => {
@@ -11,9 +11,20 @@ const IssuesLiked = () => {
   const searchTerm = useSelector(state => state.term.searchTerm)
   const issues = useSelector(state => state.issue.issues)
   const currentUser = useSelector(state => state.user.keyHolder)
+  const [ issueIds, setIssueIds ] = useState([])
+
+  useEffect(() => {
+    const ids = findIds(currentUser.favorites)
+    setIssueIds(ids)
+
+  }, [currentUser])
+
+  const findIssues = () => {
+    return issues.filter(issue => (issueIds.includes(issue.id)))
+  }
 
   const renderIssues = () => {
-    const filteredIssues = findIssues(issues, currentUser.like_issues).filter(issue => issue.title.toLowerCase().includes(searchTerm.toLowerCase()))
+    const filteredIssues = findIssues().filter(issue => issue.title.toLowerCase().includes(searchTerm.toLowerCase()))
   
     return filteredIssues.map(issue => (
       <Issue key={issue.id} issue={issue} displayBody={false} />
