@@ -1,5 +1,5 @@
 export const findIds = (userList, pathname) => {
-  if(pathname === "/view") {
+  if (pathname === "/view") {
     return userList.map(item => item.id)
   } else {
     return userList.map(item => item.issue_id)

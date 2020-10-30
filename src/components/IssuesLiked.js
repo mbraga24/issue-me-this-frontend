@@ -15,7 +15,7 @@ const IssuesLiked = props => {
   const [ issueIds, setIssueIds ] = useState([])
 
   useEffect(() => {
-    const thumbsUp = currentUser.like_issues.filter(like => like.is_like)
+    const thumbsUp = currentUser && currentUser.like_issues.filter(like => like.is_like)
     const ids = currentUser && findIds(thumbsUp, pathname)
     setIssueIds(ids)
 
