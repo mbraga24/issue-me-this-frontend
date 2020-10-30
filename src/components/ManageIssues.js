@@ -3,7 +3,6 @@ import { useSelector } from 'react-redux';
 import { Header, Grid } from 'semantic-ui-react'
 import Issue from './Issue';
 import SearchField from './SearchField';
-import { findFavoriteIssues } from '../Library/Helpers';
 import '../resources/FavoriteIssues.css';
 
 const ManageIssues = props => {
@@ -12,8 +11,16 @@ const ManageIssues = props => {
   const issues = useSelector(state => state.issue.issues)
   const currentUser = useSelector(state => state.user.keyHolder)
 
+  const findIssueIds = (userIssues) => {
+    return userIssues.map(issue => (issue.id))
+  }
+
+  const findIssues = () => {
+    return issues.filter(issue => (findIssueIds(currentUser.issues).includes(issue.id)))
+  }
+
   const renderIssues = () => {
-    const filteredIssues = findFavoriteIssues(issues, currentUser.issues).filter(issue => issue.title.toLowerCase().includes(searchTerm.toLowerCase()))
+    const filteredIssues = findIssues().filter(issue => issue.title.toLowerCase().includes(searchTerm.toLowerCase()))
   
     return filteredIssues.map(issue => (
       <Issue key={issue.id} issue={issue} displayBody={false} />
@@ -22,7 +29,9 @@ const ManageIssues = props => {
 
   return (
     <div id="FavoriteIssue-Container">
-      <Header as='h1' textAlign="center" color="grey" className="FavoriteIssue-Header">Manage Issues</Header>
+      <Header as='h1' textAlign="center" color="grey" className="FavoriteIssue-Header">
+        Manage Issues
+      </Header>
       <SearchField />
       <Grid columns={1} divided id="Issue">
         {currentUser && renderIssues()}

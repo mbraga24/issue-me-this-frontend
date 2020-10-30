@@ -21,7 +21,7 @@ const accountOptions = [
     color: "blue",
     iconName: "thumbs up",
     listHeader: "Issues you liked",
-    link: "/issues-like"
+    link: "/issues-liked"
   }
 ]
 

@@ -6,7 +6,8 @@ import SearchField from './SearchField';
 import { findFavoriteIssues } from '../Library/Helpers';
 import '../resources/FavoriteIssues.css';
 
-const IssuesLike = () => {
+const IssuesLiked = () => {
+  
   const searchTerm = useSelector(state => state.term.searchTerm)
   const issues = useSelector(state => state.issue.issues)
   const currentUser = useSelector(state => state.user.keyHolder)
@@ -24,10 +25,10 @@ const IssuesLike = () => {
       <Header as='h1' textAlign="center" color="grey" className="FavoriteIssue-Header">Issues You Like</Header>
       <SearchField />
       <Grid columns={1} divided id="Issue">
-        {currentUser && renderIssues()}
+        {currentUser ? renderIssues() : <h1>Empty</h1>}
       </Grid>
     </div>
   )
 }
 
-export default IssuesLike;
+export default IssuesLiked;

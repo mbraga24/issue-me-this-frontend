@@ -25,7 +25,7 @@ const FavoriteIssues = props => {
       <Header as='h1' textAlign="center" color="grey" className="FavoriteIssue-Header">Your Favorite Issues</Header>
       <SearchField />
       <Grid columns={1} divided id="Issue">
-        {currentUser && renderIssues()}
+        {currentUser ? renderIssues() : <h1>Empty</h1>}
       </Grid>
     </div>
   )
