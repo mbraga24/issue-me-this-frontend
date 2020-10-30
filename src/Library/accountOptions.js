@@ -14,8 +14,8 @@ const accountOptions = [
   {
      color: "blue",
      iconName: "boxes",
-     listHeader: "Manage issues",
-     link: "/manage-issues"
+     listHeader: "Manage issues"
+   //   link: "/manage-issues"
   },
   {
     color: "blue",

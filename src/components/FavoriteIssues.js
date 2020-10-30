@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { Header, Grid } from 'semantic-ui-react'
 import Issue from './Issue';
 import SearchField from './SearchField';
-import { findFavoriteIssues } from '../Library/Helpers';
+import { findIssues } from '../Library/Helpers';
 import '../resources/FavoriteIssues.css';
 
 const FavoriteIssues = props => {
@@ -13,7 +13,7 @@ const FavoriteIssues = props => {
   const currentUser = useSelector(state => state.user.keyHolder)
 
   const renderIssues = () => {
-    const filteredIssues = findFavoriteIssues(issues, currentUser.favorites).filter(issue => issue.title.toLowerCase().includes(searchTerm.toLowerCase()))
+    const filteredIssues = findIssues(issues, currentUser.favorites).filter(issue => issue.title.toLowerCase().includes(searchTerm.toLowerCase()))
   
     return filteredIssues.map(issue => (
       <Issue key={issue.id} issue={issue} displayBody={false} />
