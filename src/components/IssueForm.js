@@ -18,35 +18,35 @@ const IssueForm = props => {
   const [ message, setMessage ] = useState([])
 
   const [ fields, handleFieldChange ] = useFormFields({
-    title: "",
-    issueBody: ""
+    formTitle: "",
+    formBody: ""
     // syntax: ""
   })
-
+  
   const updateFields = () => {
-    if (fields.title === "") {
-      fields.title = props.dataTitle
+    if (fields.formTitle === "") {
+      fields.formTitle = props.dataTitle
     } 
-    if (fields.issueBody === "") {
-      fields.issueBody = props.dataBody
+    if (fields.formBody === "") {
+      fields.formBody = props.dataBody
     } 
     // if (fields.syntax === "") {
     //   fields.syntax = props.dataSyntax
     // } 
+      
+      dispatch({ type: UPDATE_TITLE, payload: fields.formTitle })
+      dispatch({ type: UPDATE_BODY, payload: fields.formBody })
+      // dispatch({ type: UPDATE_SYNTAX, payload: fields.syntax })
+    }
 
-    dispatch({ type: UPDATE_TITLE, payload: fields.title })
-    dispatch({ type: UPDATE_BODY, payload: fields.issueBody })
-    // dispatch({ type: UPDATE_SYNTAX, payload: fields.syntax })
-  }
-
-  if (props.isUpdateForm) { updateFields() } 
-
-  const addIssue = (event) => {
+    props.isUpdateForm && updateFields()
+    
+    const addIssue = (event) => {
     event.preventDefault()
     
     const newIssue = {
-      title: fields.title,
-      issue_body: fields.issueBody,
+      title: fields.formTitle,
+      issue_body: fields.formBody,
       syntax: 'javascript'
     }
 
@@ -98,10 +98,11 @@ const IssueForm = props => {
           <Grid.Column width={12} className="IssueForm-Grid-Wrapper">
             <Form onSubmit={props.displayContent ? addIssue : null}>
               {
-                props.dataTitle ? 
+                props.dataTitle || props.newIssueForm ? 
                 <Form.Group widths='equal'>
                   <Form.Input 
-                    fluid name="title" 
+                    fluid 
+                    name="formTitle" 
                     defaultValue={props.dataTitle} 
                     placeholder={instructionTitle} 
                     onChange={handleFieldChange}
@@ -109,7 +110,7 @@ const IssueForm = props => {
                 </Form.Group> : null
               }
               <Form.TextArea 
-                name="issueBody" 
+                name="formBody" 
                 style={{height: "250px"}}
                 onChange={handleFieldChange}
                 defaultValue={props.dataBody ? props.dataBody : undefined}

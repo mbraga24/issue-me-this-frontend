@@ -38,12 +38,14 @@ const Comment = props => {
 
 
   const updateComment = () => {
+    console.log("UPDATE COMMENT -->", updateBody)
     const data = {
       comment_body: updateBody
       // syntax: updateSyntax
     }
+    console.log("UPDATE COMMENT data -->", data)
     
-    fetch(`http://localhost:3000/comments/${id}`, {
+    fetch(`http://localhost:3000/comments/${props.comment.id}`, {
       method: "PATCH",
       headers: {
         'Content-Type': 'application/json'

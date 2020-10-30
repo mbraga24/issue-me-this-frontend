@@ -16,6 +16,7 @@ const Issue = props => {
   const [ issueLike, setIssueLike ] = useState({})
   const [ issueFavorite, setIssueFavorite ] = useState({})
   const [ favoriteStatus, setFavoriteStatus ] = useState(false)
+  const [ hasComment, setHasComment ] = useState(false)
 
   const [ alertHeader, setAlertHeader ] = useState("")
   const [ alertStatus, setAlertStatus ] = useState(false)
@@ -30,18 +31,19 @@ const Issue = props => {
   const totalComments = comments.length
   const imgUrl = `https://semantic-ui.com/images/avatar/small/${user.avatar}.jpg`
 
-
   useEffect(() => {
     const issueFound = currentUser && currentUser.like_issues.find(issue => issue.issue_id === id)
     const favoriteFound = currentUser && currentUser.favorites.find(issue => issue.issue_id === id)
+    const foundComment = currentUser && comments.find(comment => comment.user_id === currentUser.id)
 
+    setHasComment(foundComment)
     setDislayLikeStatus(!!issueFound)
     setIssueLike(issueFound)
     setFavoriteStatus(!!favoriteFound)
     setIssueFavorite(favoriteFound)
     setThumbsUpOrDown(issueLike && issueLike.is_like ? true : false)
     
-  }, [currentUser, issueLike, id, setIssueFavorite])
+  }, [currentUser, issueLike, id, setIssueFavorite, comments])
 
   const deleteIssue = () => {
     fetch(`http://localhost:3000/issues/${id}`, {
@@ -203,7 +205,7 @@ const Issue = props => {
                 <Divider clearing />
                 <Card.Meta className="Issue-Item-Wrapper">
                   <Card.Meta className="Issue-Item-Extra">
-                    <Icon name='comment alternate' size="large" />
+                    <Icon name={hasComment ? "comment alternate" : "comment outline"} size="large" />
                     <span className="Issue-Comment">{totalComments} Comments</span>
                   </Card.Meta>
                   <Card.Content extra className="Issue-Item-Extra">
@@ -232,13 +234,13 @@ const Issue = props => {
                       onClose={() => setOpen(false)}
                       onOpen={() => setOpen(true)}
                       open={open}
-                      trigger={<Button inverted color='green'> Edit </Button>}
+                      trigger={<Button inverted color='green'>Edit</Button>}
                     >
                       <Modal.Header>Update Issue</Modal.Header>
                       <Modal.Content>
                         <IssueForm 
-                          displayContent={false} 
                           isUpdateForm={true} 
+                          displayContent={false} 
                           dataTitle={title} 
                           dataBody={issue_body} 
                           dataSyntax={syntax} 

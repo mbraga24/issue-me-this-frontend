@@ -14,6 +14,7 @@ import Account from './Account';
 import FavoriteIssues from './FavoriteIssues';
 import IssuesLiked from './IssuesLiked';
 import UserIssues from './UserIssues';
+import UpdateAccount from './UpdateAccount';
 import '../resources/AppWrapper.css';
 import { SET_KEY_HOLDER } from '../store/type';
 
@@ -55,7 +56,7 @@ const AppWrapper = props => {
               visible={visible}
               width='wide'
             >
-              <Menu.Item as={Link} to="/home">
+              <Menu.Item as={Link} to="/">
                 <Icon name='home' size="large" />
                 Home
               </Menu.Item>
@@ -105,7 +106,8 @@ const AppWrapper = props => {
                       <Route path="/favorite-issues" component={FavoriteIssues} />
                       <Route path="/liked-issues" component={IssuesLiked} />
                       <Route path="/view-issues/user/:id" component={UserIssues} />
-                      <Route exact path="/home" component={Home} />
+                      <Route path="/update-account" component={UpdateAccount} />
+                      <Route exact path="/" component={Home} />
                     </Container>
                 </Switch>
             </Sidebar.Pusher>

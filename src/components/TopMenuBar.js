@@ -22,7 +22,7 @@ const TopMenuBar = props => {
       </Menu.Item>
         <Menu.Item
           as={Link}
-          to={`/home`}
+          to={`/`}
           name='home'
           active={activeItem === 'home'}
           onClick={handleItemClick}
