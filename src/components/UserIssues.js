@@ -3,45 +3,39 @@ import { useSelector } from 'react-redux';
 import { Header, Grid } from 'semantic-ui-react'
 import Issue from './Issue';
 import SearchField from './SearchField';
+import { findIds, findIssues } from '../Library/Helpers';
 import '../resources/FavoriteIssues.css';
 
 const UserIssues = props => {
 
   const searchTerm = useSelector(state => state.term.searchTerm)
+  const pathname = props.location.pathname.split("-")[0]
   const currentUser = useSelector(state => state.user.keyHolder)
   const issues = useSelector(state => state.issue.issues)
   const users = useSelector(state => state.user.users)
   const userId = parseInt(props.match.params.id)
   const [ userProfile, setUserProfile ] = useState(null)
+  const [ issueIds, setIssueIds ] = useState([])
+
+  console.log("props --->", pathname)
 
   useEffect(() => {
-    const user = users.find(user => user.id === userId)
+    const user = users && users.find(user => user.id === userId)
+    const userIssues = issues && issues.filter(issue => issue.user.id === userId)
+    const ids = findIds(userIssues, pathname)
     setUserProfile(user)
+    setIssueIds(ids)
 
-  }, [users, userId])
+  }, [userId, users, issues, userProfile, pathname])
 
-  // HOW TO COMBINE THESE FUNCTIONS TO THE THE SAME ONES ON FAVORITE ISSUES AND LIKED ISSUES ?
-  // CANNOT CHANGE HOW DATA RETURNS FROM SERIALIZER BECAUSE THE ISSUES OF A USER ARE ONE LEVEL DEEPER
-   
-  // const findTheseIssueIds = (userIssues) => {
-  //   return userIssues.map(issue => (issue.id))
-  // }
-
-  const findTheseIssues = () => {
-    return issues.filter(issue => issue.user.id === userId)
-  }
-
-  findTheseIssues()
   const renderIssues = () => {
-    // const filteredIssues = findTheseIssues().filter(issue => issue.title.toLowerCase().includes(searchTerm.toLowerCase()))
-    const filteredIssues = findTheseIssues().filter(issue => issue.title.toLowerCase().includes(searchTerm.toLowerCase()))
+    const filteredIssues = findIssues(issues, issueIds).filter(issue => issue.title.toLowerCase().includes(searchTerm.toLowerCase()))
   
     return filteredIssues.map(issue => (
       <Issue key={issue.id} issue={issue} displayBody={false} />
     ))
   }
 
-  console.log("USER ISSUES -->")
   return (
     <div id="FavoriteIssue-Container">
       <Header as='h1' textAlign="center" color="grey" className="FavoriteIssue-Header">

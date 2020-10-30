@@ -3,28 +3,27 @@ import { useSelector } from 'react-redux';
 import { Header, Grid } from 'semantic-ui-react'
 import Issue from './Issue';
 import SearchField from './SearchField';
-import { findIds } from '../Library/Helpers';
+import { findIds, findIssues } from '../Library/Helpers';
 import '../resources/FavoriteIssues.css';
 
-const IssuesLiked = () => {
+const IssuesLiked = props => {
   
   const searchTerm = useSelector(state => state.term.searchTerm)
+  const pathname = props.location.pathname.split("-")[0]
   const issues = useSelector(state => state.issue.issues)
   const currentUser = useSelector(state => state.user.keyHolder)
   const [ issueIds, setIssueIds ] = useState([])
 
+  console.log("props --->", pathname)
+
   useEffect(() => {
-    const ids = findIds(currentUser.favorites)
+    const ids = currentUser && findIds(currentUser.like_issues, pathname)
     setIssueIds(ids)
 
-  }, [currentUser])
-
-  const findIssues = () => {
-    return issues.filter(issue => (issueIds.includes(issue.id)))
-  }
+  }, [currentUser, pathname])
 
   const renderIssues = () => {
-    const filteredIssues = findIssues().filter(issue => issue.title.toLowerCase().includes(searchTerm.toLowerCase()))
+    const filteredIssues = findIssues(issues, issueIds).filter(issue => issue.title.toLowerCase().includes(searchTerm.toLowerCase()))
   
     return filteredIssues.map(issue => (
       <Issue key={issue.id} issue={issue} displayBody={false} />

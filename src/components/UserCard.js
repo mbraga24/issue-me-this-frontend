@@ -21,7 +21,7 @@ const UserCard = props => {
         </Card.Description>
       </Card.Content>
       <Card.Content extra>
-        <Link to={`/issues/user/${id}`}>
+        <Link to={`/view-issues/user/${id}`}>
           <i aria-hidden="true" className="list alternate outline icon"></i>
           {issues.length} {issues.length > 1 || issues.length === 0 ? "Issues" : "Issue"}
         </Link>
