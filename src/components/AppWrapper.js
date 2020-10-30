@@ -5,7 +5,7 @@ import { Route, Switch, Link } from 'react-router-dom';
 import TopMenuBar from './TopMenuBar';
 import Home from './Home';
 import Login from './Login';
-import SignUp from './SignUp';
+import Signup from './Signup';
 import IssueContainer from './IssueContainer';
 import UserContainer from './UserContainer';
 import NewIssueForm from './NewIssueForm';
@@ -97,7 +97,7 @@ const AppWrapper = props => {
                 <Switch>  
                     <Container id="AppWrapper-Container">  
                       <Route path="/login" component={Login} />
-                      <Route path="/signup" component={SignUp} />
+                      <Route path="/signup" component={Signup} />
                       <Route exact path="/issues" component={IssueContainer} />
                       <Route path="/account/:id" component={Account} />
                       <Route path="/new/issue" component={NewIssueForm} />
@@ -106,7 +106,7 @@ const AppWrapper = props => {
                       <Route path="/favorite-issues" component={FavoriteIssues} />
                       <Route path="/liked-issues" component={IssuesLiked} />
                       <Route path="/view-issues/user/:id" component={UserIssues} />
-                      <Route path="/update-account" component={UpdateAccount} />
+                      <Route path="/update/account" component={UpdateAccount} />
                       <Route exact path="/" component={Home} />
                     </Container>
                 </Switch>

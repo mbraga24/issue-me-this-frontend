@@ -3,7 +3,7 @@ const accountOptions = [
      color: "blue",
      iconName: "settings",
      listHeader: "Update account",
-     link: "/update-account"
+     link: "/update/account"
   },
   {
      color: "blue",

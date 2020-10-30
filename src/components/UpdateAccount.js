@@ -1,8 +1,9 @@
 import React from 'react';
+import AccountForm from './AccountForm';
 
 const UpdateAccount = props => {
   return (
-    <h1>Update Account</h1>
+    <AccountForm createAccount={false} header="Update Account" createBtn={false} />
   )
 }
 
