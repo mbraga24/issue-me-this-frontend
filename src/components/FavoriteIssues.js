@@ -14,8 +14,6 @@ const FavoriteIssues = props => {
   const currentUser = useSelector(state => state.user.keyHolder)
   const [ issueIds, setIssueIds ] = useState([])
 
-  console.log("props --->", pathname)
-
   useEffect(() => {
     const ids = currentUser && findIds(currentUser.favorites, pathname)
     setIssueIds(ids)

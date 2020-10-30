@@ -14,10 +14,9 @@ const IssuesLiked = props => {
   const currentUser = useSelector(state => state.user.keyHolder)
   const [ issueIds, setIssueIds ] = useState([])
 
-  console.log("props --->", pathname)
-
   useEffect(() => {
-    const ids = currentUser && findIds(currentUser.like_issues, pathname)
+    const thumbsUp = currentUser.like_issues.filter(like => like.is_like)
+    const ids = currentUser && findIds(thumbsUp, pathname)
     setIssueIds(ids)
 
   }, [currentUser, pathname])

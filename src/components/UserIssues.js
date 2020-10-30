@@ -17,8 +17,6 @@ const UserIssues = props => {
   const [ userProfile, setUserProfile ] = useState(null)
   const [ issueIds, setIssueIds ] = useState([])
 
-  console.log("props --->", pathname)
-
   useEffect(() => {
     const user = users && users.find(user => user.id === userId)
     const userIssues = issues && issues.filter(issue => issue.user.id === userId)
