@@ -3,7 +3,7 @@ import AccountForm from './AccountForm';
 
 const Signup = props => {
   return (
-      <AccountForm createAccount={true} header="Create Account" createBtn={true} />
+    <AccountForm createAccount={true} header="Create Account" createBtn={true} />
   )
 }
 

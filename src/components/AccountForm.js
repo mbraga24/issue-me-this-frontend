@@ -5,7 +5,8 @@ import { Form, Button, Segment, Dropdown, Label, Header } from 'semantic-ui-reac
 import { avatarOptions } from '../Library/avatar';
 import useFormFields from '../hooks/useFormFields';
 import '../resources/SignUp.css';
-import { ADD_USER, SET_KEY_HOLDER, UPDATE_EMAIL, UPDATE_LAST_NAME, UPDATE_FIRST_NAME, UPDATE_JOB_TITLE, UPDATE_AVATAR, UPDATE_TOP_SKILLS } from '../store/type';
+import { ADD_USER, SET_KEY_HOLDER, UPDATE_USER, UPDATE_FIRST_NAME, UPDATE_LAST_NAME, UPDATE_EMAIL, UPDATE_JOB_TITLE, UPDATE_TOP_SKILLS } from '../store/type';
+// UPDATE_AVATAR,
 
 const AccountForm = props => {
 
@@ -14,7 +15,11 @@ const AccountForm = props => {
   const dispatch = useDispatch()
   const [ avatar, setAvatar ] = useState(null)
   const [ age, setAge ] = useState(null)
+
   const [ topSkills, setTopSkills ] = useState([])
+  const [ newSkills, setNewSkills ] = useState([])
+  const [ removeSkills, setRemoveSkills ] = useState([])
+
   const [ skillSelection, setSkillSelection ] = useState([])
   const [ avatarSelection, setAvatarSelection ] = useState([])
   const [ alertHeader, setAlertHeader ] = useState("")
@@ -29,40 +34,78 @@ const AccountForm = props => {
   })
 
   const updateFields = () => { 
-    if (fields.email === "") {
-      fields.email = currentUser.email
-    } 
     if (fields.firstName === "") {
       fields.firstName = currentUser.first_name
     } 
     if (fields.lastName === "") {
       fields.lastName = currentUser.last_name
     } 
+    if (fields.email === "") {
+      fields.email = currentUser.email
+    } 
     if (fields.jobTitle === "") {
       fields.jobTitle = currentUser.profession
+    } 
+    if (topSkills.length === 0) {
+      setTopSkills(() => currentUser.skills.map(skill => skill.key))
+      // setTopSkills(currentUser.skills)
     } 
     if (avatar === null) {
       setAvatar(currentUser.avatar)
     } 
-    if (topSkills === []) {
-      setTopSkills(currentUser.skills)
-    } 
 
-    // console.log("TOP SKILLS -->", topSkills)
-
-    dispatch({ type: UPDATE_EMAIL, payload: fields.email })
     dispatch({ type: UPDATE_FIRST_NAME, payload: fields.firstName })
     dispatch({ type: UPDATE_LAST_NAME, payload: fields.lastName })
+    dispatch({ type: UPDATE_EMAIL, payload: fields.email })
     dispatch({ type: UPDATE_JOB_TITLE, payload: fields.jobTitle })
-    dispatch({ type: UPDATE_AVATAR, payload: avatar })
     dispatch({ type: UPDATE_TOP_SKILLS, payload: topSkills })
+    // dispatch({ type: UPDATE_AVATAR, payload: avatar })
   }
+
   (!props.createAccount && currentUser) && updateFields()
 
   useEffect(() => {
     setSkillSelection(skills)
     setAvatarSelection(avatarOptions())
   }, [skills])
+
+  const handleSkillsOnUpdate = (event, value) => {
+    if (topSkills.length === 0 || topSkills.length < 5) {
+      setTopSkills(value)
+
+      if (currentUser) {
+        const skill = value[value.length - 1]   
+        const unchangedUserSkills = currentUser.skills.map(skill => skill.key)
+        const skillsBeforeUpdate = topSkills
+
+        if (!topSkills.includes(skill) && !unchangedUserSkills.includes(skill)) { 
+          setNewSkills([...newSkills, skill]) 
+          const updateRemoveSkills = removeSkills.filter(s => s !== skill)
+          setRemoveSkills(updateRemoveSkills)
+        }
+        if (removeSkills.includes(skill)) {
+          const updateRemoveSkills = removeSkills.filter(s => s !== skill)
+          setRemoveSkills(updateRemoveSkills)
+        }
+      
+        if (value.length === skillsBeforeUpdate.length-1) {
+          const removedSkill = skillsBeforeUpdate.filter(skill => { return value.indexOf(skill) === -1 })[0];
+
+          if (unchangedUserSkills.includes(removedSkill) && !removeSkills.includes(removedSkill)) { 
+            setRemoveSkills([...removeSkills, removedSkill]) 
+          } 
+          if (topSkills.includes(removedSkill)) {
+            const updateNewSkills = newSkills.filter(s => s !== removedSkill)
+            setNewSkills([...updateNewSkills])
+          }
+        }
+      }
+    } else {
+      const removeSkill = topSkills.pop()
+      const keepSkills = topSkills.filter(skill => skill !== removeSkill)
+      setTopSkills([...keepSkills])
+    }
+  }
 
   // set age range for dropdown 
   const ageOptions = () => {
@@ -77,19 +120,9 @@ const AccountForm = props => {
   const handleInputAge = (event) => setAge(event.target.textContent)
   const handleInputAvatar = (event) => setAvatar(event.target.textContent)
 
-  const handleInputSkills = (event) => {
-    const newSkill = event.target.textContent
-    if (topSkills.length < 6 && newSkill !== "") {  
-      setTopSkills([...topSkills, newSkill])
-    } else {
-      const removeSkill = topSkills.pop()
-      const keepSkills = topSkills.filter(skill => skill !== removeSkill)
-      setTopSkills([...keepSkills])
-    }
-  }
-
   const createAccount = (event) => {
     event.preventDefault()
+    console.log("CREATE ACCOUNT - TOP SKILSS", topSkills)
 
     const newUser = {
       email: fields.email,
@@ -101,6 +134,8 @@ const AccountForm = props => {
       age: age,
       avatar: avatar
     }
+
+    console.log("NEW USER CREATED -->", newUser)
 
     fetch("http://localhost:3000/users", {
       method: "POST",  
@@ -123,8 +158,38 @@ const AccountForm = props => {
     })
   }
 
-  const updateAccount = () => {
+  const updateAccount = event => {
+    event.preventDefault()
     console.log("UPDATE ACCOUNT")
+    const updateUser = {
+      first_name: fields.firstName,
+      last_name: fields.lastName,
+      email: fields.email,
+      job_title: fields.jobTitle,
+      newSkills: newSkills,
+      removeSkills: removeSkills,
+      avatar: avatar,
+      password: fields.password
+    }
+
+    fetch(`http://localhost:3000/users/${currentUser.id}`, {
+      method: "PATCH",  
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(updateUser)
+    })
+    .then(r => r.json())
+    .then(data => {
+      if (data.errorStatus) {
+        handleMessages(data)
+      } else {
+        console.log(data)
+        const { user } = data
+        dispatch({ type: UPDATE_USER, payload: user })
+        props.history.push(`/account/${currentUser.id}`)
+      }
+    })
   }
 
   const handleMessages = data => {
@@ -148,11 +213,11 @@ const AccountForm = props => {
     }, 4000)
   }
 
-  console.log("TOP SKILLS --->", topSkills)
-  console.log("CURRENT USER SKILLS --->", currentUser && currentUser.skills)
+  console.log("TOP SKILLS >>>>", topSkills)
+  console.log("NEW SKILLS >>>>", newSkills)
+  console.log("REMOVE SKILLS >>>>", removeSkills)
 
   return (
-    currentUser &&
     <div id="SignUp-Container">
       <Segment raised className="SignUp-Segment">
         <Form onSubmit={props.createAccount ? createAccount : updateAccount}>
@@ -208,19 +273,25 @@ const AccountForm = props => {
             <Dropdown 
               name="topSkills"
               placeholder='Choose your top 5 skills' 
-              className={`ui ${topSkills.length === 6 ? "disabled" : ""}`}
+              className={`ui ${props.createAccount && topSkills.length === 5 ? "disabled" : ""}`}
               fluid 
-              multiple selection options={skillSelection} 
+              multiple 
+              selection 
               closeOnChange
-              onChange={handleInputSkills} 
-              defaultValue={!props.createAccount ? topSkills : undefined}
+              options={skillSelection} 
+              onChange={(event, {value}) => handleSkillsOnUpdate(event, value)} 
+              value={topSkills}
             />
             </Form.Input>
           </Form.Group>
           { 
-            topSkills.length === 6 &&
+            props.createAccount && topSkills.length === 5 ?
             <Label pointing prompt color="green">
               All set! If you change your mind you can always add or remove it later. 
+            </Label> :
+            topSkills.length === 5 &&
+            <Label pointing prompt color="green">
+              All set! If you wish to add more skills subscribe to become a member and add up to 10 top skills. 
             </Label>
           }
           <Form.Group>
@@ -232,8 +303,8 @@ const AccountForm = props => {
                 selection
                 options={avatarSelection}
                 onChange={handleInputAvatar}
-                // value={avatar}
-                defaultValue={!props.createAccount ? avatar : undefined}
+                value={avatar}
+                // defaultValue={!props.createAccount ? avatar : undefined}
               />
             </Form.Input>
           </Form.Group>
