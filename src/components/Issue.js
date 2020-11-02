@@ -234,7 +234,7 @@ const Issue = props => {
                       onClose={() => setOpen(false)}
                       onOpen={() => setOpen(true)}
                       open={open}
-                      trigger={<Button inverted color='green'>Edit</Button>}
+                      trigger={<Button inverted color='green' size="small"><Icon name='edit'/></Button>}
                     >
                       <Modal.Header>Update Issue</Modal.Header>
                       <Modal.Content>
@@ -260,11 +260,11 @@ const Issue = props => {
                       </Modal.Content>
                       <Modal.Actions>
                         <Button onClick={() => setOpen(false)} color='teal'>Cancel</Button>
-                        <Button onClick={updateIssue} positive>Update</Button>
+                        <Button onClick={updateIssue} color='green'>Update</Button>
                       </Modal.Actions>
                     </Modal>
-                    <Button inverted color='red' onClick={deleteIssue}>
-                      Delete
+                    <Button onClick={deleteIssue} inverted color='red'>
+                      <Icon name='trash'/>
                     </Button>
                   </div>
                 </Card.Content>

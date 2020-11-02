@@ -5,8 +5,7 @@ import { Form, Button, Segment, Dropdown, Label, Header } from 'semantic-ui-reac
 import { avatarOptions } from '../Library/avatar';
 import useFormFields from '../hooks/useFormFields';
 import '../resources/SignUp.css';
-import { ADD_USER, SET_KEY_HOLDER, UPDATE_USER, UPDATE_FIRST_NAME, UPDATE_LAST_NAME, UPDATE_EMAIL, UPDATE_JOB_TITLE, UPDATE_TOP_SKILLS } from '../store/type';
-// UPDATE_AVATAR,
+import { ADD_USER, SET_KEY_HOLDER, UPDATE_USER, UPDATE_FIRST_NAME, UPDATE_LAST_NAME, UPDATE_EMAIL, UPDATE_JOB_TITLE, UPDATE_AVATAR, UPDATE_TOP_SKILLS } from '../store/type';
 
 const AccountForm = props => {
 
@@ -48,7 +47,6 @@ const AccountForm = props => {
     } 
     if (topSkills.length === 0) {
       setTopSkills(() => currentUser.skills.map(skill => skill.key))
-      // setTopSkills(currentUser.skills)
     } 
     if (avatar === null) {
       setAvatar(currentUser.avatar)
@@ -59,7 +57,7 @@ const AccountForm = props => {
     dispatch({ type: UPDATE_EMAIL, payload: fields.email })
     dispatch({ type: UPDATE_JOB_TITLE, payload: fields.jobTitle })
     dispatch({ type: UPDATE_TOP_SKILLS, payload: topSkills })
-    // dispatch({ type: UPDATE_AVATAR, payload: avatar })
+    dispatch({ type: UPDATE_AVATAR, payload: avatar })
   }
 
   (!props.createAccount && currentUser) && updateFields()
@@ -69,7 +67,7 @@ const AccountForm = props => {
     setAvatarSelection(avatarOptions())
   }, [skills])
 
-  const handleSkillsOnUpdate = (event, value) => {
+  const handleSkillInput = (event, value) => {
     if (topSkills.length === 0 || topSkills.length < 5) {
       setTopSkills(value)
 
@@ -160,7 +158,6 @@ const AccountForm = props => {
 
   const updateAccount = event => {
     event.preventDefault()
-    console.log("UPDATE ACCOUNT")
     const updateUser = {
       first_name: fields.firstName,
       last_name: fields.lastName,
@@ -184,7 +181,6 @@ const AccountForm = props => {
       if (data.errorStatus) {
         handleMessages(data)
       } else {
-        console.log(data)
         const { user } = data
         dispatch({ type: UPDATE_USER, payload: user })
         props.history.push(`/account/${currentUser.id}`)
@@ -212,10 +208,6 @@ const AccountForm = props => {
       setAlertStatus(false)
     }, 4000)
   }
-
-  console.log("TOP SKILLS >>>>", topSkills)
-  console.log("NEW SKILLS >>>>", newSkills)
-  console.log("REMOVE SKILLS >>>>", removeSkills)
 
   return (
     <div id="SignUp-Container">
@@ -279,7 +271,7 @@ const AccountForm = props => {
               selection 
               closeOnChange
               options={skillSelection} 
-              onChange={(event, {value}) => handleSkillsOnUpdate(event, value)} 
+              onChange={(event, {value}) => handleSkillInput(event, value)} 
               value={topSkills}
             />
             </Form.Input>
