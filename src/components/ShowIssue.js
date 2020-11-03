@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import Comment from './Comment';
 import Issue from './Issue';
 import useFormFields from '../hooks/useFormFields';
+import Loading from './Loading';
 import '../resources/ShowIssue.css';
 import { UPDATE_ISSUE, ADD_COMMENT } from '../store/type';
 
@@ -150,7 +151,7 @@ const ShowIssue = props => {
             </Grid.Column>
           </Grid.Row>
         </Grid>
-      </Container> : null
+      </Container> : <Loading />
   );
 }
 

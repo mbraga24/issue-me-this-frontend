@@ -2,6 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { Header, Grid } from 'semantic-ui-react';
 import UserCard from './UserCard';
+import Loading from './Loading'; 
 import '../resources/UserContainer.css';
 
 const UserContainer = props => {
@@ -17,12 +18,17 @@ const UserContainer = props => {
   }
   return (
       <div id="Users-Container">
-        <Header as='h1' textAlign="center" color="grey" className="Users-Header">Users</Header>
-        <Grid divided="vertically">
-          <Grid.Row columns={4}>
-            {users && renderUsers()}
-          </Grid.Row>
-        </Grid>
+        { 
+          users ?
+          <React.Fragment>
+            <Header as='h1' textAlign="center" color="grey" className="Users-Header">Users</Header>
+            <Grid divided="vertically">
+              <Grid.Row columns={4}>
+                {renderUsers()}
+              </Grid.Row>
+            </Grid>
+          </React.Fragment> : <Loading />
+          }
       </div>
   );
 }

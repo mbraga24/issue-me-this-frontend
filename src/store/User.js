@@ -1,8 +1,9 @@
-import { SET_USERS, ADD_USER, UPDATE_USER, SET_KEY_HOLDER, REMOVE_KEY_HOLDER_LIKE, ADD_KEY_HOLDER_LIKE, ADD_KEY_HOLDER_FAVORITE, REMOVE_KEY_HOLDER_FAVORITE } from './type';
+import { SET_LOADING, SET_USERS, ADD_USER, UPDATE_USER, SET_KEY_HOLDER, REMOVE_KEY_HOLDER_LIKE, ADD_KEY_HOLDER_LIKE, ADD_KEY_HOLDER_FAVORITE, REMOVE_KEY_HOLDER_FAVORITE } from './type';
 
 const defaultState = {
   keyHolder: null,
-  users: []
+  users: null,
+  loading: false
 }
 
 const reducer = (state = defaultState, action) => {
@@ -54,6 +55,11 @@ const reducer = (state = defaultState, action) => {
       return {
         ...state,
         users: [...updatedUser]
+      }
+    case SET_LOADING:
+      return {
+        ...state,
+        loading: action.payload
       }
     default: 
       return state

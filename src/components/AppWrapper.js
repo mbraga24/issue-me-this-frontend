@@ -16,6 +16,7 @@ import IssuesLiked from './IssuesLiked';
 import UserIssues from './UserIssues';
 import UpdateAccount from './UpdateAccount';
 import '../resources/AppWrapper.css';
+import '../resources/Loading.css';
 import { SET_KEY_HOLDER } from '../store/type';
 
 const AppWrapper = props => {
@@ -23,7 +24,6 @@ const AppWrapper = props => {
   const currentUser = useSelector(state => state.user.keyHolder)
   const [ visible, setVisible ] = useState(false)
   const dispatch = useDispatch()
-
 
   const handleLogout = () => {
     localStorage.removeItem("token")
@@ -64,7 +64,8 @@ const AppWrapper = props => {
                 <Icon name='users' size="large" />
                 Users
               </Menu.Item>
-              { currentUser ?
+              { 
+              currentUser ?
                 <>
                   <Menu.Item as={Link} to={`/account/${currentUser.id}`}>
                     <Icon name='id badge' size="large" />
@@ -96,18 +97,18 @@ const AppWrapper = props => {
               <TopMenuBar toggleMenu={toggleMenu} />
                 <Switch>  
                     <Container id="AppWrapper-Container">  
-                      <Route path="/login" component={Login} />
-                      <Route path="/signup" component={Signup} />
-                      <Route exact path="/issues" component={IssueContainer} />
-                      <Route path="/account/:id" component={Account} />
-                      <Route path="/new/issue" component={NewIssueForm} />
-                      <Route path="/issues/:id" component={ShowIssue} />
-                      <Route exact path="/users" component={UserContainer} />
-                      <Route path="/favorite-issues" component={FavoriteIssues} />
-                      <Route path="/liked-issues" component={IssuesLiked} />
-                      <Route path="/view-issues/user/:id" component={UserIssues} />
-                      <Route path="/update/account" component={UpdateAccount} />
-                      <Route exact path="/" component={Home} />
+                        <Route exact path="/issues" component={IssueContainer} />
+                        <Route path="/account/:id" component={Account} />
+                        <Route path="/new/issue" component={NewIssueForm} />
+                        <Route path="/issues/:id" component={ShowIssue} />
+                        <Route exact path="/users" component={UserContainer} />
+                        <Route path="/favorite-issues" component={FavoriteIssues} />
+                        <Route path="/liked-issues" component={IssuesLiked} />
+                        <Route path="/view-issues/user/:id" component={UserIssues} />
+                        <Route path="/update/account" component={UpdateAccount} />
+                        <Route exact path="/" component={Home} />
+                        <Route path="/login" component={Login} />
+                        <Route path="/signup" component={Signup} />
                     </Container>
                 </Switch>
             </Sidebar.Pusher>

@@ -1,7 +1,7 @@
 import { SET_ISSUES, ADD_ISSUE, UPDATE_ISSUE, DELETE_ISSUE, UPDATE_TITLE, UPDATE_BODY } from './type';
 
 const defaultState = {
-  issues: [],
+  issues: null,
   issueTitle: "",
   issueBody: ""
 }

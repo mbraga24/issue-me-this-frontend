@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { Header, Grid } from 'semantic-ui-react'
 import Issue from './Issue';
 import SearchField from './SearchField';
+import Loading from './Loading';
 import '../resources/IssueContainer.css';
 
 const IssueContainer = props => {
@@ -17,14 +18,20 @@ const IssueContainer = props => {
       <Issue key={issue.id} issue={issue} displayBody={false} />
     ))
   }
-
+  
   return (
       <div id="IssueContainer">
-        <Header as='h1' textAlign="center" color="grey" className="IssueContainer-Header">All Issues</Header>
-        <SearchField setSearchTerm={props.setSearchTerm} />
-        <Grid columns={1} divided id="Issue">
-          {renderIssues()}
-        </Grid>
+        {
+          issues ? 
+          <React.Fragment>
+            <Header as='h1' textAlign="center" color="grey" className="IssueContainer-Header">All Issues</Header>
+            <SearchField setSearchTerm={props.setSearchTerm} />
+            <Grid columns={1} divided id="Issue">
+              {renderIssues()}
+            </Grid> 
+          </React.Fragment>
+          : <Loading />
+        }
       </div>
   );
 }

@@ -1,5 +1,4 @@
 import React from 'react';
-// import { useDispatch } from 'react-redux';
 import IssueForm from './IssueForm';
 import '../resources/NewIssueForm.css';
 

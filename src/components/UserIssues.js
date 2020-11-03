@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { Header, Grid } from 'semantic-ui-react'
 import Issue from './Issue';
 import SearchField from './SearchField';
+import Loading from './Loading';
 import { findIds, findIssues } from '../Library/Helpers';
 import '../resources/FavoriteIssues.css';
 
@@ -36,13 +37,19 @@ const UserIssues = props => {
 
   return (
     <div id="FavoriteIssue-Container">
-      <Header as='h1' textAlign="center" color="grey" className="FavoriteIssue-Header">
-        {(currentUser && currentUser.id === userId) ? `Manage Issues` : userProfile && `${userProfile.first_name} ${userProfile.last_name} Profile` }
-      </Header>
-      <SearchField />
-      <Grid columns={1} divided id="Issue">
-        {userProfile ? renderIssues() : <h1>EMPTY</h1>}
-      </Grid>
+      {
+        issues ? 
+        <React.Fragment>
+          <Header as='h1' textAlign="center" color="grey" className="FavoriteIssue-Header">
+            {(currentUser && currentUser.id === userId) ? `Manage Issues` : userProfile && `${userProfile.first_name} ${userProfile.last_name} Profile` }
+          </Header>
+          <SearchField />
+          <Grid columns={1} divided id="Issue">
+            {userProfile ? renderIssues() : <h1>EMPTY</h1>}
+          </Grid>
+        </React.Fragment>
+        : <Loading />
+      }
     </div>
   )
 }

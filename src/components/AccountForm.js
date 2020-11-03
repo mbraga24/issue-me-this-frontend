@@ -4,6 +4,7 @@ import { withRouter } from 'react-router-dom';
 import { Form, Button, Segment, Dropdown, Label, Header } from 'semantic-ui-react'
 import { avatarOptions } from '../Library/avatar';
 import useFormFields from '../hooks/useFormFields';
+import Loading from './Loading';
 import '../resources/SignUp.css';
 import { ADD_USER, SET_KEY_HOLDER, UPDATE_USER, UPDATE_FIRST_NAME, UPDATE_LAST_NAME, UPDATE_EMAIL, UPDATE_JOB_TITLE, UPDATE_AVATAR, UPDATE_TOP_SKILLS } from '../store/type';
 
@@ -211,6 +212,8 @@ const AccountForm = props => {
 
   return (
     <div id="SignUp-Container">
+      {
+      skills ?
       <Segment raised className="SignUp-Segment">
         <Form onSubmit={props.createAccount ? createAccount : updateAccount}>
           <Header as='h1' textAlign="center" className="SignUp-Header">{props.header}</Header>
@@ -328,7 +331,8 @@ const AccountForm = props => {
               </div>
             }
         </Form>
-      </Segment>
+      </Segment> : <Loading />
+      }
     </div>
   );
 }

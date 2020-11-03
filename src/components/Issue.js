@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Grid, Icon, Button, Card, Image, Divider, Modal } from 'semantic-ui-react'
+import { Grid, Icon, Button, Card, Image, Divider, Modal, Header } from 'semantic-ui-react'
 import { Link, withRouter } from 'react-router-dom';
 import { DELETE_ISSUE, UPDATE_ISSUE, UPDATE_TITLE, UPDATE_BODY, REMOVE_KEY_HOLDER_LIKE, ADD_KEY_HOLDER_LIKE, ADD_KEY_HOLDER_FAVORITE, REMOVE_KEY_HOLDER_FAVORITE } from '../store/type';
 import IssueForm from './IssueForm';
@@ -10,7 +10,8 @@ import '../resources/Issue.css';
 const Issue = props => {
   
   const dispatch = useDispatch() 
-  const [ open, setOpen ] = useState(false)
+  const [ openEdit, setOpenEdit ] = useState(false)
+  const [ openDelete, setOpenDelete] = React.useState(false)
   const [ displayLikeStatus, setDislayLikeStatus ] = useState(false)
   const [ thumbsUpOrDown, setThumbsUpOrDown ] = useState(false)
   const [ issueLike, setIssueLike ] = useState({})
@@ -53,6 +54,7 @@ const Issue = props => {
     .then(issue => {
       dispatch({ type: DELETE_ISSUE, payload: issue })
       props.match.path === "/issues/:id" && props.history.push('/issues')
+      setOpenDelete(false)
     })
   }
 
@@ -76,7 +78,7 @@ const Issue = props => {
         handleMessages(data)
       } else {
         dispatch({ type: UPDATE_ISSUE , payload: data.issue })
-        setOpen(false)
+        setOpenEdit(false)
       }
     })  
     dispatch({ type: UPDATE_TITLE , payload: "" })
@@ -125,7 +127,6 @@ const Issue = props => {
   }
 
   const favoriteBtn = () => {
-    
     if (!issueFavorite) {
       fetch(`http://localhost:3000/favorites`, {
         method: "POST",
@@ -231,9 +232,9 @@ const Issue = props => {
                 <Card.Content extra>
                   <div className='ui two buttons'>
                     <Modal
-                      onClose={() => setOpen(false)}
-                      onOpen={() => setOpen(true)}
-                      open={open}
+                      onClose={() => setOpenEdit(false)}
+                      onOpen={() => setOpenEdit(true)}
+                      open={openEdit}
                       trigger={<Button inverted color='green' size="small"><Icon name='edit'/></Button>}
                     >
                       <Modal.Header>Update Issue</Modal.Header>
@@ -259,13 +260,34 @@ const Issue = props => {
                         }
                       </Modal.Content>
                       <Modal.Actions>
-                        <Button onClick={() => setOpen(false)} color='teal'>Cancel</Button>
+                        <Button onClick={() => setOpenEdit(false)} color='teal'>Cancel</Button>
                         <Button onClick={updateIssue} color='green'>Update</Button>
                       </Modal.Actions>
                     </Modal>
-                    <Button onClick={deleteIssue} inverted color='red'>
-                      <Icon name='trash'/>
-                    </Button>
+                    <Modal
+                      closeIcon
+                      size="tiny"
+                      dimmer="blurring"
+                      open={openDelete}
+                      trigger={<Button inverted color='red'><Icon name='trash'/></Button>}
+                      onClose={() => setOpenDelete(false)}
+                      onOpen={() => setOpenDelete(true)}
+                    >
+                      <Header icon='trash' content='Please confirm' />
+                      <Modal.Content>
+                        <p>
+                          Are you sure you want to delete this issue?
+                        </p>
+                      </Modal.Content>
+                      <Modal.Actions>
+                        <Button color='red' onClick={() => setOpenDelete(false)}>
+                          <Icon name='remove' /> No
+                        </Button>
+                        <Button color='green' onClick={deleteIssue}>
+                          <Icon name='checkmark' /> Yes
+                        </Button>
+                      </Modal.Actions>
+                    </Modal>
                   </div>
                 </Card.Content>
               }
