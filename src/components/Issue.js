@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Grid, Icon, Button, Card, Image, Divider, Modal, Header } from 'semantic-ui-react'
 import { Link, withRouter } from 'react-router-dom';
-import { DELETE_ISSUE, UPDATE_ISSUE, UPDATE_TITLE, UPDATE_BODY, REMOVE_KEY_HOLDER_LIKE, ADD_KEY_HOLDER_LIKE, ADD_KEY_HOLDER_FAVORITE, REMOVE_KEY_HOLDER_FAVORITE } from '../store/type';
+import { UPDATE_ISSUE_INDEX, DELETE_ISSUE_INDEX, DELETE_ISSUE, UPDATE_ISSUE, UPDATE_TITLE, UPDATE_BODY, REMOVE_KEY_HOLDER_LIKE, ADD_KEY_HOLDER_LIKE, ADD_KEY_HOLDER_FAVORITE, REMOVE_KEY_HOLDER_FAVORITE } from '../store/type';
 import IssueForm from './IssueForm';
 import CreateHighlight from './CreateHighlight';
 import '../resources/Issue.css';
@@ -33,18 +33,26 @@ const Issue = props => {
   const imgUrl = `https://semantic-ui.com/images/avatar/small/${user.avatar}.jpg`
 
   useEffect(() => {
-    const issueFound = currentUser && currentUser.like_issues.find(issue => issue.issue_id === id)
-    const favoriteFound = currentUser && currentUser.favorites.find(issue => issue.issue_id === id)
-    const foundComment = currentUser && comments.find(comment => comment.user_id === currentUser.id)
+    let mounted = true;
 
-    setHasComment(foundComment)
-    setDislayLikeStatus(!!issueFound)
-    setIssueLike(issueFound)
-    setFavoriteStatus(!!favoriteFound)
-    setIssueFavorite(favoriteFound)
-    setThumbsUpOrDown(issueLike && issueLike.is_like ? true : false)
+    if(mounted) {
+      const issueFound = currentUser && currentUser.like_issues.find(issue => issue.issue_id === id)
+      const favoriteFound = currentUser && currentUser.favorites.find(issue => issue.issue_id === id)
+      const foundComment = currentUser && comments.find(comment => comment.user_id === currentUser.id)
+  
+      setHasComment(foundComment)
+      setDislayLikeStatus(!!issueFound)
+      setIssueLike(issueFound)
+      setFavoriteStatus(!!favoriteFound)
+      setIssueFavorite(favoriteFound)
+      setThumbsUpOrDown(issueLike && issueLike.is_like ? true : false)
+     } else {
+      dispatch({ type: "RESET" });
+     }
+
+     return () => mounted = false;
     
-  }, [currentUser, issueLike, id, setIssueFavorite, comments])
+  }, [currentUser, issueLike, id, setIssueFavorite, comments, dispatch])
 
   const deleteIssue = () => {
     fetch(`http://localhost:3000/issues/${id}`, {
@@ -52,7 +60,9 @@ const Issue = props => {
     })
     .then(r => r.json())
     .then(issue => {
+      console.log("DELETE ISSUE -->", issue)
       dispatch({ type: DELETE_ISSUE, payload: issue })
+      dispatch({ type: DELETE_ISSUE_INDEX, payload: issue })
       props.match.path === "/issues/:id" && props.history.push('/issues')
       setOpenDelete(false)
     })
@@ -74,9 +84,11 @@ const Issue = props => {
     })
     .then(r => r.json())
     .then(data => {
+      console.log("UPDATE ISSUE ->", data)
       if (data.errorStatus) {
         handleMessages(data)
       } else {
+        dispatch({ type: UPDATE_ISSUE_INDEX, payload: data.issue })
         dispatch({ type: UPDATE_ISSUE , payload: data.issue })
         setOpenEdit(false)
       }

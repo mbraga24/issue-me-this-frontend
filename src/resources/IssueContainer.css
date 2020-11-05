@@ -2,3 +2,7 @@
   margin: 20px;
   font-size: 42px;
 }
+
+#IssueContainer .Pagination {
+  margin: 20px 14%;
+}

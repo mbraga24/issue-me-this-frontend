@@ -9,7 +9,6 @@ const defaultState = {
 const reducer = (state = defaultState, action) => {
   switch(action.type) {
     case SET_USERS:
-      // console.log("USER STORE -->", action.payload)
       return {
         ...state,
         users: [...action.payload]

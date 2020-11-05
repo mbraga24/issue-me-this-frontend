@@ -1,4 +1,4 @@
-import { UPDATE_TITLE, UPDATE_BODY, UPDATE_SYNTAX, UPDATE_EMAIL, UPDATE_LAST_NAME, UPDATE_FIRST_NAME, UPDATE_JOB_TITLE, UPDATE_AVATAR, UPDATE_TOP_SKILLS } from './type';
+import { UPDATE_TITLE, UPDATE_BODY, UPDATE_SYNTAX, UPDATE_EMAIL, UPDATE_LAST_NAME, UPDATE_FIRST_NAME, UPDATE_JOB_TITLE, UPDATE_AVATAR, UPDATE_TOP_SKILLS, UPDATE_BIRTHDAY } from './type';
 
 const defaultState = {
   updateTitle: "",
@@ -9,7 +9,8 @@ const defaultState = {
   lastName: "",
   jobTitle: "",
   avatar: "",
-  topSkills: ""
+  topSkills: "",
+  birthday: ""
 }
 
 const store = (state = defaultState, action) => {
@@ -49,15 +50,20 @@ const store = (state = defaultState, action) => {
         ...state,
         jobTitle: action.payload
       }
+    case UPDATE_TOP_SKILLS:
+        return {
+          ...state,
+          topSkills: action.payload
+        }
     case UPDATE_AVATAR:
       return {
         ...state,
         avatar: action.payload
       }
-    case UPDATE_TOP_SKILLS:
+    case UPDATE_BIRTHDAY:
       return {
         ...state,
-        topSkills: action.payload
+        birthday: action.payload
       }
     default:
       return state

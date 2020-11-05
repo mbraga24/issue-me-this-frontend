@@ -14,6 +14,10 @@ export const SET_SEARCH_TERM = "SET_SEARCH_TERM";
 
 // issue store 
 export const SET_ISSUES = "SET_ISSUES";
+export const SET_ISSUE_INDEX = "SET_ISSUE_INDEX";
+export const ADD_ISSUE_INDEX = "ADD_ISSUE_INDEX";
+export const UPDATE_ISSUE_INDEX = "UPDATE_ISSUE_INDEX";
+export const DELETE_ISSUE_INDEX = "DELETE_ISSUE_INDEX";
 export const ADD_ISSUE = "ADD_ISSUE";
 export const UPDATE_ISSUE = "UPDATE_ISSUE";
 export const DELETE_ISSUE = "DELETE_ISSUE";
@@ -37,3 +41,4 @@ export const UPDATE_FIRST_NAME = "UPDATE_FIRST_NAME";
 export const UPDATE_JOB_TITLE = "UPDATE_JOB_TITLE";
 export const UPDATE_AVATAR = "UPDATE_AVATAR";
 export const UPDATE_TOP_SKILLS = "UPDATE_TOP_SKILLS";
+export const UPDATE_BIRTHDAY = "UPDATE_BIRTHDAY";

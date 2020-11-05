@@ -1,10 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Card, Image } from 'semantic-ui-react'
+import { Card, Image, Icon } from 'semantic-ui-react'
 
 const UserCard = props => {
 
-  const { id, first_name, last_name, profession, avatar, issues } = props.user
+  const { id, first_name, last_name, job_title, avatar, issues } = props.user
   const imgUrl = `https://semantic-ui.com/images/avatar/large/${avatar}.jpg`
 
   return (
@@ -17,12 +17,12 @@ const UserCard = props => {
           <Card.Header>{first_name} {last_name}</Card.Header>
         </Link>
         <Card.Description>
-          <p className="description">Profession: {profession}</p>
+          <p className="description">Job Title: {job_title}</p>
         </Card.Description>
       </Card.Content>
       <Card.Content extra>
         <Link to={`/view-issues/user/${id}`}>
-          <i aria-hidden="true" className="list alternate outline icon"></i>
+          <Icon name='list alternate outline' size="large"/>
           {issues.length} {issues.length > 1 || issues.length === 0 ? "Issues" : "Issue"}
         </Link>
       </Card.Content>

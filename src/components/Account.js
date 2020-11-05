@@ -76,8 +76,9 @@ const Account = props => {
                 <Card.Content>
                   <Card.Header>{userProfile.first_name} {userProfile.last_name}</Card.Header>
                   <Card.Description>
-                    <div className="description">Profession: {userProfile.profession}</div>
-                    {currentUser && <div className="description"><span className="date">Email: {userProfile.email}</span></div>}
+                    <div className="description">Profession: {userProfile.job_title} </div>
+                    <div className="description">Date of Birth: {userProfile.birthday} </div>
+                    { currentUser && <div className="description"><span className="date">Email: {userProfile.email}</span></div> }
                   </Card.Description>
                 </Card.Content>
                 <Card.Content extra>

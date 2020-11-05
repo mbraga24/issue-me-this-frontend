@@ -21,7 +21,7 @@ const UserIssues = props => {
   useEffect(() => {
     const user = users && users.find(user => user.id === userId)
     const userIssues = issues && issues.filter(issue => issue.user.id === userId)
-    const ids = findIds(userIssues, pathname)
+    const ids = issues && findIds(userIssues, pathname)
     setUserProfile(user)
     setIssueIds(ids)
 
@@ -35,6 +35,8 @@ const UserIssues = props => {
     ))
   }
 
+  console.log("ISSUES -->", issues)
+
   return (
     <div id="FavoriteIssue-Container">
       {
@@ -45,7 +47,7 @@ const UserIssues = props => {
           </Header>
           <SearchField />
           <Grid columns={1} divided id="Issue">
-            {userProfile ? renderIssues() : <h1>EMPTY</h1>}
+            {renderIssues()}
           </Grid>
         </React.Fragment>
         : <Loading />

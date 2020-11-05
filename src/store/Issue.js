@@ -1,7 +1,8 @@
-import { SET_ISSUES, ADD_ISSUE, UPDATE_ISSUE, DELETE_ISSUE, UPDATE_TITLE, UPDATE_BODY } from './type';
+import { SET_ISSUE_INDEX, ADD_ISSUE_INDEX, UPDATE_ISSUE_INDEX, DELETE_ISSUE_INDEX, SET_ISSUES, ADD_ISSUE, UPDATE_ISSUE, DELETE_ISSUE, UPDATE_TITLE, UPDATE_BODY } from './type';
 
 const defaultState = {
   issues: null,
+  issuesIndex: null,
   issueTitle: "",
   issueBody: ""
 }
@@ -13,19 +14,43 @@ const sortedIssues = data => {
 const store = (state = defaultState, action) => {
   switch(action.type) {
     case SET_ISSUES:
+      console.log("SET_ISSUES --->", action.payload)
       return {
         ...state,
         issues: [...sortedIssues(action.payload)]
       }
+    case SET_ISSUE_INDEX:
+      return {
+        ...state,
+        issuesIndex: action.payload
+      }
+    case ADD_ISSUE_INDEX:
+      // console.log("ADD_ISSUE_INDEX -->", action.payload)
+      return {
+        ...state,
+        issuesIndex: { ...state.issuesIndex, issue_pages: [action.payload ,...state.issuesIndex.issue_pages] }
+      }
+    case UPDATE_ISSUE_INDEX:
+      // console.log("UPDATE ISSUE INDEX -->", action.payload)
+      const updatedIssueIndex = state.issuesIndex.issue_pages.map(issue => issue.id === action.payload.id ? action.payload : issue)
+      return {
+        ...state,
+        issuesIndex: { ...state.issuesIndex, issue_pages: [...updatedIssueIndex] }
+      }
+    case DELETE_ISSUE_INDEX:
+      console.log("DELETE_ISSUE_INDEX -->", action.payload)
+      const remainingIssueIndex = state.issuesIndex.issue_pages.filter(issue => issue.id !== action.payload.id)
+      return {
+        ...state,
+        issuesIndex: { ...state.issuesIndex, issue_pages: [...remainingIssueIndex] }
+      }
     case ADD_ISSUE:
       return {
         ...state,
-        issues: [action.payload,...state.issues]
+        issues: [ action.payload, ...state.issues ]
       }
     case UPDATE_ISSUE:
-      console.log("UPDATE ISSUE --->", action.payload)
       const updatedIssues = state.issues.map(issue => issue.id !== action.payload.id ? issue : action.payload)
-      // console.log("UPDATEDISSUES --->", updatedIssues)
       return {
         ...state,
         issues: [...updatedIssues]

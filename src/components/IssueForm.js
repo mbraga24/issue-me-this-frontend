@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Grid, Form, Header } from 'semantic-ui-react'
 import useFormFields from '../hooks/useFormFields';
-import { ADD_ISSUE, UPDATE_USER, UPDATE_TITLE, UPDATE_BODY } from '../store/type';
+import { ADD_ISSUE, ADD_ISSUE_INDEX, UPDATE_USER, UPDATE_TITLE, UPDATE_BODY } from '../store/type';
 import '../resources/IssueForm.css';
 import { withRouter } from 'react-router-dom';
 
@@ -34,14 +34,14 @@ const IssueForm = props => {
     //   fields.syntax = props.dataSyntax
     // } 
       
-      dispatch({ type: UPDATE_TITLE, payload: fields.formTitle })
-      dispatch({ type: UPDATE_BODY, payload: fields.formBody })
-      // dispatch({ type: UPDATE_SYNTAX, payload: fields.syntax })
-    }
+    dispatch({ type: UPDATE_TITLE, payload: fields.formTitle })
+    dispatch({ type: UPDATE_BODY, payload: fields.formBody })
+    // dispatch({ type: UPDATE_SYNTAX, payload: fields.syntax })
+  }
 
     props.isUpdateForm && updateFields()
     
-    const addIssue = (event) => {
+    const addIssue = event => {
     event.preventDefault()
     
     const newIssue = {
@@ -63,6 +63,7 @@ const IssueForm = props => {
           handleMessages(data)
         } else {
           dispatch({ type: ADD_ISSUE, payload: data.issue })
+          dispatch({ type: ADD_ISSUE_INDEX, payload: data.issue })
           dispatch({ type: UPDATE_USER, payload: data.user })
           props.history.push(`/issues`)
         }

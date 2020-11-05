@@ -3,10 +3,11 @@ import { useSelector, useDispatch } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Form, Button, Segment, Dropdown, Label, Header } from 'semantic-ui-react'
 import { avatarOptions } from '../Library/avatar';
+import { DateInput } from 'semantic-ui-calendar-react';
 import useFormFields from '../hooks/useFormFields';
 import Loading from './Loading';
 import '../resources/SignUp.css';
-import { ADD_USER, SET_KEY_HOLDER, UPDATE_USER, UPDATE_FIRST_NAME, UPDATE_LAST_NAME, UPDATE_EMAIL, UPDATE_JOB_TITLE, UPDATE_AVATAR, UPDATE_TOP_SKILLS } from '../store/type';
+import { ADD_USER, SET_KEY_HOLDER, UPDATE_USER, UPDATE_FIRST_NAME, UPDATE_LAST_NAME, UPDATE_EMAIL, UPDATE_JOB_TITLE, UPDATE_AVATAR, UPDATE_TOP_SKILLS, UPDATE_BIRTHDAY } from '../store/type';
 
 const AccountForm = props => {
 
@@ -14,7 +15,7 @@ const AccountForm = props => {
   const skills = useSelector(state => state.skill.skills)
   const dispatch = useDispatch()
   const [ avatar, setAvatar ] = useState(null)
-  const [ age, setAge ] = useState(null)
+  const [ dateInput, setDateInput ] = useState("")
 
   const [ topSkills, setTopSkills ] = useState([])
   const [ newSkills, setNewSkills ] = useState([])
@@ -44,13 +45,16 @@ const AccountForm = props => {
       fields.email = currentUser.email
     } 
     if (fields.jobTitle === "") {
-      fields.jobTitle = currentUser.profession
+      fields.jobTitle = currentUser.job_title
     } 
     if (topSkills.length === 0) {
       setTopSkills(() => currentUser.skills.map(skill => skill.key))
     } 
     if (avatar === null) {
       setAvatar(currentUser.avatar)
+    } 
+    if (dateInput === "") {
+      setDateInput(currentUser.birthday)
     } 
 
     dispatch({ type: UPDATE_FIRST_NAME, payload: fields.firstName })
@@ -59,6 +63,7 @@ const AccountForm = props => {
     dispatch({ type: UPDATE_JOB_TITLE, payload: fields.jobTitle })
     dispatch({ type: UPDATE_TOP_SKILLS, payload: topSkills })
     dispatch({ type: UPDATE_AVATAR, payload: avatar })
+    dispatch({ type: UPDATE_BIRTHDAY, payload: dateInput })
   }
 
   (!props.createAccount && currentUser) && updateFields()
@@ -106,17 +111,6 @@ const AccountForm = props => {
     }
   }
 
-  // set age range for dropdown 
-  const ageOptions = () => {
-    const options = []
-    for (let start = 18; start < 85; start++) {
-      options.push({ key: start, text: start, value: start })
-    }
-    return options
-  }
-
-  // set age and avatar input
-  const handleInputAge = (event) => setAge(event.target.textContent)
   const handleInputAvatar = (event) => setAvatar(event.target.textContent)
 
   const createAccount = (event) => {
@@ -127,11 +121,11 @@ const AccountForm = props => {
       email: fields.email,
       first_name: fields.firstName,
       last_name: fields.lastName,
-      password: fields.password,
       job_title: fields.jobTitle,
-      topSkills: topSkills,
-      age: age,
-      avatar: avatar
+      top_skills: topSkills,
+      birthday: dateInput,
+      avatar: avatar,
+      password: fields.password
     }
 
     console.log("NEW USER CREATED -->", newUser)
@@ -164,9 +158,10 @@ const AccountForm = props => {
       last_name: fields.lastName,
       email: fields.email,
       job_title: fields.jobTitle,
-      newSkills: newSkills,
-      removeSkills: removeSkills,
+      new_skills: newSkills,
+      remove_skills: removeSkills,
       avatar: avatar,
+      birthday: dateInput,
       password: fields.password
     }
 
@@ -187,6 +182,10 @@ const AccountForm = props => {
         props.history.push(`/account/${currentUser.id}`)
       }
     })
+  }
+
+  const handleDateChange = (name, value) => {
+    setDateInput(value.split("-").join("/"))
   }
 
   const handleMessages = data => {
@@ -237,26 +236,25 @@ const AccountForm = props => {
           </Form.Group>
           <Form.Group>
             <Form.Input 
-              width={15} 
+              width={10} 
               name="jobTitle" 
               label='Job Title' 
               placeholder='Job Title' 
               onChange={handleFieldChange} 
               defaultValue={!props.createAccount ? fields.jobTitle : undefined} 
             />
-            <Form.Input 
-              width={4} 
-              name="age" 
-              label='Age' 
-              placeholder='Age' 
-            >
-              <Dropdown
-                  compact
-                  selection
-                  options={ageOptions()}
-                  onChange={handleInputAge}
-                />
-            </Form.Input>
+            <DateInput
+              width={10} 
+              name="date"
+              label="Date of Birth"
+              dateFormat="MM-DD-YYYY"
+              placeholder="mm/dd/yyyy"
+              value={dateInput}
+              iconPosition="left"
+              animation={false}
+              defaultValue={!props.createAccount ? dateInput : undefined} 
+              onChange={(e, {name, value}) => handleDateChange(name, value)}
+            />
           </Form.Group>
           <Form.Group>
             <Form.Input 
@@ -299,7 +297,7 @@ const AccountForm = props => {
                 options={avatarSelection}
                 onChange={handleInputAvatar}
                 value={avatar}
-                // defaultValue={!props.createAccount ? avatar : undefined}
+                defaultValue={!props.createAccount ? avatar : undefined}
               />
             </Form.Input>
           </Form.Group>
