@@ -7,7 +7,7 @@ const CreateHighlight = props => {
   const returnHighlight = () => {
     return arrayString.map((element, index) => {
       if(index % 2 !== 0) {
-        return <Highlight languages={[`${props.syntax}`]}>{element}</Highlight>
+        return <Highlight className={`Copy-Clipboard-${props.specialClass.first_name}-${props.specialClass.last_name}-${props.specialClass.id}`} languages={[`${props.syntax}`]}>{element}</Highlight>
       } else {
         return element
       }

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Grid, Icon, Button, Card, Image, Divider, Modal, Header } from 'semantic-ui-react'
+import { Grid, Icon, Button, Card, Image, Divider, Modal, Header, Popup } from 'semantic-ui-react'
 import { Link, withRouter } from 'react-router-dom';
 import { UPDATE_ISSUE_INDEX, DELETE_ISSUE_INDEX, DELETE_ISSUE, UPDATE_ISSUE, UPDATE_TITLE, UPDATE_BODY, REMOVE_KEY_HOLDER_LIKE, ADD_KEY_HOLDER_LIKE, ADD_KEY_HOLDER_FAVORITE, REMOVE_KEY_HOLDER_FAVORITE } from '../store/type';
 import IssueForm from './IssueForm';
@@ -18,6 +18,11 @@ const Issue = props => {
   const [ issueFavorite, setIssueFavorite ] = useState({})
   const [ favoriteStatus, setFavoriteStatus ] = useState(false)
   const [ hasComment, setHasComment ] = useState(false)
+  const popupWrapper = {
+    borderRadius: 0,
+    opacity: 0.8,
+    padding: '1.2em',
+  }
 
   const [ alertHeader, setAlertHeader ] = useState("")
   const [ alertStatus, setAlertStatus ] = useState(false)
@@ -33,9 +38,9 @@ const Issue = props => {
   const imgUrl = `https://semantic-ui.com/images/avatar/small/${user.avatar}.jpg`
 
   useEffect(() => {
-    let mounted = true;
+    // let mounted = true;
 
-    if(mounted) {
+    // if(mounted) {
       const issueFound = currentUser && currentUser.like_issues.find(issue => issue.issue_id === id)
       const favoriteFound = currentUser && currentUser.favorites.find(issue => issue.issue_id === id)
       const foundComment = currentUser && comments.find(comment => comment.user_id === currentUser.id)
@@ -46,11 +51,11 @@ const Issue = props => {
       setFavoriteStatus(!!favoriteFound)
       setIssueFavorite(favoriteFound)
       setThumbsUpOrDown(issueLike && issueLike.is_like ? true : false)
-     } else {
-      dispatch({ type: "RESET" });
-     }
+    //  } else {
+    //   dispatch({ type: "RESET" });
+    //  }
 
-     return () => mounted = false;
+    //  return () => mounted = false;
     
   }, [currentUser, issueLike, id, setIssueFavorite, comments, dispatch])
 
@@ -164,6 +169,38 @@ const Issue = props => {
     }
   }
 
+  const handleCopyIssue = () => {
+    const copyText = document.querySelector(`.Copy-Clipboard-Text-${user.first_name}-${user.last_name}-${user.id}`)
+    // console.log(copyText)
+
+    const textArea = document.createElement("textarea");
+    textArea.textContent = copyText.innerText;
+
+    textArea.textContent = copyText.innerText
+  
+    document.body.append(textArea);
+    textArea.select();
+    document.execCommand("copy");
+    textArea.remove();
+  }
+
+  const handleCopyCode = () => {
+    const copyText = document.querySelectorAll(`.Copy-Clipboard-${user.first_name}-${user.last_name}-${user.id}`)
+    console.log(copyText)
+
+    const textArea = document.createElement("textarea");
+    // textArea.textContent = copyText.innerText;
+
+    for (let code of copyText) {
+      textArea.textContent += code.innerText
+    }
+
+    document.body.append(textArea);
+    textArea.select();
+    document.execCommand("copy");
+    textArea.remove();
+  }
+
   const handleMessages = data => {
     setAlertHeader(data.header)
     setAlertStatus(true)
@@ -209,11 +246,38 @@ const Issue = props => {
                   </Card.Meta>
                 </Card.Meta>
                 { props.displayBody &&
-                  <Card.Description className="ShowIssue-Issue-Body">
-                    {
-                      <CreateHighlight dataString={issue_body} syntax={syntax} />
-                    }
-                  </Card.Description>
+                  <>
+                    <Card.Description className={`Copy-Clipboard-Text-${user.first_name}-${user.last_name}-${user.id} ShowIssue-Issue-Body`}>
+                      {
+                        <CreateHighlight dataString={issue_body} syntax={syntax} specialClass={user} />
+                      }
+                    </Card.Description>
+                    <Popup
+                      content='Copy the text or just code snippets to your clipboard'
+                      position='top left'
+                      inverted
+                      // className="Popup-Wrapper"
+                      style={popupWrapper}
+                      trigger={<div className="Trigger-Container"> 
+                        <Popup
+                        content='Issue copied to clipboard'
+                        on='click'
+                        position='right center'
+                        inverted
+                        pinned
+                        trigger={<Button circular basic color='blue' icon='copy' className="Clipboard-Button" onClick={handleCopyIssue} />}
+                      />
+                      <Popup
+                        content='Code copied to clipboard'
+                        on='click'
+                        position='right center'
+                        inverted
+                        pinned
+                        trigger={<Button circular basic color='blue' icon='code' className="Clipboard-Button" onClick={handleCopyCode} />}
+                      />
+                      </div>}
+                    />
+                  </>
                 }
                 <Divider clearing />
                 <Card.Meta className="Issue-Item-Wrapper">
@@ -228,9 +292,9 @@ const Issue = props => {
                       :
                       (currentUser && currentUser.id !== user.id) && 
                       <React.Fragment>
-                          <Button circular color="teal" icon='thumbs up outline' size="large" onClick={likeBtn} />
-                          <Button circular color="teal" icon='thumbs down outline' size="large" onClick={dislikeBtn} />
-                        </React.Fragment>
+                        <Button circular color="teal" icon='thumbs up outline' size="large" onClick={likeBtn} />
+                        <Button circular color="teal" icon='thumbs down outline' size="large" onClick={dislikeBtn} />
+                      </React.Fragment>
                     }
                     {
                       (currentUser && currentUser.id !== user.id) && 

@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Header, Grid, Pagination } from 'semantic-ui-react'
+import { Header, Grid, Pagination, Loader } from 'semantic-ui-react'
 import Issue from './Issue';
 import SearchField from './SearchField';
 import Loading from './Loading';
@@ -9,9 +9,21 @@ import '../resources/IssueContainer.css';
 
 const IssueContainer = props => {
 
-  const searchTerm = useSelector(state => state.term.searchTerm)
   const dispatch = useDispatch()
+  const [ loading, setLoading ] = useState(true)
+  const searchTerm = useSelector(state => state.term.searchTerm)
   const issuesIndex = useSelector(state => state.issue.issuesIndex)
+
+  useEffect(() => {
+    // fetch issues
+    fetch("http://localhost:3000/issues")
+    .then(r => r.json())
+    .then(issuesIndex => {
+      const { issue_pages, page, pages } = issuesIndex
+      dispatch({ type: SET_ISSUE_INDEX, payload: { issue_pages, page, pages } })
+      setLoading(false)
+    })
+  }, [dispatch])
 
   const renderIssues = () => {
     const filteredIssues = issuesIndex.issue_pages.filter(issue => issue.title.toLowerCase().includes(searchTerm.toLowerCase()))
@@ -25,12 +37,16 @@ const IssueContainer = props => {
     let gotopage = { activePage }
     let pagenum = gotopage.activePage
     let pagestring = pagenum.toString()
-
+    setLoading(true)
+    
     const url = "http://localhost:3000/issues/?page=" + pagestring
 
-    fetch(url).then(res => res.json()).then(issuesIndex => {
+    fetch(url)
+    .then(res => res.json())
+    .then(issuesIndex => {
       const { issue_pages, page, pages } = issuesIndex
       dispatch({ type: SET_ISSUE_INDEX, payload: { issue_pages, page, pages } })
+      setLoading(false)
     })
   }
   
@@ -50,12 +66,12 @@ const IssueContainer = props => {
               totalPages={issuesIndex.pages}
               onPageChange={handlePage}
               className="Pagination"
-              // onPageChange={(event, data) => console.log(data.activePage)}
             />
             <Grid columns={1} divided id="Issue">
-              {/* <Segment loading> */}
-                {renderIssues()}
-              {/* </Segment> */}
+              { loading ?
+                <Loader active inline='centered' />
+                : renderIssues() 
+              }
             </Grid> 
             <Pagination
               boundaryRange={0}
@@ -66,7 +82,6 @@ const IssueContainer = props => {
               totalPages={issuesIndex.pages}
               onPageChange={handlePage}
               className="Pagination"
-              // onPageChange={(event, data) => console.log(data.activePage)}
             />
           </React.Fragment>
           : <Loading />

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import  { useDispatch } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { SET_USERS, SET_ISSUES, SET_ISSUE_INDEX, SET_KEY_HOLDER, SET_COMMENTS, SET_SKILLS } from '../store/type';
+import { SET_USERS, SET_ISSUES, SET_KEY_HOLDER, SET_COMMENTS, SET_SKILLS } from '../store/type';
 import AppWrapper from './AppWrapper';
 import '../resources/App.css';
 // import { Container } from 'semantic-ui-react';
@@ -38,9 +38,7 @@ const App = props => {
     fetch("http://localhost:3000/issues")
     .then(r => r.json())
     .then(issuesIndex => {
-      const { issue_pages, page, pages } = issuesIndex
       // set issues in the store
-      dispatch({ type: SET_ISSUE_INDEX, payload: { issue_pages, page, pages } })
       dispatch({ type: SET_ISSUES, payload: issuesIndex.issues })
     })
 

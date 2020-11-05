@@ -17,7 +17,7 @@ const ShowIssue = props => {
   const issues = useSelector(state => state.issue.issues)
   const currentUser = useSelector(state => state.user.keyHolder)
   const comments = useSelector(state => state.comment.comments)
-  const currentIssue = issues.find(issue => issue.id === issueId)
+  const currentIssue = issues && issues.find(issue => issue.id === issueId)
   const [ alertHeader, setAlertHeader ] = useState("")
   const [ alertStatus, setAlertStatus ] = useState(false)
   const [ message, setMessage ] = useState([])

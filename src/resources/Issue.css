@@ -33,3 +33,13 @@
 #Issue .Issue-Comment {
   font-size: 17px;
 }
+
+#Issue .Trigger-Container {
+  width: 20%;
+}
+
+#Issue .Popup-Wrapper {
+  border-radius: 0;
+  opacity: 0.7;
+  padding: '2em';
+}
