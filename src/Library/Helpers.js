@@ -1,4 +1,4 @@
-export const findIds = (userList, pathname) => {
+export const findIds = (userList) => {
   return userList.map(item => item.issue_id)
 }
 

@@ -92,7 +92,7 @@ const Account = props => {
                 <List verticalAlign='middle' >
                   { 
                     accountOptions.map(option => (
-                      <Button key={option.iconName} as={Link} to={option.iconName === "boxes" ? `/view-issues/user/${userId}` : option.link} color={option.color} className="Account-Account-Options" >
+                      <Button key={option.iconName} as={Link} to={option.iconName === "boxes" ? `/user-issues/${userId}` : option.link} color={option.color} className="Account-Account-Options" >
                         <List.Item>
                           <List.Content>
                             <Icon name={option.iconName} size="big"/>

@@ -10,16 +10,15 @@ import '../resources/FavoriteIssues.css';
 const FavoriteIssues = props => {
 
   const searchTerm = useSelector(state => state.term.searchTerm)
-  const pathname = props.location.pathname.split("-")[0]
   const issues = useSelector(state => state.issue.issues)
   const currentUser = useSelector(state => state.user.keyHolder)
   const [ issueIds, setIssueIds ] = useState([])
 
   useEffect(() => {
-    const ids = currentUser && findIds(currentUser.favorites, pathname)
+    const ids = currentUser && findIds(currentUser.favorites)
     setIssueIds(ids)
 
-  }, [currentUser, pathname])
+  }, [currentUser])
 
   const renderIssues = () => {
     const filteredIssues = findIssues(issues, issueIds).filter(issue => issue.title.toLowerCase().includes(searchTerm.toLowerCase()))

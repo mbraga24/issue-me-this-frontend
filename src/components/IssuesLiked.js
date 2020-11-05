@@ -10,17 +10,16 @@ import '../resources/FavoriteIssues.css';
 const IssuesLiked = props => {
   
   const searchTerm = useSelector(state => state.term.searchTerm)
-  const pathname = props.location.pathname.split("-")[0]
   const issues = useSelector(state => state.issue.issues)
   const currentUser = useSelector(state => state.user.keyHolder)
   const [ issueIds, setIssueIds ] = useState([])
 
   useEffect(() => {
     const thumbsUp = currentUser && currentUser.like_issues.filter(like => like.is_like)
-    const ids = currentUser && findIds(thumbsUp, pathname)
+    const ids = currentUser && findIds(thumbsUp)
     setIssueIds(ids)
 
-  }, [currentUser, pathname])
+  }, [currentUser])
 
   const renderIssues = () => {
     const filteredIssues = findIssues(issues, issueIds).filter(issue => issue.title.toLowerCase().includes(searchTerm.toLowerCase()))

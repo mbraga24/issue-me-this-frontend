@@ -104,7 +104,7 @@ const AppWrapper = props => {
                         <Route exact path="/users" component={UserContainer} />
                         <Route path="/favorite-issues" component={FavoriteIssues} />
                         <Route path="/liked-issues" component={IssuesLiked} />
-                        <Route path="/view-issues/user/:id" component={UserIssues} />
+                        <Route path="/user-issues/:id" component={UserIssues} />
                         <Route path="/update/account" component={UpdateAccount} />
                         <Route exact path="/" component={Home} />
                         <Route path="/login" component={Login} />
