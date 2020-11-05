@@ -115,7 +115,6 @@ const AccountForm = props => {
 
   const createAccount = (event) => {
     event.preventDefault()
-    console.log("CREATE ACCOUNT - TOP SKILSS", topSkills)
 
     const newUser = {
       email: fields.email,
@@ -127,8 +126,6 @@ const AccountForm = props => {
       avatar: avatar,
       password: fields.password
     }
-
-    console.log("NEW USER CREATED -->", newUser)
 
     fetch("http://localhost:3000/users", {
       method: "POST",  

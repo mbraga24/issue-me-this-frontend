@@ -65,7 +65,6 @@ const Issue = props => {
     })
     .then(r => r.json())
     .then(issue => {
-      console.log("DELETE ISSUE -->", issue)
       dispatch({ type: DELETE_ISSUE, payload: issue })
       dispatch({ type: DELETE_ISSUE_INDEX, payload: issue })
       props.match.path === "/issues/:id" && props.history.push('/issues')
@@ -89,7 +88,6 @@ const Issue = props => {
     })
     .then(r => r.json())
     .then(data => {
-      console.log("UPDATE ISSUE ->", data)
       if (data.errorStatus) {
         handleMessages(data)
       } else {
@@ -171,13 +169,8 @@ const Issue = props => {
 
   const handleCopyIssue = () => {
     const copyText = document.querySelector(`.Copy-Clipboard-Text-${user.first_name}-${user.last_name}-${user.id}`)
-    // console.log(copyText)
-
     const textArea = document.createElement("textarea");
     textArea.textContent = copyText.innerText;
-
-    textArea.textContent = copyText.innerText
-  
     document.body.append(textArea);
     textArea.select();
     document.execCommand("copy");
@@ -186,15 +179,10 @@ const Issue = props => {
 
   const handleCopyCode = () => {
     const copyText = document.querySelectorAll(`.Copy-Clipboard-${user.first_name}-${user.last_name}-${user.id}`)
-    console.log(copyText)
-
     const textArea = document.createElement("textarea");
-    // textArea.textContent = copyText.innerText;
-
     for (let code of copyText) {
       textArea.textContent += code.innerText
     }
-
     document.body.append(textArea);
     textArea.select();
     document.execCommand("copy");
