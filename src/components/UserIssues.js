@@ -4,7 +4,6 @@ import { Header, Grid } from 'semantic-ui-react'
 import Issue from './Issue';
 import SearchField from './SearchField';
 import Loading from './Loading';
-import { findIds, findIssues } from '../Library/Helpers';
 import '../resources/FavoriteIssues.css';
 
 const UserIssues = props => {
@@ -16,26 +15,24 @@ const UserIssues = props => {
   const users = useSelector(state => state.user.users)
   const userId = parseInt(props.match.params.id)
   const [ userProfile, setUserProfile ] = useState(null)
-  const [ issueIds, setIssueIds ] = useState([])
 
   useEffect(() => {
     const user = users && users.find(user => user.id === userId)
-    const userIssues = issues && issues.filter(issue => issue.user.id === userId)
-    const ids = issues && findIds(userIssues, pathname)
     setUserProfile(user)
-    setIssueIds(ids)
 
   }, [userId, users, issues, userProfile, pathname])
 
+  const findIssues = () => {
+    return issues.filter(issue => issue.user.id === userId)
+  }
+
   const renderIssues = () => {
-    const filteredIssues = findIssues(issues, issueIds).filter(issue => issue.title.toLowerCase().includes(searchTerm.toLowerCase()))
+    const filteredIssues = findIssues().filter(issue => issue.title.toLowerCase().includes(searchTerm.toLowerCase()))
   
     return filteredIssues.map(issue => (
       <Issue key={issue.id} issue={issue} displayBody={false} />
     ))
   }
-
-  console.log("ISSUES -->", issues)
 
   return (
     <div id="FavoriteIssue-Container">
