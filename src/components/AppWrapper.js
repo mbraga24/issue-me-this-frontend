@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Container, Grid, Icon, Menu, Sidebar } from 'semantic-ui-react'
 import { Route, Switch, Link } from 'react-router-dom';
-import TopMenuBar from './TopMenuBar';
+import MenuBar from './MenuBar';
 import Home from './Home';
 import Login from './Login';
 import Signup from './Signup';
@@ -47,7 +47,7 @@ const AppWrapper = props => {
         <Grid.Column>
           <Sidebar.Pushable id="Pushable-Sidebar">
             <Sidebar
-              color="teal"
+              color="blue"
               as={Menu}
               animation='overlay'
               inverted
@@ -94,7 +94,7 @@ const AppWrapper = props => {
               }
             </Sidebar>
             <Sidebar.Pusher dimmed={visible}>
-              <TopMenuBar toggleMenu={toggleMenu} />
+              <MenuBar toggleMenu={toggleMenu} />
                 <Switch>  
                     <Container id="AppWrapper-Container">  
                         <Route exact path="/issues" component={IssueContainer} />

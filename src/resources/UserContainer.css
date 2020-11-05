@@ -3,3 +3,8 @@
   margin-bottom: 25px;
   font-size: 38px;
 }
+
+#Users-Container .User-Card {
+  color: blue;
+  /* border: 3px solid red; */
+}

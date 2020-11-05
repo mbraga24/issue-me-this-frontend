@@ -21,7 +21,7 @@ const UserContainer = props => {
         { 
           users ?
           <React.Fragment>
-            <Header as='h1' textAlign="center" color="grey" className="Users-Header">Users</Header>
+            <Header as='h1' textAlign="center" color="blue" className="Users-Header">Users</Header>
             <Grid divided="vertically">
               <Grid.Row columns={4}>
                 {renderUsers()}

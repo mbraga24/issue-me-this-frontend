@@ -1,6 +1,5 @@
 #Home-Container {
-  /* background-color: #f9fafb; */
-  height: 100vh;
+  height: 80vh;
   display: flex;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
@@ -12,11 +11,9 @@
   -webkit-box-align: stretch;
   -ms-flex-align: stretch;
   align-items: stretch;
-  /* max-width: initial; */
   -webkit-animation: none;
   animation: none;
   padding: 1em 1em;
-  /* min-height: 18rem; */
 }
 
 #Home-Container .Home-Icon {

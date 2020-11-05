@@ -39,7 +39,7 @@ const UserIssues = props => {
       {
         issues ? 
         <React.Fragment>
-          <Header as='h1' textAlign="center" color="grey" className="FavoriteIssue-Header">
+          <Header as='h1' textAlign="center" color="blue" className="FavoriteIssue-Header">
             {(currentUser && currentUser.id === userId) ? `Manage Issues` : userProfile && `${userProfile.first_name} ${userProfile.last_name} Profile` }
           </Header>
           <SearchField />

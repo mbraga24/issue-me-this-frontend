@@ -17,7 +17,7 @@ const UserCard = props => {
           <Card.Header>{first_name} {last_name}</Card.Header>
         </Link>
         <Card.Description>
-          <p className="description">Job Title: {job_title}</p>
+          Job Title: {job_title}
         </Card.Description>
       </Card.Content>
       <Card.Content extra>

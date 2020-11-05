@@ -33,7 +33,7 @@ const FavoriteIssues = props => {
       {
         issues ?
         <React.Fragment>
-          <Header as='h1' textAlign="center" color="grey" className="FavoriteIssue-Header">Your Favorite Issues</Header>
+          <Header as='h1' textAlign="center" color="blue" className="FavoriteIssue-Header">Your Favorite Issues</Header>
           <SearchField />
           <Grid columns={1} divided id="Issue">
             {renderIssues()}

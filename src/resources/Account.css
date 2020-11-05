@@ -11,7 +11,7 @@
 #Account-Container .Account-Header {
   margin-top: 25px;
   margin-bottom: 25px;
-  font-size: 32px;
+  font-size: 42px;
 }
 
 #Account-Container .Card-Wrapper {
@@ -27,8 +27,9 @@
   font-weight: bold;
 }
 
-#Account-Container .Account-Account-Options {
-  width: 35%;
+#Account-Container .Account-Button-Options {
+  /* width: 35%; */
+  width: 50%;
   margin-bottom: 5px;
 }
 

@@ -13,7 +13,7 @@ const TopMenuBar = props => {
   }
 
   return(
-    <Menu color="teal" inverted id="Top-Menu-Bar">
+    <Menu color="blue" inverted id="Top-Menu-Bar">
       <Menu.Item
         active={activeItem === 'more'}
         onClick={props.toggleMenu}

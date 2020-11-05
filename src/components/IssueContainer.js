@@ -55,18 +55,8 @@ const IssueContainer = props => {
         {
           issuesIndex ? 
           <React.Fragment>
-            <Header as='h1' textAlign="center" color="grey" className="IssueContainer-Header">All Issues</Header>
+            <Header as='h1' textAlign="center" color="blue" className="IssueContainer-Header">All Issues</Header>
             <SearchField setSearchTerm={props.setSearchTerm} />
-            <Pagination
-              boundaryRange={0}
-              defaultActivePage={issuesIndex.page}
-              firstItem={null}
-              lastItem={null}
-              siblingRange={1}
-              totalPages={issuesIndex.pages}
-              onPageChange={handlePage}
-              className="Pagination"
-            />
             <Grid columns={1} divided id="Issue">
               { loading ?
                 <Loader active inline='centered' />
@@ -74,6 +64,7 @@ const IssueContainer = props => {
               }
             </Grid> 
             <Pagination
+              raised
               boundaryRange={0}
               defaultActivePage={issuesIndex.page}
               firstItem={null}
