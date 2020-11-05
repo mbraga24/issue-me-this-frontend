@@ -1,23 +1,23 @@
 const accountOptions = [
   {
-     color: "purple",
+     color: "teal",
      iconName: "settings",
      listHeader: "Update account",
      link: "/update/account"
   },
   {
-     color: "purple",
+     color: "teal",
      iconName: "star",
      listHeader: "Favorite issues",
      link: "/favorite-issues"
   },
   {
-     color: "purple",
+     color: "teal",
      iconName: "boxes",
      listHeader: "Manage issues"
   },
   {
-    color: "purple",
+    color: "teal",
     iconName: "thumbs up",
     listHeader: "Issues you liked",
     link: "/liked-issues"
