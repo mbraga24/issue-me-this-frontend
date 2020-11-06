@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Header, Grid, Pagination, Loader } from 'semantic-ui-react'
+import { Header, Grid, Pagination } from 'semantic-ui-react';
 import Issue from './Issue';
 import SearchField from './SearchField';
 import Loading from './Loading';
@@ -18,15 +18,15 @@ const IssueContainer = props => {
     // fetch issues
     fetch("http://localhost:3000/issues")
     .then(r => r.json())
-    .then(issuesIndex => {
-      const { issue_pages, page, pages } = issuesIndex
+    .then(issues => {
+      const { issue_pages, page, pages } = issues
       dispatch({ type: SET_ISSUE_INDEX, payload: { issue_pages, page, pages } })
       setLoading(false)
     })
   }, [dispatch])
 
   const renderIssues = () => {
-    const filteredIssues = issuesIndex.issue_pages.filter(issue => issue.title.toLowerCase().includes(searchTerm.toLowerCase()))
+    const filteredIssues = issuesIndex && issuesIndex.issue_pages.filter(issue => issue.title.toLowerCase().includes(searchTerm.toLowerCase()))
   
     return filteredIssues.map(issue => (
       <Issue key={issue.id} issue={issue} displayBody={false} />
@@ -52,16 +52,15 @@ const IssueContainer = props => {
   
   return (
       <div id="IssueContainer">
+        <Header as='h1' textAlign="center" color="blue" className="IssueContainer-Header">All Issues</Header>
         {
-          issuesIndex ? 
+          loading ?
+          <Loading loadingClass={true} /> 
+          :
           <React.Fragment>
-            <Header as='h1' textAlign="center" color="blue" className="IssueContainer-Header">All Issues</Header>
             <SearchField setSearchTerm={props.setSearchTerm} />
             <Grid columns={1} divided id="Issue">
-              { loading ?
-                <Loader active inline='centered' />
-                : renderIssues() 
-              }
+              { renderIssues()}
             </Grid> 
             <Pagination
               raised
@@ -75,7 +74,6 @@ const IssueContainer = props => {
               className="Pagination"
             />
           </React.Fragment>
-          : <Loading />
         }
       </div>
   );

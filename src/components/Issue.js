@@ -38,24 +38,16 @@ const Issue = props => {
   const imgUrl = `https://semantic-ui.com/images/avatar/small/${user.avatar}.jpg`
 
   useEffect(() => {
-    // let mounted = true;
+    const issueFound = currentUser && currentUser.like_issues.find(issue => issue.issue_id === id)
+    const favoriteFound = currentUser && currentUser.favorites.find(issue => issue.issue_id === id)
+    const foundComment = currentUser && comments.find(comment => comment.user_id === currentUser.id)
 
-    // if(mounted) {
-      const issueFound = currentUser && currentUser.like_issues.find(issue => issue.issue_id === id)
-      const favoriteFound = currentUser && currentUser.favorites.find(issue => issue.issue_id === id)
-      const foundComment = currentUser && comments.find(comment => comment.user_id === currentUser.id)
-  
-      setHasComment(foundComment)
-      setDislayLikeStatus(!!issueFound)
-      setIssueLike(issueFound)
-      setFavoriteStatus(!!favoriteFound)
-      setIssueFavorite(favoriteFound)
-      setThumbsUpOrDown(issueLike && issueLike.is_like ? true : false)
-    //  } else {
-    //   dispatch({ type: "RESET" });
-    //  }
-
-    //  return () => mounted = false;
+    setHasComment(foundComment)
+    setDislayLikeStatus(!!issueFound)
+    setIssueLike(issueFound)
+    setFavoriteStatus(!!favoriteFound)
+    setIssueFavorite(favoriteFound)
+    setThumbsUpOrDown(issueLike && issueLike.is_like ? true : false)
     
   }, [currentUser, issueLike, id, setIssueFavorite, comments, dispatch])
 
@@ -224,7 +216,7 @@ const Issue = props => {
                   <Card.Meta className="Issue-Icon-Avatar" textAlign='right'>
                     <Image
                       as={Link}
-                      to={`/account/${user.id}`}
+                      to={`${currentUser ? `/account/${user.id}` : "/login"}`}
                       className="Image"
                       size='big'
                       avatar
@@ -233,37 +225,39 @@ const Issue = props => {
                     />
                   </Card.Meta>
                 </Card.Meta>
-                { props.displayBody &&
+                { 
+                  props.displayBody && 
                   <>
                     <Card.Description className={`Copy-Clipboard-Text-${user.first_name}-${user.last_name}-${user.id} ShowIssue-Issue-Body`}>
                       {
-                        <CreateHighlight dataString={issue_body} syntax={syntax} specialClass={user} />
+                        <CreateHighlight dataString={issue_body} syntax={syntax} user={user} />
                       }
                     </Card.Description>
                     <Popup
                       content='Copy the text or just code snippets to your clipboard'
                       position='top left'
                       inverted
-                      // className="Popup-Wrapper"
                       style={popupWrapper}
-                      trigger={<div className="Trigger-Container"> 
+                      trigger={
+                      <div className="Trigger-Container"> 
                         <Popup
-                        content='Issue copied to clipboard'
-                        on='click'
-                        position='right center'
-                        inverted
-                        pinned
-                        trigger={<Button circular basic color='blue' icon='copy' className="Clipboard-Button" onClick={handleCopyIssue} />}
-                      />
-                      <Popup
-                        content='Code copied to clipboard'
-                        on='click'
-                        position='right center'
-                        inverted
-                        pinned
-                        trigger={<Button circular basic color='blue' icon='code' className="Clipboard-Button" onClick={handleCopyCode} />}
-                      />
-                      </div>}
+                          content='Issue copied to clipboard'
+                          on='click'
+                          position='right center'
+                          inverted
+                          pinned
+                          trigger={<Button circular basic color='blue' icon='copy' className="Clipboard-Button" onClick={handleCopyIssue} />}
+                        />
+                        <Popup
+                          content='Code copied to clipboard'
+                          on='click'
+                          position='right center'
+                          inverted
+                          pinned
+                          trigger={<Button circular basic color='blue' icon='code' className="Clipboard-Button" onClick={handleCopyCode} />}
+                        />
+                      </div>
+                      }
                     />
                   </>
                 }

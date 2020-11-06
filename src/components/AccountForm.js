@@ -150,6 +150,7 @@ const AccountForm = props => {
 
   const updateAccount = event => {
     event.preventDefault()
+    
     const updateUser = {
       first_name: fields.firstName,
       last_name: fields.lastName,
@@ -326,7 +327,7 @@ const AccountForm = props => {
               </div>
             }
         </Form>
-      </Segment> : <Loading />
+      </Segment> : <Loading loadingClass={true} /> 
       }
     </div>
   );

@@ -18,16 +18,17 @@ const UserContainer = props => {
   }
   return (
       <div id="Users-Container">
-        { 
-          users ?
-          <React.Fragment>
             <Header as='h1' textAlign="center" color="blue" className="Users-Header">Users</Header>
             <Grid divided="vertically">
-              <Grid.Row columns={4}>
-                {renderUsers()}
-              </Grid.Row>
+              {
+              users ?
+              <React.Fragment>  
+                <Grid.Row columns={4}>
+                  {renderUsers()}
+                </Grid.Row>
+              </React.Fragment> : <Loading loadingClass={true} /> 
+              }
             </Grid>
-          </React.Fragment> : <Loading />
           }
       </div>
   );

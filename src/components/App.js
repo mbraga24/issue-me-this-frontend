@@ -10,9 +10,6 @@ const App = props => {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    // log user in when component mounts
-    // check if user is loggedin with the id stored in localStorage
-    // Additional metadata - authorization header convention
    if (localStorage.token) {
     fetch("http://localhost:3000/autologin", {
       headers: {

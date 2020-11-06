@@ -97,61 +97,65 @@ const ShowIssue = props => {
   }
 
   return (
-    currentIssue ?
-      <Container id="ShowIssue">
-        <Header as='h1' textAlign="center" className="ShowIssue-Header">Issue</Header>
-        <Grid columns="2" divided id="Issue">
-          <Issue issue={currentIssue} displayBody={true}/>
-          <Grid.Row>
-            <Grid.Column className="ShowIssue-Wrap" width={12}>
-            { 
-              currentUser ? 
-              <Form onSubmit={postComment}>
-                <Form.Field
-                  name="commentArea"
-                  style={{height: "200px"}}
-                  control={TextArea}
-                  label='Your Answer'
-                  placeholder={instructionPost}
-                  onChange={handleFieldChange}
-                />
-                <Form.Group>
-                  <Form.Field control={Button} positive>Post Answer</Form.Field>
-                </Form.Group>
-                {
-                  (alertStatus && !!message) && 
-                    <div className="ui negative message">
-                      <i className="close icon" onClick={handleDismissOnClick}></i>
-                      <div className="header">
-                        {alertHeader}
+    <Container id="ShowIssue">
+      {
+        currentIssue ?
+        <React.Fragment>
+          <Header as='h1' textAlign="center" className="ShowIssue-Header">Issue</Header>
+          <Grid columns="2" divided id="Issue">
+            <Issue issue={currentIssue} displayBody={true}/>
+            <Grid.Row>
+              <Grid.Column className="ShowIssue-Wrap" width={12}>
+              { 
+                currentUser ? 
+                <Form onSubmit={postComment}>
+                  <Form.Field
+                    name="commentArea"
+                    style={{height: "200px"}}
+                    control={TextArea}
+                    label='Your Answer'
+                    placeholder={instructionPost}
+                    onChange={handleFieldChange}
+                  />
+                  <Form.Group>
+                    <Form.Field control={Button} positive>Post Answer</Form.Field>
+                  </Form.Group>
+                  {
+                    (alertStatus && !!message) && 
+                      <div className="ui negative message">
+                        <i className="close icon" onClick={handleDismissOnClick}></i>
+                        <div className="header">
+                          {alertHeader}
+                        </div>
+                        <ul className="list">
+                          {message.length !== 0 ? renderAlertMessage() : null}
+                        </ul>
                       </div>
-                      <ul className="list">
-                        {message.length !== 0 ? renderAlertMessage() : null}
-                      </ul>
-                    </div>
-                }
-              </Form>
-                : 
-                <Button.Group size='large'>
-                  <Link to="/login">
-                    <Button color="green">Login</Button>
-                  </Link>
-                  <Button.Or />
-                  <Link to="/signup">
-                    <Button color="blue">Sign up</Button>
-                  </Link>
-                </Button.Group>
-            }
-            </Grid.Column>
-          </Grid.Row>
-          <Grid.Row>
-            <Grid.Column className="ShowIssue-Wrap" width={12}>
-              <Header as='h1' textAlign="center" className="ShowIssue-Comment-Header">Answers</Header>
-              {renderComments()}
-            </Grid.Column>
-          </Grid.Row>
-        </Grid>
-      </Container> : <Loading />
+                  }
+                </Form>
+                  : 
+                  <Button.Group size='large'>
+                    <Link to="/login">
+                      <Button color="green">Login</Button>
+                    </Link>
+                    <Button.Or />
+                    <Link to="/signup">
+                      <Button color="blue">Sign up</Button>
+                    </Link>
+                  </Button.Group>
+              }
+              </Grid.Column>
+            </Grid.Row>
+            <Grid.Row>
+              <Grid.Column className="ShowIssue-Wrap" width={12}>
+                <Header as='h1' textAlign="center" className="ShowIssue-Comment-Header">Answers</Header>
+                {renderComments()}
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
+        </React.Fragment> : <Loading loadingClass={true} /> 
+        }      
+        </Container> 
   );
 }
 

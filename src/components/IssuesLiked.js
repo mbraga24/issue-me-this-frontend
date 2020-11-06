@@ -31,16 +31,16 @@ const IssuesLiked = props => {
 
   return (
     <div id="FavoriteIssue-Container">
-      {
-        issues ?
-        <React.Fragment>
-          <Header as='h1' textAlign="center" color="blue" className="FavoriteIssue-Header">Issues You Like</Header>
-          <SearchField />
-          <Grid columns={1} divided id="Issue">
-            {renderIssues()}
-          </Grid> 
-        </React.Fragment> : <Loading />
-      }
+    <Header as='h1' textAlign="center" color="blue" className="FavoriteIssue-Header">Issues You Like</Header>
+    {
+    issues ?
+    <React.Fragment>
+      <SearchField />
+      <Grid columns={1} divided id="Issue">
+        {renderIssues()}
+      </Grid> 
+    </React.Fragment> : <Loading loadingClass={true} /> 
+    }
     </div>
   )
 }

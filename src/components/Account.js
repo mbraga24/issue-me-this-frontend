@@ -125,7 +125,7 @@ const Account = props => {
           </Grid.Row>
         </Grid> 
         </div>
-      </React.Fragment> : <Loading />
+      </React.Fragment> : <Loading loadingClass={true} /> 
 
     );
 }

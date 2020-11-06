@@ -14,7 +14,6 @@ const sortedIssues = data => {
 const store = (state = defaultState, action) => {
   switch(action.type) {
     case SET_ISSUES:
-      console.log("SET_ISSUES --->", action.payload)
       return {
         ...state,
         issues: [...sortedIssues(action.payload)]
@@ -25,20 +24,17 @@ const store = (state = defaultState, action) => {
         issuesIndex: action.payload
       }
     case ADD_ISSUE_INDEX:
-      // console.log("ADD_ISSUE_INDEX -->", action.payload)
       return {
         ...state,
         issuesIndex: { ...state.issuesIndex, issue_pages: [action.payload ,...state.issuesIndex.issue_pages] }
       }
     case UPDATE_ISSUE_INDEX:
-      // console.log("UPDATE ISSUE INDEX -->", action.payload)
       const updatedIssueIndex = state.issuesIndex.issue_pages.map(issue => issue.id === action.payload.id ? action.payload : issue)
       return {
         ...state,
         issuesIndex: { ...state.issuesIndex, issue_pages: [...updatedIssueIndex] }
       }
     case DELETE_ISSUE_INDEX:
-      console.log("DELETE_ISSUE_INDEX -->", action.payload)
       const remainingIssueIndex = state.issuesIndex.issue_pages.filter(issue => issue.id !== action.payload.id)
       return {
         ...state,

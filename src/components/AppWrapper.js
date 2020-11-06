@@ -64,6 +64,10 @@ const AppWrapper = props => {
                 <Icon name='users' size="large" />
                 Users
               </Menu.Item>
+              <Menu.Item as={Link} to="/issues">
+                <Icon name='list alternate outline' size="large" />
+                Issues
+              </Menu.Item>
               { 
               currentUser ?
                 <>
@@ -96,19 +100,26 @@ const AppWrapper = props => {
             <Sidebar.Pusher dimmed={visible}>
               <MenuBar toggleMenu={toggleMenu} />
                 <Switch>  
-                    <Container id="AppWrapper-Container">  
-                        <Route exact path="/issues" component={IssueContainer} />
+                    <Container id="AppWrapper-Container">
+                      {
+                      currentUser &&
+                      <React.Fragment>
                         <Route path="/account/:id" component={Account} />
                         <Route path="/new/issue" component={NewIssueForm} />
                         <Route path="/issues/:id" component={ShowIssue} />
-                        <Route exact path="/users" component={UserContainer} />
                         <Route path="/favorite-issues" component={FavoriteIssues} />
                         <Route path="/liked-issues" component={IssuesLiked} />
                         <Route path="/user-issues/:id" component={UserIssues} />
-                        <Route path="/update/account" component={UpdateAccount} />
+                        <Route path="/update/account" component={UpdateAccount} /> 
+                      </React.Fragment>
+                      }
+                      <React.Fragment>
                         <Route exact path="/" component={Home} />
                         <Route path="/login" component={Login} />
                         <Route path="/signup" component={Signup} />
+                        <Route exact path="/issues" component={IssueContainer} />
+                        <Route exact path="/users" component={UserContainer} />
+                      </React.Fragment>
                     </Container>
                 </Switch>
             </Sidebar.Pusher>
