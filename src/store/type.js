@@ -28,6 +28,12 @@ export const ADD_COMMENT = "ADD_COMMENT";
 export const UPDATE_COMMENT = "UPDATE_COMMENT";
 export const DELETE_COMMENT = "DELETE_COMMENT";
 
+// like store
+export const SET_LIKES = "SET_LIKES";
+export const ADD_LIKE = "ADD_LIKE";
+export const UPDATE_LIKE = "UPDATE_LIKE";
+export const DELETE_LIKE = "DELETE_LIKE";
+
 // skill store
 export const SET_SKILLS = "SET_SKILLS";
 
