@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Grid, Icon, Button, Card, Image, Divider, Modal, Header, Popup } from 'semantic-ui-react'
 import { Link, withRouter } from 'react-router-dom';
-import { UPDATE_ISSUE_INDEX, DELETE_ISSUE_INDEX, DELETE_ISSUE, UPDATE_ISSUE, UPDATE_TITLE, UPDATE_BODY, REMOVE_KEY_HOLDER_LIKE, ADD_KEY_HOLDER_LIKE, ADD_KEY_HOLDER_FAVORITE, REMOVE_KEY_HOLDER_FAVORITE } from '../store/type';
+import { UPDATE_ISSUE_INDEX, DELETE_ISSUE_INDEX, DELETE_ISSUE, UPDATE_ISSUE, UPDATE_TITLE, UPDATE_BODY, REMOVE_KEY_HOLDER_LIKE, ADD_KEY_HOLDER_LIKE, ADD_KEY_HOLDER_FAVORITE, REMOVE_KEY_HOLDER_FAVORITE, ADD_LIKE, DELETE_LIKE } from '../store/type';
 import IssueForm from './IssueForm';
 import CreateHighlight from './CreateHighlight';
 import '../resources/Issue.css';
@@ -16,6 +16,8 @@ const Issue = props => {
   const [ thumbsUpOrDown, setThumbsUpOrDown ] = useState(false)
   const [ issueLike, setIssueLike ] = useState({})
   const [ issueFavorite, setIssueFavorite ] = useState({})
+  const [ issueLikes, setIssueLikes ] = useState([])
+  const [ issueDislikes, setIssueDislikes ] = useState([])
   const [ favoriteStatus, setFavoriteStatus ] = useState(false)
   const [ hasComment, setHasComment ] = useState(false)
   const popupWrapper = {
@@ -29,19 +31,27 @@ const Issue = props => {
   const [ message, setMessage ] = useState([])
 
   const currentUser = useSelector(state => state.user.keyHolder)
+  const likes = useSelector(state => state.like.likes)
   const updateTitle = useSelector(state => state.updateForm.updateTitle)
   const updateBody = useSelector(state => state.updateForm.updateBody)
-  // const updateSyntax = useSelector(state => state.updateForm.updateSyntax)
 
   const { id, title, comments, issue_body, syntax, user } = props.issue
   const totalComments = comments.length
   const imgUrl = `https://semantic-ui.com/images/avatar/small/${user.avatar}.jpg`
 
+  const totalDislikes = useCallback(dataLikes => {
+    return dataLikes.filter(like => like.is_like === false && like.issue_id === id)
+  }, [id])
+
+  const totalLikes = useCallback(dataLikes => {
+    return dataLikes.filter(like => like.is_like === true && like.issue_id === id)
+  }, [id])
+
   useEffect(() => {
     const issueFound = currentUser && currentUser.like_issues.find(issue => issue.issue_id === id)
     const favoriteFound = currentUser && currentUser.favorites.find(issue => issue.issue_id === id)
     const foundComment = currentUser && comments.find(comment => comment.user_id === currentUser.id)
-
+    // setTotalLikes(props.issue.like_issues)
     setHasComment(foundComment)
     setDislayLikeStatus(!!issueFound)
     setIssueLike(issueFound)
@@ -50,6 +60,11 @@ const Issue = props => {
     setThumbsUpOrDown(issueLike && issueLike.is_like ? true : false)
     
   }, [currentUser, issueLike, id, setIssueFavorite, comments, dispatch])
+
+  useEffect(() => {
+    setIssueLikes(totalLikes(likes))
+    setIssueDislikes(totalDislikes(likes))
+  }, [props.history.location.pathname, likes, totalLikes, totalDislikes]) 
 
   const deleteIssue = () => {
     fetch(`http://localhost:3000/issues/${id}`, {
@@ -68,7 +83,6 @@ const Issue = props => {
     const data = {
       title: updateTitle,
       issue_body: updateBody
-      // syntax: updateSyntax
     }
     
     fetch(`http://localhost:3000/issues/${id}`, {
@@ -100,6 +114,7 @@ const Issue = props => {
     .then(data => {
       dispatch({ type: REMOVE_KEY_HOLDER_LIKE, payload: data.like })
       dispatch({ type: UPDATE_ISSUE, payload: data.issue })
+      dispatch({ type: DELETE_LIKE, payload: data.like })
     })
   }
 
@@ -113,8 +128,10 @@ const Issue = props => {
     })
     .then(r => r.json())
     .then(data => {
+      console.log("LIKE ->", data)
       dispatch({ type: ADD_KEY_HOLDER_LIKE, payload: data.like })
       dispatch({ type: UPDATE_ISSUE, payload: data.issue })
+      dispatch({ type: ADD_LIKE, payload: data.like })
     })
   }
 
@@ -130,6 +147,7 @@ const Issue = props => {
     .then(data => {
       dispatch({ type: ADD_KEY_HOLDER_LIKE, payload: data.like })
       dispatch({ type: UPDATE_ISSUE, payload: data.issue })
+      dispatch({ type: ADD_LIKE, payload: data.like })
     })
   }
 
@@ -202,6 +220,14 @@ const Issue = props => {
     }, 4000)
   }
 
+  // console.log(props.history.location.pathname.split("/"))
+  // console.log(`ISSUE: ${props.issue.title}: Total likes: ${issueLikes().length}`)
+  console.log(`ISSUE: ${props.issue.title}: Total likes: ${issueLikes.length}`)
+  console.log("==================================")
+  // console.log("ALL LIKES IN THE APP -->", likes)
+  // console.log("THIS ISSUE'S USER -->", user)
+  // console.log("THIS ISSUE'S  -->", user)
+
   return (
       <Grid.Row>
         <Grid.Column className="Issue-Inner-Wrap" width={12}>
@@ -213,16 +239,17 @@ const Issue = props => {
                       {title}
                     </Link>
                   </Card.Meta>
-                  <Card.Meta className="Issue-Icon-Avatar" textAlign='right'>
+                  <Card.Meta className="Issue-Icon-Avatar" textAlign='center'>
                     <Image
                       as={Link}
                       to={`${currentUser ? `/account/${user.id}` : "/login"}`}
-                      className="Image"
+                      className="Issue-Image"
                       size='big'
                       avatar
                       alt={`${user.first_name} ${user.last_name}`}
                       src={imgUrl}
                     />
+                  <span>{`${user.first_name} ${user.last_name[0]}.`}</span>
                   </Card.Meta>
                 </Card.Meta>
                 { 
@@ -263,14 +290,24 @@ const Issue = props => {
                 }
                 <Divider clearing />
                 <Card.Meta className="Issue-Item-Wrapper">
-                  <Card.Meta className="Issue-Item-Extra">
-                    <Icon name={hasComment ? "comment alternate" : "comment outline"} size="large" />
-                    <span className="Issue-Comment">{totalComments} Comments</span>
+                  <Card.Meta className="Issue-Item-Inner-Wrapper">
+                    <Card.Meta className="Issue-Item-Extra">
+                      <Icon name={hasComment ? "comment alternate" : "comment outline"} size="large" />
+                      <span className="Issue-Comment">{totalComments} Comments</span>
+                    </Card.Meta>
+                    <Card.Meta className="Issue-Item-Extra Inner-Item">
+                      <Icon name="thumbs up" />
+                      <span className="Issue-Comment">{issueLikes.length}</span>
+                    </Card.Meta>
+                    <Card.Meta className="Issue-Item-Extra Inner-Item">
+                      <Icon name="thumbs down" />
+                      <span className="Issue-Comment">{issueDislikes.length}</span>
+                    </Card.Meta>
                   </Card.Meta>
                   <Card.Content extra className="Issue-Item-Extra">
                     { 
                       currentUser && displayLikeStatus ? 
-                      <Button circular color={thumbsUpOrDown ? "blue" : "grey"} icon={ thumbsUpOrDown ? "thumbs up" : "thumbs down"} size="large" onClick={unlike} />
+                      <Button circular color={thumbsUpOrDown ? "blue" : "grey"} icon={ thumbsUpOrDown ? "thumbs up" : "thumbs down"} onClick={unlike} size="large" />
                       :
                       (currentUser && currentUser.id !== user.id) && 
                       <React.Fragment>

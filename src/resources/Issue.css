@@ -15,6 +15,11 @@
   justify-content: space-between;
 }
 
+#Issue .Issue-Item-Inner-Wrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
 #Issue .Issue-Icon-Title {
   font-size: 21px;
   margin-top: 5px;
@@ -28,6 +33,10 @@
 
 #Issue .Issue-Item-Extra {
   margin: auto 0;
+}
+
+#Issue .Inner-Item {
+  margin-left: 10px;
 }
 
 #Issue .Issue-Comment {
