@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import  { useDispatch } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { SET_USERS, SET_ISSUES, SET_ISSUE_INDEX, SET_KEY_HOLDER, SET_COMMENTS, SET_SKILLS, SET_LIKES } from '../store/type';
+import { SET_USERS, SET_ISSUES, SET_ISSUE_INDEX, SET_KEY_HOLDER, SET_COMMENTS, SET_SKILLS, SET_ISSUE_LIKES, SET_COMMENT_LIKES } from '../store/type';
 import AppWrapper from './AppWrapper';
 import '../resources/App.css';
 // import { Container } from 'semantic-ui-react';
@@ -50,14 +50,23 @@ const App = props => {
       dispatch({ type: SET_COMMENTS, payload: comments })
     })
 
-    // fetch likes
+    // fetch like_issues
     fetch("http://localhost:3000/like_issues")
     .then(r => r.json())
     .then(likes => {
-      console.log("ALL LIKES -->", likes)
+      console.log("ALL ISSUE LIKES -->",likes)
       // set likes in the store
-      dispatch({ type: SET_LIKES, payload: likes })
+      dispatch({ type: SET_ISSUE_LIKES, payload: likes })
     })
+
+      // fetch like_comments
+      fetch("http://localhost:3000/like_comments")
+      .then(r => r.json())
+      .then(likes => {
+        console.log("ALL COMMENT LIKES -->", likes)
+        // set likes in the store
+        dispatch({ type: SET_COMMENT_LIKES, payload: likes })
+      })
 
     // fetch skills
     fetch("http://localhost:3000/skills")

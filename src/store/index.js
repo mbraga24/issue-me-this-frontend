@@ -3,7 +3,8 @@ import user from './User';
 import term from './SearchTerm';
 import issue from './Issue';
 import comment from './Comment';
-import like from './Like';
+import likeIssue from './LikeIssue';
+import likeComment from './LikeComment';
 import skill from './Skill';
 import updateForm from './UpdateForm';
 
@@ -12,7 +13,8 @@ const rootReducer = combineReducers({
   issue,
   term,
   comment,
-  like,
+  likeIssue,
+  likeComment,
   skill,
   updateForm
 })

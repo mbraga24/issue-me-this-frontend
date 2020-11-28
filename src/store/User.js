@@ -1,4 +1,4 @@
-import { SET_LOADING, SET_USERS, ADD_USER, UPDATE_USER, SET_KEY_HOLDER, REMOVE_KEY_HOLDER_LIKE, ADD_KEY_HOLDER_LIKE, ADD_KEY_HOLDER_FAVORITE, REMOVE_KEY_HOLDER_FAVORITE } from './type';
+import { SET_LOADING, SET_USERS, ADD_USER, UPDATE_USER, SET_KEY_HOLDER, REMOVE_KEY_HOLDER_ISSUE_LIKE, ADD_KEY_HOLDER_ISSUE_LIKE, ADD_KEY_HOLDER_COMMENT_LIKE, REMOVE_KEY_HOLDER_COMMENT_LIKE, ADD_KEY_HOLDER_FAVORITE, REMOVE_KEY_HOLDER_FAVORITE } from './type';
 
 const defaultState = {
   keyHolder: null,
@@ -18,18 +18,33 @@ const reducer = (state = defaultState, action) => {
         ...state,
         keyHolder: action.payload
       }
-    case ADD_KEY_HOLDER_LIKE:
+    case ADD_KEY_HOLDER_ISSUE_LIKE:
       const currentLikeIssues = state.keyHolder.like_issues
       const newLikes = [...currentLikeIssues, action.payload] 
       return {
         ...state,
         keyHolder: { ...state.keyHolder, like_issues: newLikes }
       }
-    case REMOVE_KEY_HOLDER_LIKE:
+    case REMOVE_KEY_HOLDER_ISSUE_LIKE:
       const remainingIssueLikes = state.keyHolder.like_issues.filter(like => like.id !== action.payload.id)
       return {
         ...state,
         keyHolder: { ...state.keyHolder, like_issues: remainingIssueLikes }
+      }
+    case ADD_KEY_HOLDER_COMMENT_LIKE:
+      console.log("ADD_KEY_HOLDER_COMMENT_LIKE -->", action.payload)
+      const currentLikeComments = state.keyHolder.like_comments
+      const newCommentLikes = [...currentLikeComments, action.payload] 
+      return {
+        ...state,
+        keyHolder: { ...state.keyHolder, like_comments: newCommentLikes }
+      }
+    case REMOVE_KEY_HOLDER_COMMENT_LIKE:
+      console.log("REMOVE_KEY_HOLDER_COMMENT_LIKE -->", action.payload)
+      const remainingCommentLikes = state.keyHolder.like_comments.filter(like => like.id !== action.payload.id)
+      return {
+        ...state,
+        keyHolder: { ...state.keyHolder, like_issues: remainingCommentLikes }
       }
     case ADD_KEY_HOLDER_FAVORITE:
       const currentFavorites = state.keyHolder.favorites
