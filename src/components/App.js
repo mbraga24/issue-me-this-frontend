@@ -72,7 +72,7 @@ const App = props => {
       // set skills in the store
       dispatch({ type: SET_SKILLS, payload: skills })
     })
-
+    
   }, [dispatch])
 
   return ( <div id="App-Container"><AppWrapper /></div> );

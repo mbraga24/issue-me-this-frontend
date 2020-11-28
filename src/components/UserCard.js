@@ -6,14 +6,12 @@ import { Card, Image, Icon } from 'semantic-ui-react'
 const UserCard = props => {
 
   const currentUser = useSelector(state => state.user.keyHolder)
-  const { id, first_name, last_name, job_title, avatar, issues } = props.user
-  const imgUrl = `https://semantic-ui.com/images/avatar/large/${avatar}.jpg`
+  const { id, first_name, last_name, job_title, picture, issues } = props.user
+  // const imgUrl = `https://semantic-ui.com/images/avatar/large/${avatar}.jpg`
 
   return (
     <Card>
-      <Link to={`${currentUser ? `/account/${id}` : "/login"}`}>
-        <Image src={imgUrl} wrapped ui={true} />
-      </Link>
+      <Image as={Link} to={`${currentUser ? `/account/${id}` : "/login"}`} src={picture} wrapped ui={true} size="medium" />
       <Card.Content>
         <Link to={`${currentUser ? `/account/${id}` : "/login"}`}>
           <Card.Header>{first_name} {last_name}</Card.Header>

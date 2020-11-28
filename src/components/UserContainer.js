@@ -23,13 +23,12 @@ const UserContainer = props => {
               {
               users ?
               <React.Fragment>  
-                <Grid.Row columns={4}>
+                <Grid.Row columns={5}>
                   {renderUsers()}
                 </Grid.Row>
               </React.Fragment> : <Loading loadingClass={true} /> 
               }
             </Grid>
-          }
       </div>
   );
 }

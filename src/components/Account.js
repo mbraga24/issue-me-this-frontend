@@ -90,7 +90,7 @@ const Account = props => {
           }
             <Grid.Column width={5}>
               <Card className="Card-Wrapper">
-                <Image src={`https://semantic-ui.com/images/avatar/large/${userProfile.avatar}.jpg`} wrapped ui={false} />
+                <Image src={userProfile.picture} size="medium" />
                 <Card.Content>
                   <Card.Header>{userProfile.first_name} {userProfile.last_name}</Card.Header>
                   <Card.Description>

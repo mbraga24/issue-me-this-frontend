@@ -28,8 +28,8 @@ const Comment = props => {
 
   const dispatch = useDispatch()
   const { id, comment_body, syntax, user } = props.comment
-  const { first_name, last_name, profession, avatar } = user
-  const imgUrl = `https://semantic-ui.com/images/avatar/small/${avatar}.jpg`
+  const { first_name, last_name, profession, picture } = user
+  // const imgUrl = `https://semantic-ui.com/images/avatar/small/${avatar}.jpg`
 
   const totalCommentDislikes = useCallback(dataLikes => {
     return dataLikes.filter(like => like.is_like === false && like.comment_id === id)
@@ -165,7 +165,7 @@ const Comment = props => {
               avatar
               size='big'
               alt={`${first_name} ${profession}`}
-              src={imgUrl}
+              src={picture}
             />
           </Link>
           <Link to={`/users/${id}`}> 

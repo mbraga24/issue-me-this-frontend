@@ -39,7 +39,7 @@ const Issue = props => {
 
   const { id, title, comments, issue_body, syntax, user } = props.issue
   const totalComments = comments.length
-  const imgUrl = `https://semantic-ui.com/images/avatar/small/${user.avatar}.jpg`
+  // const imgUrl = `https://semantic-ui.com/images/avatar/small/${user.avatar}.jpg`
   
   const totalIssueDislikes = useCallback(dataLikes => {
     return dataLikes.filter(like => like.is_like === false && like.issue_id === id)
@@ -240,7 +240,7 @@ const Issue = props => {
                       size='big'
                       avatar
                       alt={`${user.first_name} ${user.last_name}`}
-                      src={imgUrl}
+                      src={user.picture}
                     />
                   <span>{`${user.first_name} ${user.last_name[0]}.`}</span>
                   </Card.Meta>
