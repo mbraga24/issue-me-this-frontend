@@ -65,10 +65,9 @@ const ShowIssue = props => {
   // return currentIssue.comments.map(comment => (
   const renderComments = () => {    
     return issueComments().map(comment => (
-      <Grid.Row>
+      <Grid.Row key={comment.id} >
         <Grid.Column width={10}>
             <Comment 
-              key={comment.id} 
               comment={comment} />
         </Grid.Column>
       </Grid.Row>

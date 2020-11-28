@@ -10,16 +10,6 @@
   margin: 0 auto;
 }
 
-#Issue .Issue-Item-Wrapper {
-  display: flex;
-  justify-content: space-between;
-}
-
-#Issue .Issue-Item-Inner-Wrapper {
-  display: flex;
-  justify-content: space-between;
-}
-
 #Issue .Issue-Icon-Title {
   font-size: 21px;
   margin-top: 5px;
@@ -29,6 +19,11 @@
 }
 #Issue .Issue-Icon-Avatar {
   width: 15%;
+}
+
+#Issue .Issue-Item-Wrapper {
+  display: flex;
+  justify-content: space-between;
 }
 
 #Issue .Issue-Item-Extra {

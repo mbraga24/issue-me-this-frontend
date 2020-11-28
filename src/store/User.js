@@ -32,7 +32,6 @@ const reducer = (state = defaultState, action) => {
         keyHolder: { ...state.keyHolder, like_issues: remainingIssueLikes }
       }
     case ADD_KEY_HOLDER_COMMENT_LIKE:
-      console.log("ADD_KEY_HOLDER_COMMENT_LIKE -->", action.payload)
       const currentLikeComments = state.keyHolder.like_comments
       const newCommentLikes = [...currentLikeComments, action.payload] 
       return {
@@ -40,11 +39,10 @@ const reducer = (state = defaultState, action) => {
         keyHolder: { ...state.keyHolder, like_comments: newCommentLikes }
       }
     case REMOVE_KEY_HOLDER_COMMENT_LIKE:
-      console.log("REMOVE_KEY_HOLDER_COMMENT_LIKE -->", action.payload)
       const remainingCommentLikes = state.keyHolder.like_comments.filter(like => like.id !== action.payload.id)
       return {
         ...state,
-        keyHolder: { ...state.keyHolder, like_issues: remainingCommentLikes }
+        keyHolder: { ...state.keyHolder, like_comments: [...remainingCommentLikes] }
       }
     case ADD_KEY_HOLDER_FAVORITE:
       const currentFavorites = state.keyHolder.favorites

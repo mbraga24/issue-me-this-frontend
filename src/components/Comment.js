@@ -1,6 +1,6 @@
 import React, { useCallback, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Button, Card, Image, Divider, Modal } from 'semantic-ui-react'
+import { Button, Card, Image, Divider, Modal, Icon } from 'semantic-ui-react'
 import { useSelector, useDispatch } from 'react-redux';
 import IssueForm from './IssueForm';
 import CreateHighlight from './CreateHighlight';
@@ -94,9 +94,10 @@ const Comment = props => {
     })
     .then(r => r.json())
     .then(data => {
+      console.log("UNLIKE ->", data)
       dispatch({ type: REMOVE_KEY_HOLDER_COMMENT_LIKE, payload: data.like })
-      dispatch({ type: UPDATE_COMMENT, payload: data.comment })
       dispatch({ type: DELETE_COMMENT_LIKE, payload: data.like })
+      dispatch({ type: UPDATE_COMMENT, payload: data.comment })
     })
   }
 
@@ -112,8 +113,8 @@ const Comment = props => {
     .then(data => {
       console.log("LIKE ->", data)
       dispatch({ type: ADD_KEY_HOLDER_COMMENT_LIKE, payload: data.like })
-      dispatch({ type: UPDATE_COMMENT, payload: data.comment })
       dispatch({ type: ADD_COMMENT_LIKE, payload: data.like })
+      dispatch({ type: UPDATE_COMMENT, payload: data.comment })
     })
   }
 
@@ -128,8 +129,8 @@ const Comment = props => {
     .then(r => r.json())
     .then(data => {
       dispatch({ type: ADD_KEY_HOLDER_COMMENT_LIKE, payload: data.like })
-      dispatch({ type: UPDATE_COMMENT, payload: data.comment })
       dispatch({ type: ADD_COMMENT_LIKE, payload: data.like })
+      dispatch({ type: UPDATE_COMMENT, payload: data.comment })
     })
   }
 
@@ -154,8 +155,6 @@ const Comment = props => {
     }, 4000)
   }
 
-  // console.log(props.comment)
-
   return (
     <Card.Group id="Comment">
       <Card fluid>
@@ -179,8 +178,15 @@ const Comment = props => {
           <Card.Description id="some-id">
             <CreateHighlight dataString={comment_body} syntax={syntax} />
           </Card.Description>
-        </Card.Content>
-        <Card.Content extra className="Issue-Item-Extra">
+          <Divider clearing />
+          <Card.Meta className="Comment-Item-Wrapper">
+            <Card.Meta className="Comment-Item-Wrapper Inner-Wrapper">
+                <Icon name="thumbs up" />
+                <span className="Comment-Count">{commentLikes.length}</span>
+                <Icon name="thumbs down" />
+                <span className="Comment-Count">{commentDislikes.length}</span>
+            </Card.Meta>
+            <Card.Meta className="Comment-Item-Extra">
             { 
               currentUser && displayLikeStatus ? 
               <Button circular color={thumbsUpOrDown ? "blue" : "grey"} icon={thumbsUpOrDown ? "thumbs up" : "thumbs down"} onClick={unlike} size="large" />
@@ -191,10 +197,12 @@ const Comment = props => {
                 <Button circular color="teal" icon='thumbs down outline' size="large" onClick={dislikeBtn} />
               </React.Fragment>
             }
-          </Card.Content>
+            </Card.Meta>
+          </Card.Meta>
+        </Card.Content>
         {
           currentUser && currentUser.id === user.id &&
-          <Card.Content extra>
+          <Card.Content>
             <div className='ui two buttons'>
               <Modal
                   onClose={() => setOpen(false)}

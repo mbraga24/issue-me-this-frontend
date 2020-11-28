@@ -283,10 +283,10 @@ const Issue = props => {
                 }
                 <Divider clearing />
                 <Card.Meta className="Issue-Item-Wrapper">
-                  <Card.Meta className="Issue-Item-Inner-Wrapper">
+                  <Card.Meta className="Issue-Item-Wrapper">
                     <Card.Meta className="Issue-Item-Extra">
                       <Icon name={hasComment ? "comment alternate" : "comment outline"} size="large" />
-                      <span className="Issue-Comment">{totalComments} Comments</span>
+                      <span className="Issue-Comment">{totalComments}</span>
                     </Card.Meta>
                     <Card.Meta className="Issue-Item-Extra Inner-Item">
                       <Icon name="thumbs up" />
@@ -297,7 +297,7 @@ const Issue = props => {
                       <span className="Issue-Comment">{issueDislikes.length}</span>
                     </Card.Meta>
                   </Card.Meta>
-                  <Card.Content extra className="Issue-Item-Extra">
+                  <Card.Meta className="Issue-Item-Extra">
                     { 
                       currentUser && displayLikeStatus ? 
                       <Button circular color={thumbsUpOrDown ? "blue" : "grey"} icon={ thumbsUpOrDown ? "thumbs up" : "thumbs down"} onClick={unlike} size="large" />
@@ -312,12 +312,12 @@ const Issue = props => {
                       (currentUser && currentUser.id !== user.id) && 
                         <Button circular color={favoriteStatus ? "olive" : "teal"} icon={favoriteStatus ? "star" : "star outline"} size="large" onClick={favoriteBtn} />
                     }
-                  </Card.Content>
+                  </Card.Meta>
                 </Card.Meta>
               </Card.Content>
               {
                 currentUser && currentUser.id === user.id &&
-                <Card.Content extra>
+                <Card.Content>
                   <div className='ui two buttons'>
                     <Modal
                       onClose={() => setOpenEdit(false)}

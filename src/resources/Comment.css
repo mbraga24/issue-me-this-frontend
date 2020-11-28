@@ -1,0 +1,8 @@
+#Comment .Comment-Item-Wrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
+#Comment .Inner-Wrapper{
+  margin: auto 0;
+}
