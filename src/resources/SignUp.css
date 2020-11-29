@@ -7,3 +7,13 @@
   margin-top: 10px;
   margin-bottom: 25px;
 }
+
+#SignUp-Container .SignUp-Profile-Picture-Wrapper {
+  display: flex;
+  align-items: center;
+  /* justify-content: center; */
+}
+
+#SignUp-Container .SignUp-Profile-Picture-Item {
+  margin: 0 auto;
+}

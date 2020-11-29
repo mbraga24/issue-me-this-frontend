@@ -88,7 +88,7 @@ const Account = props => {
               </List>
             </Grid.Column>
           }
-            <Grid.Column width={5}>
+            <Grid.Column width={4}>
               <Card className="Card-Wrapper">
                 <Image src={userProfile.picture} size="medium" />
                 <Card.Content>
@@ -99,7 +99,7 @@ const Account = props => {
                     { currentUser && <div className="description"><span className="date">Email: {userProfile.email}</span></div> }
                   </Card.Description>
                 </Card.Content>
-                <Card.Content extra>
+                <Card.Content extra as={Link} to={`/user-issues/${userId}`}>
                     <Icon name='list alternate outline' size="large" />
                     {userProfile.issues.length} {userProfile.issues.length > 1 || userProfile.issues.length === 0 ? "Issues" : "Issue"}
                 </Card.Content>

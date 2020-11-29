@@ -63,7 +63,7 @@ const IssueContainer = props => {
               { renderIssues()}
             </Grid> 
             <Pagination
-              raised
+              // raised
               boundaryRange={0}
               defaultActivePage={issuesIndex.page}
               firstItem={null}
