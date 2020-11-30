@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
-import { Card, Image, Segment, Grid, Header, Icon, List, Button } from 'semantic-ui-react'
+import { Card, Image, Segment, Grid, Header, Icon, List, Button, Divider } from 'semantic-ui-react'
 import Loading from './Loading';
 import accountOptions from '../Library/accountOptions';
 import '../resources/Account.css';
@@ -68,6 +68,7 @@ const Account = props => {
       <React.Fragment>
         <div id="Account-Container">
         <Header as='h1' textAlign="center" color="blue" className="Account-Header">{(currentUser && currentUser.id === userId) ? `Hello, ${userProfile.first_name}! ` : `${userProfile.first_name} ${userProfile.last_name} Profile` }</Header>
+        <Divider />
         <Grid columns={3} stackable divided className="Account-Profile-Details">
           <Grid.Row>
           { 

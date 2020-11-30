@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Header, Grid, Pagination } from 'semantic-ui-react';
+import { Header, Grid, Pagination, Divider } from 'semantic-ui-react';
 import Issue from './Issue';
 import SearchField from './SearchField';
 import Loading from './Loading';
@@ -59,6 +59,7 @@ const IssueContainer = props => {
           :
           <React.Fragment>
             <SearchField setSearchTerm={props.setSearchTerm} />
+            <Divider />
             <Grid columns={1} divided id="Issue">
               { renderIssues()}
             </Grid> 

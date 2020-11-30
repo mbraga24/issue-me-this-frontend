@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Header, Grid } from 'semantic-ui-react'
+import { Header, Grid, Divider } from 'semantic-ui-react'
 import Issue from './Issue';
 import SearchField from './SearchField';
 import Loading from './Loading';
@@ -36,6 +36,7 @@ const IssuesLiked = props => {
     issues ?
     <React.Fragment>
       <SearchField />
+      <Divider />
       <Grid columns={1} divided id="Issue">
         {renderIssues()}
       </Grid> 

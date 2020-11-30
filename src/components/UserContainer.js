@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { Header, Grid } from 'semantic-ui-react';
+import { Header, Grid, Divider } from 'semantic-ui-react';
 import UserCard from './UserCard';
 import Loading from './Loading'; 
 import '../resources/UserContainer.css';
@@ -18,17 +18,18 @@ const UserContainer = props => {
   }
   return (
       <div id="Users-Container">
-            <Header as='h1' textAlign="center" color="blue" className="Users-Header">Users</Header>
-            <Grid divided="vertically">
-              {
-              users ?
-              <React.Fragment>  
-                <Grid.Row columns={5}>
-                  {renderUsers()}
-                </Grid.Row>
-              </React.Fragment> : <Loading loadingClass={true} /> 
-              }
-            </Grid>
+        <Header as='h1' textAlign="center" color="blue" className="Users-Header">Users</Header>
+        <Divider />
+        <Grid divided="vertically">
+          {
+          users ?
+          <React.Fragment>  
+            <Grid.Row columns={5}>
+              {renderUsers()}
+            </Grid.Row>
+          </React.Fragment> : <Loading loadingClass={true} /> 
+          }
+        </Grid>
       </div>
   );
 }
