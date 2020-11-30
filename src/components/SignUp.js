@@ -5,10 +5,10 @@ import { Form, Button, Segment, Dropdown, Label, Header, Icon, Image } from 'sem
 import { DateInput } from 'semantic-ui-calendar-react';
 import useFormFields from '../hooks/useFormFields';
 import Loading from './Loading';
-import '../resources/SignUp.css';
 import { ADD_USER, SET_KEY_HOLDER } from '../store/type';
+import '../resources/Signup.css';
 
-const SignUp = props => {
+const Signup = props => {
 
   const skills = useSelector(state => state.skill.skills)
   const dispatch = useDispatch()
@@ -107,12 +107,12 @@ const SignUp = props => {
   console.log("topSkills", topSkills)
 
   return (
-    <div id="SignUp-Container">
+    <div id="Signup-Container">
       {
       skills ?
-      <Segment raised className="SignUp-Segment">
+      <Segment raised className="Signup-Segment">
         <Form onSubmit={createAccount}>
-          <Header as='h1' textAlign="center" className="SignUp-Header">Create Account</Header>
+          <Header as='h1' textAlign="center" className="Signup-Header">Create Account</Header>
           <Form.Group>
             <Form.Input 
               width={8} 
@@ -181,14 +181,14 @@ const SignUp = props => {
             </Label> 
           }
           <Form.Group>
-            <Form.Field className="SignUp-Profile-Picture-Item">
+            <Form.Field className="Signup-Profile-Picture-Item">
               <label>Profile Picture</label>
               <Image src='https://react.semantic-ui.com/images/wireframe/image.png' size='small'/>
             </Form.Field>
           </Form.Group>
-          {/* <Form.Group className="SignUp-Profile-Picture-Wrapper"> */}
+          {/* <Form.Group className="Signup-Profile-Picture-Wrapper"> */}
           <Form.Group>
-            <Form.Field className="SignUp-Profile-Picture-Item">
+            <Form.Field className="Signup-Profile-Picture-Item">
               <input
                 type="file"
                 id="file"
@@ -211,7 +211,6 @@ const SignUp = props => {
               onChange={handleFieldChange}
               defaultValue={fields.email} 
             />
-
           </Form.Group>
           <Form.Group>
             <Form.Input type="password" label='Password' placeholder='Password' width={16} name="password" onChange={handleFieldChange}/>
@@ -236,5 +235,5 @@ const SignUp = props => {
   );
 }
 
-export default withRouter(SignUp);
+export default withRouter(Signup);
 
