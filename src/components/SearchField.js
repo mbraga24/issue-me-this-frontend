@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
-import _ from 'lodash';
+import { withRouter } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
+import _ from 'lodash';
 import { SET_SEARCH_TERM } from '../store/type';
-import { Search, Grid } from 'semantic-ui-react';
+import { Search } from 'semantic-ui-react';
 import '../resources/SearchField.css';
 
-const SearchField = () => {
+const SearchField = props => {
 
   const dispatch = useDispatch()
-
   const source = useSelector(state => state.issue.issues)
   const [ isLoading, setIsLoading ] = useState(false)
   const [ results, setResults ] = useState([])
@@ -28,26 +28,24 @@ const SearchField = () => {
         setResults([])
       } 
         const re = new RegExp(_.escapeRegExp(value), 'i')
-        const isMatch = (res) => re.test(res.title)
+        const isMatch = (res) => re.test(re.title)
   
         setIsLoading(false)
         setResults(_.filter(source, isMatch))
     }, 200)
   }
-
+  
   return (
-    <Grid id="SearchBar-Container">
       <Search
-        className="SearchBar"
-        aligned='right'
+        className="SearchField"
+        // aligned='left'
         loading={isLoading}
         onResultSelect={handleResultSelect}
         onSearchChange={_.debounce(handleOnChange)}
         results={results}
         placeholder="Search"
       />
-    </Grid>
     )
 }
 
-export default SearchField;
+export default withRouter(SearchField);
