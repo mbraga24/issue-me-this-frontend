@@ -1,3 +1,7 @@
+#Signup-Container {
+  height: 100vh;
+}
+
 #Signup-Container .Signup-Segment {
   width: 50%;
   margin: 75px auto;
@@ -6,14 +10,4 @@
 #Signup-Container .Signup-Header {
   margin-top: 10px;
   margin-bottom: 25px;
-}
-
-#Signup-Container .Signup-Profile-Picture-Wrapper {
-  display: flex;
-  align-items: center;
-  /* justify-content: center; */
-}
-
-#Signup-Container .Signup-Profile-Picture-Item {
-  margin: 0 auto;
 }

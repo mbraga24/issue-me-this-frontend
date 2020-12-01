@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { Form, Button, Segment, Dropdown, Label, Header, Icon, Image } from 'semantic-ui-react'
+import { Form, Button, Segment, Dropdown, Header } from 'semantic-ui-react'
 import { DateInput } from 'semantic-ui-calendar-react';
 import useFormFields from '../hooks/useFormFields';
 import Loading from './Loading';
 import { ADD_USER, SET_KEY_HOLDER } from '../store/type';
 import '../resources/Signup.css';
 
-const SignUp = props => {
+const Signup = props => {
 
   const skills = useSelector(state => state.skill.skills)
   const dispatch = useDispatch()
@@ -105,12 +105,12 @@ const SignUp = props => {
   }
 
   return (
-    <div id="SignUp-Container">
+    <div id="Signup-Container">
       {
       skills ?
-      <Segment raised className="SignUp-Segment">
+      <Segment raised className="Signup-Segment">
         <Form onSubmit={createAccount}>
-          <Header as='h1' textAlign="center" className="SignUp-Header">Create Account</Header>
+          <Header as='h1' textAlign="center" className="Signup-Header">Create Account</Header>
           <Form.Group>
             <Form.Input 
               width={8} 
@@ -131,7 +131,7 @@ const SignUp = props => {
           </Form.Group>
           <Form.Group>
             <Form.Input 
-              width={10} 
+              width={8} 
               name="jobTitle" 
               label='Job Title' 
               placeholder='Job Title' 
@@ -139,21 +139,37 @@ const SignUp = props => {
               defaultValue={fields.jobTitle} 
             />
             <DateInput
-              width={10} 
+              width={8} 
               name="date"
               label="Date of Birth"
               dateFormat="MM-DD-YYYY"
               placeholder="mm/dd/yyyy"
-              value={dateInput}
               iconPosition="left"
               animation={false}
-              defaultValue={dateInput} 
+              value={dateInput}
               onChange={(e, {name, value}) => handleDateChange(name, value)}
             />
           </Form.Group>
           <Form.Group>
             <Form.Input 
-              width={16} 
+              width={8} 
+              name="email" 
+              label='Email' 
+              placeholder='Email' 
+              onChange={handleFieldChange}
+              defaultValue={fields.email} 
+            />
+            <Form.Input 
+              width={8} 
+              type="password" 
+              label='Password' 
+              placeholder='Password' 
+              name="password" 
+              onChange={handleFieldChange}/>
+          </Form.Group>
+          <Form.Group>
+            <Form.Input
+              width={12} 
               name="topSkills" 
               label='Choose Your Top 5 Skills' 
               placeholder='Skills' 
@@ -172,48 +188,7 @@ const SignUp = props => {
             />
             </Form.Input>
           </Form.Group>
-          { 
-            topSkills.length === 5 &&
-            <Label pointing prompt color="green">
-              All set! If you change your mind you can always update your skills later. 
-            </Label> 
-          }
-          <Form.Group>
-            <Form.Field className="SignUp-Profile-Picture-Item">
-              <label>Profile Picture</label>
-              <Image src='https://react.semantic-ui.com/images/wireframe/image.png' size='small'/>
-            </Form.Field>
-          </Form.Group>
-          {/* <Form.Group className="SignUp-Profile-Picture-Wrapper"> */}
-          <Form.Group>
-            <Form.Field className="SignUp-Profile-Picture-Item">
-              <input
-                type="file"
-                id="file"
-                name="file"
-                hidden
-                // onChange={fileChange}
-              />
-              <Button type="button" as="label" htmlFor="file" style={{color: "white;"}}>
-                <Icon name="desktop" />
-                Choose a profile picture
-              </Button>
-            </Form.Field>
-          </Form.Group>
-          <Form.Group>
-            <Form.Input 
-              width={16} 
-              name="email" 
-              label='Email' 
-              placeholder='Email' 
-              onChange={handleFieldChange}
-              defaultValue={fields.email} 
-            />
 
-          </Form.Group>
-          <Form.Group>
-            <Form.Input type="password" label='Password' placeholder='Password' width={16} name="password" onChange={handleFieldChange}/>
-          </Form.Group>
           <Button type='submit' color="blue">Create Account</Button>
           {
             (alertStatus && !!message) && 
@@ -234,5 +209,5 @@ const SignUp = props => {
   );
 }
 
-export default withRouter(SignUp);
+export default withRouter(Signup);
 

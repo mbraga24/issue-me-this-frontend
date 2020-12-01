@@ -1,12 +1,8 @@
 #FavoriteIssue-Container {
-  height: 100%;
+  height: 100vh;
 }
 
 #FavoriteIssue-Container .FavoriteIssue-Header {
   margin: 15px;
   font-size: 42px;
 }
-
-/* #FavoriteIssue-Container .FavoriteIssue-Header-Items {
-  display: flex;
-} */

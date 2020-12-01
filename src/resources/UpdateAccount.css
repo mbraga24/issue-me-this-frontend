@@ -1,5 +1,10 @@
 #UpdateAccount-Container {
-  margin: 0 auto;
+  height: 100vh;
+}
+
+#UpdateAccount-Container .UpdateAccount-Header {
+  margin: 15px;
+  font-size: 42px;
 }
 
  #UpdateAccount-Container .UpdateAccount-FormWrapper {

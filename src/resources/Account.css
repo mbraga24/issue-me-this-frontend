@@ -2,6 +2,11 @@
   width: 100%;
 }
 
+#Account-Container .Account-Header {
+  margin: 15px;
+  font-size: 42px;
+}
+
 #Account-Container .Top-Skills-Wrapper {
   width: 80%;
   margin: 0 auto;

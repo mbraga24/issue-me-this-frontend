@@ -156,20 +156,16 @@ const UpdateAccount = props => {
     })
   }
 
-  // console.log("fields.firstName", fields.firstName)
-  // console.log("newSkills", newSkills)
-  console.log("removeSkills", removeSkills)
-
   return (
     <div id="UpdateAccount-Container">
-      <Header as='h1' textAlign="center" color="blue" className="Users-Header">Update Account</Header>
+      <Header as='h1' textAlign="center" color="blue" className="UpdateAccount-Header">Update Account</Header>
       <Divider />
       <Form onSubmit={handleSubmit}>
         <div className="UpdateAccount-FormWrapper">
           <Form.Group widths={1}>
             <Form.Field className="Signup-Profile-Picture-Item">
               <label>Profile Picture</label>
-              <Image src='https://react.semantic-ui.com/images/wireframe/image.png' size='small'/>
+              <Image src="/default-profile.jpg" circular size='small'/>
             </Form.Field>
             </Form.Group>
             <Form.Group>

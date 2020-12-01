@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Container, Grid, Icon, Menu, Sidebar } from 'semantic-ui-react'
-import { Route, Switch, Link } from 'react-router-dom';
+import { Route, Switch, Link, Redirect } from 'react-router-dom';
 import MenuBar from './MenuBar';
 import Home from './Home';
 import Login from './Login';
@@ -101,25 +101,27 @@ const AppWrapper = props => {
               <MenuBar toggleMenu={toggleMenu} />
                 <Switch>  
                     <Container id="AppWrapper-Container">
-                      {
-                      currentUser &&
-                      <React.Fragment>
-                        <Route path="/account/:id" component={Account} />
-                        <Route path="/new/issue" component={NewIssueForm} />
-                        <Route path="/issues/:id" component={ShowIssue} />
-                        <Route path="/favorite-issues" component={FavoriteIssues} />
-                        <Route path="/liked-issues" component={IssuesLiked} />
-                        <Route path="/user-issues/:id" component={UserIssues} />
-                        <Route path="/update/account" component={UpdateAccount} /> 
-                      </React.Fragment>
-                      }
-                      <React.Fragment>
-                        <Route exact path="/" component={Home} />
-                        <Route path="/login" component={Login} />
-                        <Route path="/signup" component={Signup} />
-                        <Route exact path="/issues" component={IssueContainer} />
-                        <Route exact path="/users" component={UserContainer} />
-                      </React.Fragment>
+                      <Route exact path="/" component={Home} />
+                      { 
+                        currentUser &&
+                          <React.Fragment>
+                            <Route path="/account/:id" component={Account} />
+                            <Route path="/new/issue" component={NewIssueForm} />
+                            <Route path="/issues/:id" component={ShowIssue} />
+                            <Route path="/favorite-issues" component={FavoriteIssues} />
+                            <Route path="/liked-issues" component={IssuesLiked} />
+                            <Route path="/user-issues/:id" component={UserIssues} />
+                            <Route path="/update/account" component={UpdateAccount} /> 
+                          </React.Fragment>
+                        }
+                          <React.Fragment>
+                            <Route path="/login" component={Login} />
+                            <Route path="/signup" component={Signup} />
+                            <Route exact path="/issues" component={IssueContainer} />
+                            <Route exact path="/users" component={UserContainer} />
+                            <Redirect />
+                          </React.Fragment>
+
                     </Container>
                 </Switch>
             </Sidebar.Pusher>
