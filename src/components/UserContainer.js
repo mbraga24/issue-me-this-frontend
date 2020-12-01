@@ -20,14 +20,12 @@ const UserContainer = props => {
       <div id="Users-Container">
         <Header as='h1' textAlign="center" color="blue" className="Users-Header">Users</Header>
         <Divider />
-        <Grid divided="vertically">
+        <Grid padded>
           {
           users ?
-          <React.Fragment>  
             <Grid.Row columns={5}>
               {renderUsers()}
-            </Grid.Row>
-          </React.Fragment> : <Loading loadingClass={true} /> 
+            </Grid.Row> : <Loading loadingClass={true} /> 
           }
         </Grid>
       </div>

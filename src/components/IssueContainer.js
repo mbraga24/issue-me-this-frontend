@@ -53,13 +53,13 @@ const IssueContainer = props => {
   return (
       <div id="IssueContainer">
         <Header as='h1' textAlign="center" color="blue" className="IssueContainer-Header">All Issues</Header>
+        <Divider />
+        <SearchField />
         {
           loading ?
           <Loading loadingClass={true} /> 
           :
           <React.Fragment>
-            <SearchField setSearchTerm={props.setSearchTerm} />
-            <Divider />
             <Grid columns={1} divided id="Issue">
               { renderIssues()}
             </Grid> 

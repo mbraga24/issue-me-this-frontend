@@ -1,0 +1,8 @@
+#UserIssues-Container {
+  height: 100%;
+}
+
+#UserIssues-Container .UserIssues-Header {
+  margin: 15px;
+  font-size: 42px;
+}

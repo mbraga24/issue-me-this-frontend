@@ -4,8 +4,9 @@ import { Header, Grid, Divider } from 'semantic-ui-react'
 import Issue from './Issue';
 import SearchField from './SearchField';
 import Loading from './Loading';
+import MissingTemplate from './MissingTemplate';
 import { findIds, findIssues } from '../Library/Helpers';
-import '../resources/FavoriteIssues.css';
+import '../resources/IssuesLiked.css';
 
 const IssuesLiked = props => {
   
@@ -24,19 +25,23 @@ const IssuesLiked = props => {
   const renderIssues = () => {
     const filteredIssues = findIssues(issues, issueIds).filter(issue => issue.title.toLowerCase().includes(searchTerm.toLowerCase()))
   
-    return filteredIssues.map(issue => (
-      <Issue key={issue.id} issue={issue} displayBody={false} />
-    ))
+    if (filteredIssues.length !== 0) {
+      return filteredIssues.map(issue => (
+        <Issue key={issue.id} issue={issue} displayBody={false} />
+      ))
+    } else {
+      return <MissingTemplate header="No issues liked" />
+    }
   }
 
   return (
-    <div id="FavoriteIssue-Container">
-    <Header as='h1' textAlign="center" color="blue" className="FavoriteIssue-Header">Issues You Like</Header>
+    <div id="IssuesLiked-Container">        
+      <Header className="IssuesLiked-Header" as='h1' textAlign="center" color="blue">Issues You Like</Header>
+      <Divider />
+      <SearchField />    
     {
     issues ?
     <React.Fragment>
-      <SearchField />
-      <Divider />
       <Grid columns={1} divided id="Issue">
         {renderIssues()}
       </Grid> 

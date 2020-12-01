@@ -3,6 +3,10 @@
 }
 
 #FavoriteIssue-Container .FavoriteIssue-Header {
-  margin: 20px;
+  margin: 15px;
   font-size: 42px;
 }
+
+/* #FavoriteIssue-Container .FavoriteIssue-Header-Items {
+  display: flex;
+} */
