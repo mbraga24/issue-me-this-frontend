@@ -1,36 +1,20 @@
-#Account-Container {
-  height: 100%;
-  margin-left: 20px;
-}
-
 #Account-Container .Account-Profile-Details {
   width: 100%;
+}
+
+#Account-Container .Top-Skills-Wrapper {
+  width: 80%;
   margin: 0 auto;
-}
-
-#Account-Container .Account-Header {
-  margin-top: 25px;
-  margin-bottom: 25px;
-  font-size: 42px;
-}
-
-#Account-Container .Card-Wrapper {
-  margin: 0 auto;
-}
-
-#Account-Container .Account-Header-Details {
-  width: 100%;
-  font-weight: bold;
-}
-
-#Account-Container .Account-Skills {
-  font-weight: bold;
 }
 
 #Account-Container .Account-Button-Options {
-  /* width: 35%; */
-  width: 50%;
-  margin-bottom: 5px;
+  margin: 0 auto;
+  width: 80%;
+}
+
+#Account-Container .Account-Skill{
+  margin: 10px auto;
+  width: 30%;
 }
 
 #Account-Container .Account-Options-Wrapper {
