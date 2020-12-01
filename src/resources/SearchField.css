@@ -1,8 +1,5 @@
-#SearchBar-Container {
-  width: 50vw;
-  margin: 0 auto;
-}
-
-#SearchBar-Container .SearchBar {
-  margin: 0 auto;
+.SearchField {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-end;
 }
