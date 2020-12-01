@@ -8,7 +8,7 @@ import Loading from './Loading';
 import { ADD_USER, SET_KEY_HOLDER } from '../store/type';
 import '../resources/Signup.css';
 
-const Signup = props => {
+const SignUp = props => {
 
   const skills = useSelector(state => state.skill.skills)
   const dispatch = useDispatch()
@@ -104,15 +104,13 @@ const Signup = props => {
     }, 4000)
   }
 
-  console.log("topSkills", topSkills)
-
   return (
-    <div id="Signup-Container">
+    <div id="SignUp-Container">
       {
       skills ?
-      <Segment raised className="Signup-Segment">
+      <Segment raised className="SignUp-Segment">
         <Form onSubmit={createAccount}>
-          <Header as='h1' textAlign="center" className="Signup-Header">Create Account</Header>
+          <Header as='h1' textAlign="center" className="SignUp-Header">Create Account</Header>
           <Form.Group>
             <Form.Input 
               width={8} 
@@ -181,14 +179,14 @@ const Signup = props => {
             </Label> 
           }
           <Form.Group>
-            <Form.Field className="Signup-Profile-Picture-Item">
+            <Form.Field className="SignUp-Profile-Picture-Item">
               <label>Profile Picture</label>
               <Image src='https://react.semantic-ui.com/images/wireframe/image.png' size='small'/>
             </Form.Field>
           </Form.Group>
-          {/* <Form.Group className="Signup-Profile-Picture-Wrapper"> */}
+          {/* <Form.Group className="SignUp-Profile-Picture-Wrapper"> */}
           <Form.Group>
-            <Form.Field className="Signup-Profile-Picture-Item">
+            <Form.Field className="SignUp-Profile-Picture-Item">
               <input
                 type="file"
                 id="file"
@@ -211,6 +209,7 @@ const Signup = props => {
               onChange={handleFieldChange}
               defaultValue={fields.email} 
             />
+
           </Form.Group>
           <Form.Group>
             <Form.Input type="password" label='Password' placeholder='Password' width={16} name="password" onChange={handleFieldChange}/>
@@ -235,5 +234,5 @@ const Signup = props => {
   );
 }
 
-export default withRouter(Signup);
+export default withRouter(SignUp);
 
