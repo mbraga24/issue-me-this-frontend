@@ -156,13 +156,6 @@ const UpdateAccount = props => {
     })
   }
 
-  // t.string "email"
-  // t.string "first_name"
-  // t.string "last_name"
-  // t.string "birthday"
-  // t.string "job_title"
-  // t.string "picture"
-
   // console.log("fields.firstName", fields.firstName)
   // console.log("newSkills", newSkills)
   console.log("removeSkills", removeSkills)
@@ -188,7 +181,7 @@ const UpdateAccount = props => {
                   hidden
                   // onChange={fileChange}
                 />
-                <Button type="button" as="label" htmlFor="file" style={{color: "white"}}>
+                <Button type="button" as="label" htmlFor="file">
                   <Icon name="desktop" />
                   Choose a profile picture
                 </Button>
