@@ -61,10 +61,9 @@ const IssueContainer = props => {
           :
           <React.Fragment>
             <Grid columns={1} divided id="Issue">
-              { renderIssues()}
+              {renderIssues()}
             </Grid> 
             <Pagination
-              // raised
               boundaryRange={0}
               defaultActivePage={issuesIndex.page}
               firstItem={null}
