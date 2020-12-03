@@ -2,6 +2,14 @@
   width: 100%;
 }
 
+#Account-Container .Account-Image {
+  margin: 0 auto;
+}
+
+#Account-Container .Account-Card {
+  margin: 50px auto;
+}
+
 #Account-Container .Account-Header {
   margin: 15px;
   font-size: 42px;
