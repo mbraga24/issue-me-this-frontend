@@ -1,0 +1,8 @@
+#UserCard-Container {
+  margin-top: 20px;
+}
+
+#UserCard-Container .Card-Size {
+  width: 150px;
+  height: 150px;
+}
