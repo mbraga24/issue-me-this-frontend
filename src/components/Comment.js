@@ -43,7 +43,7 @@ const Comment = props => {
     setDislayLikeStatus(!!commentFound)
     setCommentLike(commentFound)
     setThumbsUpOrDown(commentLike && commentLike.is_like ? true : false)
-
+    console.log("PAGE IS REALODING")
   }, [commentLike, currentUser, id])
 
   useEffect(() => {
@@ -235,7 +235,7 @@ const Comment = props => {
                     <Button onClick={updateComment} positive>Update</Button>
                   </Modal.Actions>
                 </Modal>
-              <Button basic color='red' onClick={deleteComment}>
+              <Button inverted color='red' onClick={deleteComment}>
                 Delete
               </Button>
             </div>
