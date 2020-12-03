@@ -8,7 +8,7 @@ import Login from './Login';
 import SignUp from './SignUp';
 import IssueContainer from './IssueContainer';
 import UserContainer from './UserContainer';
-import NewIssueForm from './NewIssueForm';
+import NewIssue from './NewIssue';
 import ShowIssue from './ShowIssue';
 import Account from './Account';
 import FavoriteIssues from './FavoriteIssues';
@@ -107,7 +107,7 @@ const AppWrapper = props => {
                         currentUser &&
                           <React.Fragment>
                             <Route path="/account/:id" component={Account} />
-                            <Route path="/new/issue" component={NewIssueForm} />
+                            <Route path="/new/issue" component={NewIssue} />
                             <Route path="/favorite-issues" component={FavoriteIssues} />
                             <Route path="/liked-issues" component={IssuesLiked} />
                             <Route path="/user-issues/:id" component={UserIssues} />
