@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Container, Grid, Icon, Menu, Sidebar } from 'semantic-ui-react'
-import { Route, Switch, Link, withRouter, Redirect } from 'react-router-dom';
+import { Route, Switch, Link, withRouter } from 'react-router-dom';
 import Navbar from './Navbar';
 import Home from './Home';
 import Login from './Login';
