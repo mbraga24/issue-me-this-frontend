@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { DateInput } from 'semantic-ui-calendar-react';
 import { Form, Header, Icon, Divider, Button, Image, Dropdown, Label } from 'semantic-ui-react';
-import { UPDATE_USER  } from '../store/type';
+import { UPDATE_USER, SET_KEY_HOLDER } from '../store/type';
 import useFormFields from '../hooks/useFormFields';
 import '../resources/UpdateAccount.css';
 
@@ -30,18 +30,18 @@ const UpdateAccount = props => {
   const [ alertStatus, setAlertStatus ] = useState(false)
   const [ message, setMessage ] = useState([])
   const [ fields, handleFieldChange ] = useFormFields({
-    firstName: null,
-    lastName: null,
-    jobTitle: null,
-    email: null,
-    password: null,
-    picture: null,
+    firstName: undefined,
+    lastName: undefined,
+    jobTitle: undefined,
+    email: undefined,
+    password: undefined
   })
 
   useEffect(() => {
     setSkillSelection(skills)
     setDateInput(currentUser.birthday)
     setTopSkills(() => currentUser.skills.map(skill => skill.key))
+    setTempImage(currentUser.profile_picture.image_url)
   }, [skills, currentUser, skillSelection])
 
   useEffect(() => {
@@ -85,7 +85,6 @@ const UpdateAccount = props => {
         const skill = value[value.length - 1]   
         const unchangedUserSkills = currentUser.skills.map(skill => skill.key)
         const skillsBeforeUpdate = topSkills
-        console.log("skillsBeforeUpdate ->", skillsBeforeUpdate)
 
         if (!topSkills.includes(skill) && !unchangedUserSkills.includes(skill)) { 
           setNewSkills([...newSkills, skill]) 
@@ -137,33 +136,30 @@ const UpdateAccount = props => {
       password: fields.password
     }
 
-    console.log("updateUser -->", updateUser)
-
     fetch(`http://localhost:3000/users/${currentUser.id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json"
-        // "Accept": "application/json"
       },
-      body: updateUser
+      body: JSON.stringify(updateUser)
     })
     .then(r => r.json())
     .then(data => {
       if (data.errorStatus) {
         setBtnLoading(false)
-        console.log("ERROR UPDATING ->", data)
         handleMessages(data)
       } else {
         setBtnLoading(false)
-        console.log("SUCCESSFULLY UPDATED ->", data)
         const { user } = data
         dispatch({ type: UPDATE_USER, payload: user })
+        dispatch({ type: SET_KEY_HOLDER, payload: user })
         props.history.push(`/account/${currentUser.id}`)
       }
     })
   }
 
   const imageUpload = e => {
+    e.preventDefault()
     setUploadStatus(true)
     // FormData attributes 
     const formData = new FormData();
@@ -190,7 +186,7 @@ const UpdateAccount = props => {
           <Form onSubmit={imageUpload}>
             <Form.Group className="Form-Group-Alignment">
               <Form.Field className="Signup-Profile-Picture-Item Circular">
-                <Image src={btnUploadStatus ? tempImage : "/default-profile.jpg"} size='small' className="Circular-Image" />
+                <Image src={tempImage} size='small' className="Circular-Image" />
               </Form.Field>
             </Form.Group>
             <Form.Group className="Form-Group-Alignment">
@@ -257,7 +253,7 @@ const UpdateAccount = props => {
               className="UpdateAccount-Form" 
               label='Last name' 
               placeholder='Last name'
-              defaultValue={fields.firstLast ? fields.firstLast : currentUser.last_name}
+              defaultValue={fields.lastName ? fields.lastName : currentUser.last_name}
             />
           </Form.Group>
           <Form.Group widths={2}>
@@ -275,10 +271,9 @@ const UpdateAccount = props => {
               label="Date of Birth"
               dateFormat="MM-DD-YYYY"
               placeholder="mm/dd/yyyy"
-              value={dateInput}
               iconPosition="right"
-              animation={false}
-              defaultValue={dateInput} 
+              animation="false"
+              value={dateInput}
               onChange={(e, {name, value}) => handleDateChange(name, value)}
             />
           </Form.Group>
@@ -304,7 +299,7 @@ const UpdateAccount = props => {
               />
           </Form.Group>
           <Form.Field className="Submit-Button-Wrapper">
-            <Button type="submit" className={`${disableBtn && "disabled"}  ${btnLoading && !disableBtn ? "loading disabled" : ""} UpdateAccount-Button-Color`}>{btnLoading ? "Loading" : "Save changes"}</Button>
+            <Button type="submit" className={`${disableBtn && "disabled"}  ${btnLoading && !disableBtn ? "loading disabled" : ""} UpdateAccount-Button-Color Update-User-Btn-Size`}>{btnLoading ? "Loading" : "Save changes"}</Button>
           </Form.Field>
           <Form.Group widths='equal'>
             <Form.Field>
