@@ -64,6 +64,10 @@
   margin: 15px auto;
 }
 
+#UpdateAccount-Container .Update-User-Btn-Size {
+  width: 150px;
+}
+
 #UpdateAccount-Container, .UpdateAccount-Icon-Color {
   color: #79589f;
 }
