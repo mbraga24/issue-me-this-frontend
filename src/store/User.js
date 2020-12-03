@@ -1,9 +1,8 @@
-import { SET_LOADING, SET_USERS, ADD_USER, UPDATE_USER, SET_KEY_HOLDER, REMOVE_KEY_HOLDER_ISSUE_LIKE, ADD_KEY_HOLDER_ISSUE_LIKE, ADD_KEY_HOLDER_COMMENT_LIKE, REMOVE_KEY_HOLDER_COMMENT_LIKE, ADD_KEY_HOLDER_FAVORITE, REMOVE_KEY_HOLDER_FAVORITE } from './type';
+import { SET_USERS, ADD_USER, UPDATE_USER, SET_KEY_HOLDER, REMOVE_KEY_HOLDER_ISSUE_LIKE, ADD_KEY_HOLDER_ISSUE_LIKE, ADD_KEY_HOLDER_COMMENT_LIKE, REMOVE_KEY_HOLDER_COMMENT_LIKE, ADD_KEY_HOLDER_FAVORITE, REMOVE_KEY_HOLDER_FAVORITE } from './type';
 
 const defaultState = {
   keyHolder: null,
-  users: null,
-  loading: false
+  users: [],
 }
 
 const reducer = (state = defaultState, action) => {
@@ -63,15 +62,12 @@ const reducer = (state = defaultState, action) => {
         users: [...state.users, action.payload]
       }
     case UPDATE_USER:
-      const updatedUser = state.users.map(user => user.id !== action.payload.id ? user : action.payload)
+      console.log("UPDATE_USER", action.payload)
+      console.log("UPDATE_USER", state.users)
+      const updatedUsers = state.users.map(user => user.id === action.payload.id ? action.payload : user )
       return {
         ...state,
-        users: [...updatedUser]
-      }
-    case SET_LOADING:
-      return {
-        ...state,
-        loading: action.payload
+        users: [...updatedUsers]
       }
     default: 
       return state
