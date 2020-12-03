@@ -2,6 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { Header, Grid, Divider } from 'semantic-ui-react';
 import UserCard from './UserCard';
+import SearchField from './SearchField';
 import Loading from './Loading'; 
 import '../resources/UserContainer.css';
 
@@ -20,6 +21,7 @@ const UserContainer = props => {
       <div id="Users-Container">
         <Header as='h1' textAlign="center" color="blue" className="Users-Header">Users</Header>
         <Divider />
+        <SearchField />
         <Grid padded>
           {
           users ?
