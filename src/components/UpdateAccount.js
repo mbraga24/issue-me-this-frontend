@@ -10,9 +10,12 @@ import '../resources/UpdateAccount.css';
 const UpdateAccount = props => {
 
   const dispatch = useDispatch()
+  const [ uploadStatus, setUploadStatus ] = useState(false)
+  const [ btnUploadStatus, setBtnUploadState ] = useState(false)
   const [ btnLoading, setBtnLoading ] = useState(false)
   const [ disableBtn, setDisableBtn ] = useState(true)
   const [ changeDate, setChangeDate ] = useState(null)
+  const [ tempImage, setTempImage ] = useState(null)
   const [ skillSelection, setSkillSelection ] = useState([])
   const [ dateInput, setDateInput ] = useState("")
   const [ file, setFile ] = useState(null)
@@ -115,8 +118,9 @@ const UpdateAccount = props => {
 
   const fileChange = e => {
     setFile(e.target.files[0])
+    setTempImage(URL.createObjectURL(e.target.files[0]))
+    setBtnUploadState(true)
   };
-
 
   const handleSubmit = e => {
     e.preventDefault()
@@ -132,7 +136,6 @@ const UpdateAccount = props => {
       birthday: dateInput,
       password: fields.password
     }
-    // setAlertStatus(true)
 
     console.log("updateUser -->", updateUser)
 
@@ -161,13 +164,11 @@ const UpdateAccount = props => {
   }
 
   const imageUpload = e => {
-
+    setUploadStatus(true)
     // FormData attributes 
     const formData = new FormData();
 
     formData.append("profile_picture", file);
-    console.log(formData)
-    console.log(file)
 
     fetch(`http://localhost:3000/users/${currentUser.id}/upload_photo`, {
       method: "POST",
@@ -175,49 +176,57 @@ const UpdateAccount = props => {
     })
     .then(r => r.json())
     .then(userImage => {
+      setUploadStatus(false)
       dispatch({ type: UPDATE_USER, payload: userImage })
     })
   }
+
+  console.log("FILE -->", file)
 
   return (
     <div id="UpdateAccount-Container">
       <Header as='h1' textAlign="center" color="blue" className="UpdateAccount-Header">Update Account</Header>
       <Divider />
-      <Form onSubmit={imageUpload}>
-        <Form.Group widths={1}>
-          <Form.Field className="Signup-Profile-Picture-Item">
-            <label>Profile Picture</label>
-            <Image src="default-profile.jpg" circular size='small'/>
-          </Form.Field>
-          </Form.Group>
-          <Form.Group>
-            <Form.Field className="Signup-Profile-Picture-Item">
-              <input
-                type="file"
-                accept="image/png, image/jpeg"
-                id="file"
-                name="file"
-                hidden
-                onChange={fileChange}
-              />
-              <Button type="button" as="label" htmlFor="file">
-                <Icon name="desktop" />
-                Choose a profile picture
-              </Button>
-              <Button type="submit" >
-                <Icon name="desktop" />
-                Upload Photo
-              </Button>
-          </Form.Field>
-        </Form.Group>
-      </Form>
-      <Form onSubmit={handleSubmit}>
-        <div className="UpdateAccount-FormWrapper">
+      <div className="UpdateAccount-FormWrapper">
+          <Form onSubmit={imageUpload}>
+            <Form.Group className="Form-Group-Alignment">
+              <Form.Field className="Signup-Profile-Picture-Item Circular">
+                <Image src={btnUploadStatus ? tempImage : "/default-profile.jpg"} size='small'   
+                  className="Circular-Img"
+                />
+              </Form.Field>
+            </Form.Group>
+            <Form.Group className="Form-Group-Alignment">
+              <Form.Field className="Signup-Profile-Picture-Item">
+                <input
+                  type="file"
+                  accept="image/png, image/jpeg"
+                  id="file"
+                  name="file"
+                  hidden
+                  onChange={fileChange}
+                />
+                <div>
+                  {
+                    !btnUploadStatus ?
+                    <Button type="button" as="label" htmlFor="file" className="Upload-Btn-Size">
+                      <Icon name="desktop" />
+                      Choose a profile picture
+                    </Button> :
+                    <Button type="submit" color="blue" className={`${uploadStatus && "loading"} Upload-Btn-Size`}>
+                      {uploadStatus ? "Loading" : "Confirm Profile Picture"}
+                    </Button>
+                  }
+                </div>
+              </Form.Field>
+            </Form.Group>
+          </Form>
+
+        <Form onSubmit={handleSubmit}>
           <Form.Group widths={2}>
             <Dropdown 
               name="topSkills"
               placeholder='Choose your top 5 skills' 
-              // className={`ui ${topSkills.length === 6 ? "disabled" : ""}`}
               className="ui"
               fluid 
               multiple 
@@ -316,8 +325,8 @@ const UpdateAccount = props => {
             }
             </Form.Field>
           </Form.Group>
-        </div>
-      </Form>
+        </Form>
+      </div>
     </div>
   );
 };

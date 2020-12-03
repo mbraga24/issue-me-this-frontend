@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Container, Grid, Icon, Menu, Sidebar } from 'semantic-ui-react'
-import { Route, Switch, Link, Redirect } from 'react-router-dom';
+import { Route, Switch, Link, withRouter, Redirect } from 'react-router-dom';
 import MenuBar from './MenuBar';
 import Home from './Home';
 import Login from './Login';
-import Signup from './Signup';
+import SignUp from './SignUp';
 import IssueContainer from './IssueContainer';
 import UserContainer from './UserContainer';
 import NewIssueForm from './NewIssueForm';
@@ -15,9 +15,9 @@ import FavoriteIssues from './FavoriteIssues';
 import IssuesLiked from './IssuesLiked';
 import UserIssues from './UserIssues';
 import UpdateAccount from './UpdateAccount';
+import { SET_KEY_HOLDER } from '../store/type';
 import '../resources/AppWrapper.css';
 import '../resources/Loading.css';
-import { SET_KEY_HOLDER } from '../store/type';
 
 const AppWrapper = props => {
 
@@ -28,6 +28,7 @@ const AppWrapper = props => {
   const handleLogout = () => {
     localStorage.removeItem("token")
     dispatch({ type: SET_KEY_HOLDER, payload: null })
+    props.history.push("/")
   }
 
   const toggleMenu = () => {
@@ -107,7 +108,6 @@ const AppWrapper = props => {
                           <React.Fragment>
                             <Route path="/account/:id" component={Account} />
                             <Route path="/new/issue" component={NewIssueForm} />
-                            <Route path="/issues/:id" component={ShowIssue} />
                             <Route path="/favorite-issues" component={FavoriteIssues} />
                             <Route path="/liked-issues" component={IssuesLiked} />
                             <Route path="/user-issues/:id" component={UserIssues} />
@@ -116,7 +116,8 @@ const AppWrapper = props => {
                         }
                           <React.Fragment>
                             <Route path="/login" component={Login} />
-                            <Route path="/signup" component={Signup} />
+                            <Route path="/signup" component={SignUp} />
+                            <Route path="/issues/:id" component={ShowIssue} />
                             <Route exact path="/issues" component={IssueContainer} />
                             <Route exact path="/users" component={UserContainer} />
                           </React.Fragment>
@@ -130,4 +131,4 @@ const AppWrapper = props => {
   );
 }
 
-export default AppWrapper;
+export default withRouter(AppWrapper);

@@ -6,9 +6,9 @@ import { DateInput } from 'semantic-ui-calendar-react';
 import useFormFields from '../hooks/useFormFields';
 import Loading from './Loading';
 import { ADD_USER, SET_KEY_HOLDER } from '../store/type';
-import '../resources/Signup.css';
+import '../resources/SignUp.css';
 
-const Signup = props => {
+const SignUp = props => {
 
   const skills = useSelector(state => state.skill.skills)
   const dispatch = useDispatch()
@@ -104,12 +104,12 @@ const Signup = props => {
   }
 
   return (
-    <div id="Signup-Container">
+    <div id="SignUp-Container">
       {
       skills ?
-      <Segment raised className="Signup-Segment">
+      <Segment raised className="SignUp-Segment">
         <Form onSubmit={createAccount}>
-          <Header as='h1' textAlign="center" className="Signup-Header">Create Account</Header>
+          <Header as='h1' textAlign="center" className="SignUp-Header">Create Account</Header>
           <Form.Group>
             <Form.Input 
               width={8} 
@@ -208,5 +208,5 @@ const Signup = props => {
   );
 }
 
-export default withRouter(Signup);
+export default withRouter(SignUp);
 
