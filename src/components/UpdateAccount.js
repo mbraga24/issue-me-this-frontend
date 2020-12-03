@@ -181,8 +181,6 @@ const UpdateAccount = props => {
     })
   }
 
-  console.log("FILE -->", file)
-
   return (
     <div id="UpdateAccount-Container">
       <Header as='h1' textAlign="center" color="blue" className="UpdateAccount-Header">Update Account</Header>
@@ -191,9 +189,7 @@ const UpdateAccount = props => {
           <Form onSubmit={imageUpload}>
             <Form.Group className="Form-Group-Alignment">
               <Form.Field className="Signup-Profile-Picture-Item Circular">
-                <Image src={btnUploadStatus ? tempImage : "/default-profile.jpg"} size='small'   
-                  className="Circular-Img"
-                />
+                <Image src={btnUploadStatus ? tempImage : "/default-profile.jpg"} size='small' className="Circular-Image" />
               </Form.Field>
             </Form.Group>
             <Form.Group className="Form-Group-Alignment">
