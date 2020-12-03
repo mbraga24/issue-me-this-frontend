@@ -59,10 +59,9 @@ const ShowIssue = props => {
   }
 
   const issueComments = () => {
-    return comments.filter(comment => comment.issue_id === currentIssue.id)
+      return comments.filter(comment => comment.issue_id === currentIssue.id)
   }
 
-  // return currentIssue.comments.map(comment => (
   const renderComments = () => {    
     return issueComments().map(comment => (
       <Grid.Row key={comment.id} >
@@ -94,6 +93,8 @@ const ShowIssue = props => {
       setAlertStatus(false)
     }, 4000)
   }
+
+  // console.log(comments.le)
 
   return (
     <Container id="ShowIssue">
@@ -145,12 +146,16 @@ const ShowIssue = props => {
               }
               </Grid.Column>
             </Grid.Row>
-            <Grid.Row>
-              <Grid.Column className="ShowIssue-Wrap" width={12}>
-                <Header as='h1' textAlign="center" className="ShowIssue-Comment-Header">Answers</Header>
-                {renderComments()}
-              </Grid.Column>
-            </Grid.Row>
+
+            {
+              issueComments().length !== 0 && 
+              <Grid.Row>
+                <Grid.Column className="ShowIssue-Wrap" width={12}>
+                  <Header as='h1' textAlign="center" className="ShowIssue-Comment-Header">Answers</Header>
+                  {renderComments()}
+                </Grid.Column>
+              </Grid.Row>
+            }
           </Grid>
         </React.Fragment> : <Loading loadingClass={true} /> 
         }      
