@@ -11,3 +11,7 @@
   margin-top: 10px;
   margin-bottom: 25px;
 }
+
+#SignUp-Container .Submit-Btn-Size {
+  width: 150px;
+}

@@ -15,6 +15,7 @@ const SignUp = props => {
   const [ dateInput, setDateInput ] = useState("")
   const [ topSkills, setTopSkills ] = useState([])
   const [ skillSelection, setSkillSelection ] = useState([])
+  const [ btnLoadingStatus, setBtnLoadingStatus ] = useState(false)
   const [ alertHeader, setAlertHeader ] = useState("")
   const [ alertStatus, setAlertStatus ] = useState(false)
   const [ message, setMessage ] = useState([])
@@ -44,6 +45,7 @@ const SignUp = props => {
 
   const createAccount = (event) => {
     event.preventDefault()
+    setBtnLoadingStatus(true)
 
     const newUser = {
       email: fields.email,
@@ -68,12 +70,14 @@ const SignUp = props => {
     .then(data => {
       if (data.errorStatus) {
         handleMessages(data)
+        setBtnLoadingStatus(false)
       } else {
         const { user, token } = data
         dispatch({ type: ADD_USER, payload: user })
         dispatch({ type: SET_KEY_HOLDER, payload: user })
         localStorage.token = token
         props.history.push('/issues')
+        setBtnLoadingStatus(false)
       }
     })
   }
@@ -188,7 +192,9 @@ const SignUp = props => {
             </Form.Input>
           </Form.Group>
 
-          <Button type='submit' color="blue">Create Account</Button>
+          <Button type='submit' color="blue" className={`${btnLoadingStatus && "loading"} Submit-Btn-Size`}>
+            {btnLoadingStatus ? "Loading" : "Create Account"}
+          </Button>
           {
             (alertStatus && !!message) && 
               <div className="ui negative message">
