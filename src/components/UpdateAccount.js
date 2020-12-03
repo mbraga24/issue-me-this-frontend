@@ -119,7 +119,7 @@ const UpdateAccount = props => {
   const fileChange = e => {
     setFile(e.target.files[0])
     setTempImage(URL.createObjectURL(e.target.files[0]))
-    setBtnUploadState(true)
+    setBtnUploadState(false)
   };
 
   const handleSubmit = e => {
@@ -177,6 +177,7 @@ const UpdateAccount = props => {
     .then(r => r.json())
     .then(userImage => {
       setUploadStatus(false)
+      setBtnUploadState(false)
       dispatch({ type: UPDATE_USER, payload: userImage })
     })
   }
