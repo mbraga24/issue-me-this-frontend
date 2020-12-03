@@ -11,6 +11,7 @@ const Login = props => {
   const dispatch = useDispatch()
   const [ alertHeader, setAlertHeader ] = useState("")
   const [ alertStatus, setAlertStatus ] = useState(false)
+  const [ btnLoadingStatus, setBtnLoadingStatus ] = useState(false)
   const [ message, setMessage ] = useState([])
   const [ fields, handleFieldChange ] = useFormFields({
     email: "",
@@ -19,6 +20,7 @@ const Login = props => {
 
   const handleSubmit = event => {
     event.preventDefault()
+    setBtnLoadingStatus(true)
 
     const loginUser = {
       email: fields.email.toLowerCase(),
@@ -37,11 +39,13 @@ const Login = props => {
     .then(data => {
       if (data.errorStatus) {
         handleMessages(data)
+        setBtnLoadingStatus(false)
       } else {
         const { user, token } = data
         dispatch({ type: SET_KEY_HOLDER, payload: user })
         localStorage.token = token
         props.history.push('/issues')
+        setBtnLoadingStatus(false)
       }
     })
   }
@@ -78,7 +82,9 @@ const Login = props => {
           <Form.Group>
             <Form.Input type="password" label='Password' placeholder='Password' width={16} name="password" onChange={handleFieldChange}/>
           </Form.Group>
-          <Button type='submit' color="green">Log In</Button>
+          <Button type='submit' color="green" className={`${btnLoadingStatus && "loading"} Submit-Btn-Size`}>
+            {btnLoadingStatus ? "Loading" : "Log In"}
+          </Button>
           {
               (alertStatus && !!message) && 
                 <div className="ui negative message">
