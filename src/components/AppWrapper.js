@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Container, Grid, Icon, Menu, Sidebar } from 'semantic-ui-react'
 import { Route, Switch, Link, withRouter, Redirect } from 'react-router-dom';
-import MenuBar from './MenuBar';
+import Navbar from './Navbar';
 import Home from './Home';
 import Login from './Login';
 import SignUp from './SignUp';
@@ -99,7 +99,7 @@ const AppWrapper = props => {
               }
             </Sidebar>
             <Sidebar.Pusher dimmed={visible}>
-              <MenuBar toggleMenu={toggleMenu} />
+              <Navbar toggleMenu={toggleMenu} />
                 <Switch>  
                     <Container id="AppWrapper-Container">
                       <Route exact path="/" component={Home} />
