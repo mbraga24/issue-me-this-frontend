@@ -238,7 +238,7 @@ const Issue = props => {
                       className="Issue-Image"
                       size='big'
                       avatar
-                      alt={`${user.first_name} ${user.last_name}`}
+                      alt={`user ${user.first_name} ${user.last_name}`}
                       src={user.profile_picture.image_url}
                     />
                   <span>{`${user.first_name} ${user.last_name[0]}.`}</span>
