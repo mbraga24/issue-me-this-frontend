@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Grid, Form, Header } from 'semantic-ui-react'
+import { Grid, Form } from 'semantic-ui-react'
 import useFormFields from '../hooks/useFormFields';
 import { ADD_ISSUE, ADD_ISSUE_INDEX, UPDATE_USER, UPDATE_TITLE, UPDATE_BODY } from '../store/type';
 import '../resources/IssueForm.css';
@@ -20,7 +20,6 @@ const IssueForm = props => {
   const [ fields, handleFieldChange ] = useFormFields({
     formTitle: "",
     formBody: ""
-    // syntax: ""
   })
   
   const updateFields = () => {
@@ -89,7 +88,6 @@ const IssueForm = props => {
 
   return (
     <div id="IssueForm-Container">
-      { props.displayContent && <Header as='h1' textAlign="center" color="grey" className="IssueForm-Header">What's your issue?</Header> }
       <Grid>
         <Grid.Row>
           <Grid.Column width={12} className="IssueForm-Grid-Wrapper">
@@ -108,7 +106,7 @@ const IssueForm = props => {
               }
               <Form.TextArea 
                 name="formBody" 
-                className="Form-TextArea"
+                style={{height: "350px"}}
                 onChange={handleFieldChange}
                 defaultValue={props.dataBody ? props.dataBody : undefined}
                 placeholder={instructionPost} />
