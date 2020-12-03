@@ -30,13 +30,9 @@ const IssueForm = props => {
     if (fields.formBody === "") {
       fields.formBody = props.dataBody
     } 
-    // if (fields.syntax === "") {
-    //   fields.syntax = props.dataSyntax
-    // } 
-      
+
     dispatch({ type: UPDATE_TITLE, payload: fields.formTitle })
     dispatch({ type: UPDATE_BODY, payload: fields.formBody })
-    // dispatch({ type: UPDATE_SYNTAX, payload: fields.syntax })
   }
 
     props.isUpdateForm && updateFields()

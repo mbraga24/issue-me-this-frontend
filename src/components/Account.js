@@ -79,7 +79,7 @@ const Account = props => {
               <Grid divided>
                 <Grid.Row stretched>
                   <Grid.Column>
-                    <Image style={{margin: "0 auto"}} src={userProfile.picture ? userProfile.picture : "/default-profile.jpg"} size='small' circular />
+                    <Image style={{margin: "0 auto"}} src={userProfile.profile_picture.image_url} size='small' circular />
                     <Card style={{margin: "50px auto" }} className="Card-Wrapper">
                       <Card.Content>
                         <Card.Header textAlign="center">{userProfile.first_name} {userProfile.last_name}</Card.Header>
@@ -102,7 +102,7 @@ const Account = props => {
                   {
                     accountOptions.map(option => (
                       <Grid.Column>
-                        <Button key={option.iconName} as={Link} to={option.iconName === "boxes" ? `/user-issues/${userId}` : option.link} color="blue" className="Account-Button-Options" >
+                        <Button circular key={option.iconName} as={Link} to={option.iconName === "boxes" ? `/user-issues/${userId}` : option.link} color="blue" className="Account-Button-Options" >
                           <List.Item>
                             <List.Content>
                               <Icon name={option.iconName} size="big"/>

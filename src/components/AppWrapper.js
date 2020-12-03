@@ -119,7 +119,6 @@ const AppWrapper = props => {
                             <Route path="/signup" component={Signup} />
                             <Route exact path="/issues" component={IssueContainer} />
                             <Route exact path="/users" component={UserContainer} />
-                            <Redirect />
                           </React.Fragment>
 
                     </Container>

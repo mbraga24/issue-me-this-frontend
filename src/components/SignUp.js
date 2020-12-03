@@ -52,7 +52,6 @@ const Signup = props => {
       job_title: fields.jobTitle,
       top_skills: [...topSkills],
       birthday: dateInput,
-      // picture: pictureFile,
       password: fields.password
     }
 

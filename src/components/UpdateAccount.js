@@ -15,6 +15,7 @@ const UpdateAccount = props => {
   const [ changeDate, setChangeDate ] = useState(null)
   const [ skillSelection, setSkillSelection ] = useState([])
   const [ dateInput, setDateInput ] = useState("")
+  const [ file, setFile ] = useState(null)
   
   const [ topSkills, setTopSkills ] = useState([])
   const [ newSkills, setNewSkills ] = useState([])
@@ -68,8 +69,6 @@ const UpdateAccount = props => {
   }
 
   const handleDateChange = (name, value) => {
-    console.log(name)
-    console.log(value)
     setChangeDate(value)
     setDateInput(value.split("-").join("/"))
   }
@@ -114,10 +113,15 @@ const UpdateAccount = props => {
     }
   }
 
+  const fileChange = e => {
+    setFile(e.target.files[0])
+  };
+
+
   const handleSubmit = e => {
     e.preventDefault()
     setBtnLoading(true)
-
+  
     const updateUser = {
       first_name: fields.firstName ? fields.firstName : currentUser.first_name,
       last_name: fields.lastName ? fields.lastName : currentUser.last_name,
@@ -125,7 +129,6 @@ const UpdateAccount = props => {
       job_title: fields.jobTitle ? fields.jobTitle : currentUser.job_title,
       new_skills: newSkills,
       remove_skills: removeSkills,
-      // picture: picture,
       birthday: dateInput,
       password: fields.password
     }
@@ -136,9 +139,10 @@ const UpdateAccount = props => {
     fetch(`http://localhost:3000/users/${currentUser.id}`, {
       method: "PATCH",
       headers: {
-        'Content-Type': 'application/json'
+        "Content-Type": "application/json"
+        // "Accept": "application/json"
       },
-      body: JSON.stringify(updateUser)
+      body: updateUser
     })
     .then(r => r.json())
     .then(data => {
@@ -156,33 +160,59 @@ const UpdateAccount = props => {
     })
   }
 
+  const imageUpload = e => {
+
+    // FormData attributes 
+    const formData = new FormData();
+
+    formData.append("profile_picture", file);
+    console.log(formData)
+    console.log(file)
+
+    fetch(`http://localhost:3000/users/${currentUser.id}/upload_photo`, {
+      method: "POST",
+      body: formData
+    })
+    .then(r => r.json())
+    .then(userImage => {
+      dispatch({ type: UPDATE_USER, payload: userImage })
+    })
+  }
+
   return (
     <div id="UpdateAccount-Container">
       <Header as='h1' textAlign="center" color="blue" className="UpdateAccount-Header">Update Account</Header>
       <Divider />
+      <Form onSubmit={imageUpload}>
+        <Form.Group widths={1}>
+          <Form.Field className="Signup-Profile-Picture-Item">
+            <label>Profile Picture</label>
+            <Image src="default-profile.jpg" circular size='small'/>
+          </Form.Field>
+          </Form.Group>
+          <Form.Group>
+            <Form.Field className="Signup-Profile-Picture-Item">
+              <input
+                type="file"
+                accept="image/png, image/jpeg"
+                id="file"
+                name="file"
+                hidden
+                onChange={fileChange}
+              />
+              <Button type="button" as="label" htmlFor="file">
+                <Icon name="desktop" />
+                Choose a profile picture
+              </Button>
+              <Button type="submit" >
+                <Icon name="desktop" />
+                Upload Photo
+              </Button>
+          </Form.Field>
+        </Form.Group>
+      </Form>
       <Form onSubmit={handleSubmit}>
         <div className="UpdateAccount-FormWrapper">
-          <Form.Group widths={1}>
-            <Form.Field className="Signup-Profile-Picture-Item">
-              <label>Profile Picture</label>
-              <Image src="/default-profile.jpg" circular size='small'/>
-            </Form.Field>
-            </Form.Group>
-            <Form.Group>
-              <Form.Field className="Signup-Profile-Picture-Item">
-                <input
-                  type="file"
-                  id="file"
-                  name="file"
-                  hidden
-                  // onChange={fileChange}
-                />
-                <Button type="button" as="label" htmlFor="file">
-                  <Icon name="desktop" />
-                  Choose a profile picture
-                </Button>
-            </Form.Field>
-          </Form.Group>
           <Form.Group widths={2}>
             <Dropdown 
               name="topSkills"
