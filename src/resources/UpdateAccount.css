@@ -2,6 +2,30 @@
   height: 100vh;
 }
 
+#UpdateAccount-Container .Circular {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  position: relative;
+  overflow: hidden;
+}
+
+#UpdateAccount-Container .Circular-Img {
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+
+
 #UpdateAccount-Container .UpdateAccount-Header {
   margin: 15px;
   font-size: 42px;
@@ -30,6 +54,16 @@
   justify-content: space-between;
   width: 100%;
   padding: 10px 0;
+}
+
+#UpdateAccount-Container .Form-Group-Alignment {
+  display: flex;
+  justify-content: center;
+}
+
+#UpdateAccount-Container .Upload-Btn-Size {
+  width: 215px;
+  margin: 15px auto;
 }
 
 #UpdateAccount-Container, .UpdateAccount-Icon-Color {
