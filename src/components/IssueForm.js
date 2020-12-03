@@ -108,7 +108,7 @@ const IssueForm = props => {
               }
               <Form.TextArea 
                 name="formBody" 
-                style={{height: "250px"}}
+                className="Form-TextArea"
                 onChange={handleFieldChange}
                 defaultValue={props.dataBody ? props.dataBody : undefined}
                 placeholder={instructionPost} />
