@@ -79,7 +79,9 @@ const Account = props => {
               <Grid divided>
                 <Grid.Row stretched>
                   <Grid.Column>
-                    <Image className="Account-Image" src={userProfile.profile_picture ? userProfile.profile_picture.image_url : "/default-profile.jpg"} size='small' circular />
+                    <div className="Account-Image-Alignment Circular">
+                      <Image className="Circular-Image" src={userProfile.profile_picture ? userProfile.profile_picture.image_url : "/default-profile.jpg"} size='small' circular />
+                    </div>
                     <Card className="Account-Card">
                       <Card.Content>
                         <Card.Header textAlign="center">{userProfile.first_name} {userProfile.last_name}</Card.Header>
