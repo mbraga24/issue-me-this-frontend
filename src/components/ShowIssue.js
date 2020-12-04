@@ -110,8 +110,8 @@ const ShowIssue = props => {
                 currentUser ? 
                 <Form onSubmit={postComment}>
                   <Form.Field
+                    style={{height: "320px"}}
                     name="commentArea"
-                    className="Form-Field-Answer"
                     control={TextArea}
                     label='Your Answer'
                     placeholder={instructionPost}
