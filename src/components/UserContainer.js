@@ -17,6 +17,7 @@ const UserContainer = props => {
         </Grid.Column>
       ))
   }
+
   return (
       <div id="Users-Container">
         <Header as='h1' textAlign="center" color="blue" className="Users-Header">Users</Header>

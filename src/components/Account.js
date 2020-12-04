@@ -80,7 +80,7 @@ const Account = props => {
                 <Grid.Row stretched>
                   <Grid.Column>
                     <div className="Account-Image-Alignment Circular">
-                      <Image className="Circular-Image" src={userProfile.profile_picture ? userProfile.profile_picture.image_url : "/default-profile.jpg"} size='small' circular />
+                      <Image className="Circular-Image" src={userProfile.profile_picture.image_url} size='small' circular />
                     </div>
                     <Card className="Account-Card">
                       <Card.Content>

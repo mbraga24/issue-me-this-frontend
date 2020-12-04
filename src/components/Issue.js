@@ -128,7 +128,6 @@ const Issue = props => {
     })
     .then(r => r.json())
     .then(data => {
-      console.log("LIKE ->", data)
       dispatch({ type: ADD_KEY_HOLDER_ISSUE_LIKE, payload: data.like })
       dispatch({ type: UPDATE_ISSUE, payload: data.issue })
       dispatch({ type: ADD_ISSUE_LIKE, payload: data.like })

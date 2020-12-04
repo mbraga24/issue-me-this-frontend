@@ -11,7 +11,7 @@ const UserCard = props => {
 
   return (
     <Card id="UserCard-Container" className="Card-Size">
-      <Image className="Card-Image" as={Link} to={`${currentUser ? `/account/${id}` : "/login"}`} src={profile_picture ? profile_picture.image_url : "/default-profile.jpg"} wrapped ui={true} size="medium" />
+      <Image className="Card-Image" as={Link} to={`${currentUser ? `/account/${id}` : "/login"}`} src={profile_picture.image_url} wrapped ui={true} size="medium" />
       <Card.Content>
         <Link to={`${currentUser ? `/account/${id}` : "/login"}`}>
           <Card.Header>{first_name} {last_name}</Card.Header>

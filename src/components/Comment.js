@@ -43,7 +43,6 @@ const Comment = props => {
     setDislayLikeStatus(!!commentFound)
     setCommentLike(commentFound)
     setThumbsUpOrDown(commentLike && commentLike.is_like ? true : false)
-    console.log("PAGE IS REALODING")
   }, [commentLike, currentUser, id])
 
   useEffect(() => {
@@ -93,7 +92,6 @@ const Comment = props => {
     })
     .then(r => r.json())
     .then(data => {
-      console.log("UNLIKE ->", data)
       dispatch({ type: REMOVE_KEY_HOLDER_COMMENT_LIKE, payload: data.like })
       dispatch({ type: DELETE_COMMENT_LIKE, payload: data.like })
       dispatch({ type: UPDATE_COMMENT, payload: data.comment })
@@ -110,7 +108,6 @@ const Comment = props => {
     })
     .then(r => r.json())
     .then(data => {
-      console.log("LIKE ->", data)
       dispatch({ type: ADD_KEY_HOLDER_COMMENT_LIKE, payload: data.like })
       dispatch({ type: ADD_COMMENT_LIKE, payload: data.like })
       dispatch({ type: UPDATE_COMMENT, payload: data.comment })

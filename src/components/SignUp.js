@@ -32,7 +32,6 @@ const SignUp = props => {
   }, [skills])
 
   const handleSkillInput = (event, { value }) => {
-    console.log("VALUE ", value)
     const newSkill = event.target.textContent
     if (topSkills.length < 5 && newSkill !== "") {  
       setTopSkills([...topSkills, newSkill])
@@ -56,8 +55,6 @@ const SignUp = props => {
       birthday: dateInput,
       password: fields.password
     }
-
-    console.log("newUser -->", newUser)
 
     fetch("http://localhost:3000/users", {
       method: "POST",  
