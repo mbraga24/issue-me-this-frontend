@@ -118,7 +118,7 @@ const UpdateAccount = props => {
   const fileChange = e => {
     setFile(e.target.files[0])
     setTempImage(URL.createObjectURL(e.target.files[0]))
-    setBtnUploadState(false)
+    setBtnUploadState(true)
   };
 
   const handleSubmit = e => {
