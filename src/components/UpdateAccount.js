@@ -161,9 +161,9 @@ const UpdateAccount = props => {
   const imageUpload = e => {
     e.preventDefault()
     setUploadStatus(true)
+
     // FormData attributes 
     const formData = new FormData();
-
     formData.append("profile_picture", file);
 
     fetch(`http://localhost:3000/users/${currentUser.id}/upload_photo`, {
