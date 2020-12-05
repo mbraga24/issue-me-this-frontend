@@ -9,6 +9,8 @@ const App = props => {
   const dispatch = useDispatch()
 
   useEffect(() => {
+
+    // autologin
    if (localStorage.token) {
     fetch("http://localhost:3000/autologin", {
       headers: {
@@ -17,7 +19,6 @@ const App = props => {
     })
     .then(r => r.json())
     .then(user => {
-      // set current user in store
       dispatch({ type: SET_KEY_HOLDER, payload: user })
     })
    }
@@ -34,7 +35,6 @@ const App = props => {
     fetch("http://localhost:3000/issues")
     .then(r => r.json())
     .then(issuesIndex => {
-      // set issues in the store
       const { issue_pages, page, pages } = issuesIndex
 
       dispatch({ type: SET_ISSUE_INDEX, payload: { issue_pages, page, pages } })
@@ -45,7 +45,6 @@ const App = props => {
     fetch("http://localhost:3000/comments")
     .then(r => r.json())
     .then(comments => {
-      // set comments in the store
       dispatch({ type: SET_COMMENTS, payload: comments })
     })
 
@@ -53,7 +52,6 @@ const App = props => {
     fetch("http://localhost:3000/like_issues")
     .then(r => r.json())
     .then(likes => {
-      // set likes in the store
       dispatch({ type: SET_ISSUE_LIKES, payload: likes })
     })
 
@@ -61,7 +59,6 @@ const App = props => {
       fetch("http://localhost:3000/like_comments")
       .then(r => r.json())
       .then(likes => {
-        // set likes in the store
         dispatch({ type: SET_COMMENT_LIKES, payload: likes })
       })
 
@@ -69,7 +66,6 @@ const App = props => {
     fetch("http://localhost:3000/skills")
     .then(r => r.json())
     .then(skills => {
-      // set skills in the store
       dispatch({ type: SET_SKILLS, payload: skills })
     })
     

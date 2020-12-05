@@ -60,8 +60,10 @@ const IssueContainer = props => {
           <Loading loadingClass={true} /> 
           :
           <React.Fragment>
-            <Grid columns={1} divided id="Issue">
+            <Grid id="Issue">
+              <Grid.Row>
               {renderIssues()}
+              </Grid.Row>
             </Grid> 
             <Pagination
               boundaryRange={0}

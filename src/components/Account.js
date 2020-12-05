@@ -17,7 +17,7 @@ const Account = props => {
   const [ issueCount, setIssueCount ] = useState([])
   
   function findPopularIssues(issues) {
-    return issues.filter(issue => issue.like_issues.length >= 3)
+    return issues.filter(issue => issue.like_issues.length >= 4)
   }
 
   useEffect(() => {
@@ -38,11 +38,10 @@ const Account = props => {
   }
   
   const renderIssues = () => {
-
     if (popularIssues.length !== 0) {
       return popularIssues.map(issue => (
-        <Grid.Column key={issue.id}>
-            <Card fluid>
+        <Grid.Column width={6} key={issue.id}>
+            <Card raised className="Card-Size">
               <Card.Content>
                 <Card.Header as={Link} to={`/issues/${issue.id}`}>{issue.title}</Card.Header>
               </Card.Content>
@@ -120,14 +119,14 @@ const Account = props => {
               <Divider />
               <Header as='h1' color="blue" textAlign="center">Top skills</Header>
               <Grid stackable columns='equal' className="Top-Skills-Wrapper">
-                <Grid.Row stretched>
+                <Grid.Row>
                   {renderSkills()}
                 </Grid.Row>
               </Grid>
               <Divider />
-              <Header as='h1' color="blue" textAlign="center">Your popular issues</Header>
-              <Grid columns='equal' className={`${currentUser ? "" : "Account-Not-Loggedin-User"}`}>
-                <Grid.Row stretched>
+              <Header as='h1' color="blue" textAlign="center" className="Issue-Header">Your popular issues</Header>
+              <Grid stackable columns='equal' className={`${currentUser ? "Popular-Issues-Wrapper" : "Account-Not-Loggedin-User"}`}>
+                <Grid.Row>
                   {renderIssues()}
                 </Grid.Row>
               </Grid>

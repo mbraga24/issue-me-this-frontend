@@ -220,166 +220,164 @@ const Issue = props => {
   }
   
   return (
-      <Grid.Row>
-        <Grid.Column className="Issue-Inner-Wrap" width={12}>
-            <Card fluid raised>
-              <Card.Content className="Issue-Content">
-                <Card.Meta className="Issue-Item-Wrapper">
-                  <Card.Meta className="Issue-Icon-Title">
-                    <Link to={`/issues/${id}`}>
-                      {title}
-                    </Link>
-                  </Card.Meta>
-                  <Card.Meta className="Issue-Icon-Avatar" textAlign='center'>
-                    <Image
-                      as={Link}
-                      to={`${currentUser ? `/account/${user.id}` : "/login"}`}
-                      className="Issue-Image"
-                      size='big'
-                      avatar
-                      alt={`user ${user.first_name} ${user.last_name}`}
-                      src={user.profile_picture.image_url}
-                    />
-                  <span>{`${user.first_name} ${user.last_name[0]}.`}</span>
-                  </Card.Meta>
-                </Card.Meta>
-                { 
-                  props.displayBody && 
-                  <>
-                    <Card.Description className={`Copy-Clipboard-Text-${user.first_name}-${user.last_name}-${user.id} ShowIssue-Issue-Body`}>
-                      {
-                        <CreateHighlight dataString={issue_body} syntax={syntax} user={user} />
-                      }
-                    </Card.Description>
+    <Grid.Column className="Issue-Inner-Wrap" width={12}>
+        <Card fluid raised>
+          <Card.Content className="Issue-Content">
+            <Card.Meta className="Issue-Item-Wrapper">
+              <Card.Meta className="Issue-Icon-Title">
+                <Link to={`/issues/${id}`}>
+                  {title}
+                </Link>
+              </Card.Meta>
+              <Card.Meta className="Issue-Icon-Avatar" textAlign='center'>
+                <Image
+                  as={Link}
+                  to={`${currentUser ? `/account/${user.id}` : "/login"}`}
+                  className="Issue-Image"
+                  size='big'
+                  avatar
+                  alt={`user ${user.first_name} ${user.last_name}`}
+                  src={user.profile_picture.image_url}
+                />
+              <span>{`${user.first_name} ${user.last_name[0]}.`}</span>
+              </Card.Meta>
+            </Card.Meta>
+            { 
+              props.displayBody && 
+              <>
+                <Card.Description className={`Copy-Clipboard-Text-${user.first_name}-${user.last_name}-${user.id} ShowIssue-Issue-Body`}>
+                  {
+                    <CreateHighlight dataString={issue_body} syntax={syntax} user={user} />
+                  }
+                </Card.Description>
+                <Popup
+                  content='Copy the text or just code snippets to your clipboard'
+                  position='top left'
+                  inverted
+                  style={popupWrapper}
+                  trigger={
+                  <div className="Trigger-Container"> 
                     <Popup
-                      content='Copy the text or just code snippets to your clipboard'
-                      position='top left'
+                      content='Issue copied to clipboard'
+                      on='click'
+                      position='right center'
                       inverted
-                      style={popupWrapper}
-                      trigger={
-                      <div className="Trigger-Container"> 
-                        <Popup
-                          content='Issue copied to clipboard'
-                          on='click'
-                          position='right center'
-                          inverted
-                          pinned
-                          trigger={<Button circular basic color='blue' icon='copy' className="Clipboard-Button" onClick={handleCopyIssue} />}
-                        />
-                        <Popup
-                          content='Code copied to clipboard'
-                          on='click'
-                          position='right center'
-                          inverted
-                          pinned
-                          trigger={<Button circular basic color='blue' icon='code' className="Clipboard-Button" onClick={handleCopyCode} />}
-                        />
-                      </div>
-                      }
+                      pinned
+                      trigger={<Button circular basic color='blue' icon='copy' className="Clipboard-Button" onClick={handleCopyIssue} />}
                     />
-                  </>
-                }
-                <Divider clearing />
-                <Card.Meta className="Issue-Item-Wrapper">
-                  <Card.Meta className="Issue-Item-Wrapper">
-                    <Card.Meta className="Issue-Item-Extra">
-                      <Icon name={hasComment ? "comment alternate" : "comment outline"} size="large" />
-                      <span className="Issue-Comment">{totalComments}</span>
-                    </Card.Meta>
-                    <Card.Meta className="Issue-Item-Extra Inner-Item">
-                      <Icon name="thumbs up" />
-                      <span className="Issue-Comment">{issueLikes.length}</span>
-                    </Card.Meta>
-                    <Card.Meta className="Issue-Item-Extra Inner-Item">
-                      <Icon name="thumbs down" />
-                      <span className="Issue-Comment">{issueDislikes.length}</span>
-                    </Card.Meta>
-                  </Card.Meta>
-                  <Card.Meta className="Issue-Item-Extra">
-                    { 
-                      currentUser && displayLikeStatus ? 
-                      <Button circular color={thumbsUpOrDown ? "blue" : "grey"} icon={ thumbsUpOrDown ? "thumbs up" : "thumbs down"} onClick={unlike} size="large" />
-                      :
-                      (currentUser && currentUser.id !== user.id) && 
-                      <React.Fragment>
-                        <Button circular color="teal" icon='thumbs up outline' size="large" onClick={likeBtn} />
-                        <Button circular color="teal" icon='thumbs down outline' size="large" onClick={dislikeBtn} />
-                      </React.Fragment>
-                    }
-                    {
-                      (currentUser && currentUser.id !== user.id) && 
-                        <Button circular color={favoriteStatus ? "olive" : "teal"} icon={favoriteStatus ? "star" : "star outline"} size="large" onClick={favoriteBtn} />
-                    }
-                  </Card.Meta>
-                </Card.Meta>
-              </Card.Content>
-              {
-                currentUser && currentUser.id === user.id &&
-                <Card.Content>
-                  <div className='ui two buttons'>
-                    <Modal
-                      onClose={() => setOpenEdit(false)}
-                      onOpen={() => setOpenEdit(true)}
-                      open={openEdit}
-                      trigger={<Button inverted color='green' size="small"><Icon name='edit'/></Button>}
-                    >
-                      <Modal.Header>Update Issue</Modal.Header>
-                      <Modal.Content>
-                        <IssueForm 
-                          isUpdateForm={true} 
-                          displayContent={false} 
-                          dataTitle={title} 
-                          dataBody={issue_body} 
-                          dataSyntax={syntax} 
-                        />
-                        {
-                          (alertStatus && !!message) && 
-                            <div className="ui negative message">
-                              <i className="close icon" onClick={handleDismissOnClick}></i>
-                              <div className="header">
-                                {alertHeader}
-                              </div>
-                              <ul className="list">
-                                {message.length !== 0 ? renderAlertMessage() : null}
-                              </ul>
-                            </div>
-                        }
-                      </Modal.Content>
-                      <Modal.Actions>
-                        <Button onClick={() => setOpenEdit(false)} color='teal'>Cancel</Button>
-                        <Button onClick={updateIssue} color='green'>Update</Button>
-                      </Modal.Actions>
-                    </Modal>
-                    <Modal
-                      closeIcon
-                      size="tiny"
-                      dimmer="blurring"
-                      open={openDelete}
-                      trigger={<Button inverted color='red'><Icon name='trash'/></Button>}
-                      onClose={() => setOpenDelete(false)}
-                      onOpen={() => setOpenDelete(true)}
-                    >
-                      <Header icon='trash' content='Please confirm' />
-                      <Modal.Content>
-                        <p>
-                          Are you sure you want to delete this issue?
-                        </p>
-                      </Modal.Content>
-                      <Modal.Actions>
-                        <Button color='red' onClick={() => setOpenDelete(false)}>
-                          <Icon name='remove' /> No
-                        </Button>
-                        <Button color='green' onClick={deleteIssue}>
-                          <Icon name='checkmark' /> Yes
-                        </Button>
-                      </Modal.Actions>
-                    </Modal>
+                    <Popup
+                      content='Code copied to clipboard'
+                      on='click'
+                      position='right center'
+                      inverted
+                      pinned
+                      trigger={<Button circular basic color='blue' icon='code' className="Clipboard-Button" onClick={handleCopyCode} />}
+                    />
                   </div>
-                </Card.Content>
-              }
-            </Card>
-        </Grid.Column>
-      </Grid.Row>
+                  }
+                />
+              </>
+            }
+            <Divider clearing />
+            <Card.Meta className="Issue-Item-Wrapper">
+              <Card.Meta className="Issue-Item-Wrapper">
+                <Card.Meta className="Issue-Item-Extra">
+                  <Icon name={hasComment ? "comment alternate" : "comment outline"} size="large" />
+                  <span className="Issue-Comment">{totalComments}</span>
+                </Card.Meta>
+                <Card.Meta className="Issue-Item-Extra Inner-Item">
+                  <Icon name="thumbs up" />
+                  <span className="Issue-Comment">{issueLikes.length}</span>
+                </Card.Meta>
+                <Card.Meta className="Issue-Item-Extra Inner-Item">
+                  <Icon name="thumbs down" />
+                  <span className="Issue-Comment">{issueDislikes.length}</span>
+                </Card.Meta>
+              </Card.Meta>
+              <Card.Meta className="Issue-Item-Extra">
+                { 
+                  currentUser && displayLikeStatus ? 
+                  <Button circular color={thumbsUpOrDown ? "blue" : "grey"} icon={ thumbsUpOrDown ? "thumbs up" : "thumbs down"} onClick={unlike} size="large" />
+                  :
+                  (currentUser && currentUser.id !== user.id) && 
+                  <React.Fragment>
+                    <Button circular color="teal" icon='thumbs up outline' size="large" onClick={likeBtn} />
+                    <Button circular color="teal" icon='thumbs down outline' size="large" onClick={dislikeBtn} />
+                  </React.Fragment>
+                }
+                {
+                  (currentUser && currentUser.id !== user.id) && 
+                    <Button circular color={favoriteStatus ? "olive" : "teal"} icon={favoriteStatus ? "star" : "star outline"} size="large" onClick={favoriteBtn} />
+                }
+              </Card.Meta>
+            </Card.Meta>
+          </Card.Content>
+          {
+            currentUser && currentUser.id === user.id &&
+            <Card.Content>
+              <div className='ui two buttons'>
+                <Modal
+                  onClose={() => setOpenEdit(false)}
+                  onOpen={() => setOpenEdit(true)}
+                  open={openEdit}
+                  trigger={<Button inverted color='green' size="small"><Icon name='edit'/></Button>}
+                >
+                  <Modal.Header>Update Issue</Modal.Header>
+                  <Modal.Content>
+                    <IssueForm 
+                      isUpdateForm={true} 
+                      displayContent={false} 
+                      dataTitle={title} 
+                      dataBody={issue_body} 
+                      dataSyntax={syntax} 
+                    />
+                    {
+                      (alertStatus && !!message) && 
+                        <div className="ui negative message">
+                          <i className="close icon" onClick={handleDismissOnClick}></i>
+                          <div className="header">
+                            {alertHeader}
+                          </div>
+                          <ul className="list">
+                            {message.length !== 0 ? renderAlertMessage() : null}
+                          </ul>
+                        </div>
+                    }
+                  </Modal.Content>
+                  <Modal.Actions>
+                    <Button onClick={() => setOpenEdit(false)} color='teal'>Cancel</Button>
+                    <Button onClick={updateIssue} color='green'>Update</Button>
+                  </Modal.Actions>
+                </Modal>
+                <Modal
+                  closeIcon
+                  size="tiny"
+                  dimmer="blurring"
+                  open={openDelete}
+                  trigger={<Button inverted color='red'><Icon name='trash'/></Button>}
+                  onClose={() => setOpenDelete(false)}
+                  onOpen={() => setOpenDelete(true)}
+                >
+                  <Header icon='trash' content='Please confirm' />
+                  <Modal.Content>
+                    <p>
+                      Are you sure you want to delete this issue?
+                    </p>
+                  </Modal.Content>
+                  <Modal.Actions>
+                    <Button color='red' onClick={() => setOpenDelete(false)}>
+                      <Icon name='remove' /> No
+                    </Button>
+                    <Button color='green' onClick={deleteIssue}>
+                      <Icon name='checkmark' /> Yes
+                    </Button>
+                  </Modal.Actions>
+                </Modal>
+              </div>
+            </Card.Content>
+          }
+        </Card>
+    </Grid.Column>
   );
 } 
 

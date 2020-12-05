@@ -8,6 +8,8 @@
 
 #Issue .Issue-Inner-Wrap {
   margin: 0 auto;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
 #Issue .Issue-Icon-Title {

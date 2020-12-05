@@ -35,7 +35,7 @@
 }
 
 #Account-Container .Top-Skills-Wrapper {
-  width: 80%;
+  /* width: 80%; */
   margin: 0 auto;
 }
 
@@ -55,10 +55,22 @@
 }
 
 #Account-Container .Account-Item-Name {
-  margin-top: 7px;
+  margin-top: 8px;
   line-height: 1.2;
 }
 
 #Account-Container .Account-Not-Loggedin-User {
   display: none;
+}
+
+#Account-Container .Popular-Issues-Wrapper {
+  margin-bottom: 40px; 
+}
+
+#Account-Container .Card-Size {
+  width: 100%;
+}
+
+#Account-Container .Issue-Header {
+  margin-bottom: 50px;
 }
