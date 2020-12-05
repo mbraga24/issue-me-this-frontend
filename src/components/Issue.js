@@ -67,7 +67,7 @@ const Issue = props => {
   }, [allIssueLikes, totalIssueLikes, totalIssueDislikes]) 
 
   const deleteIssue = () => {
-    fetch(`http://localhost:3000/issues/${id}`, {
+    fetch(`http://localhost:3000/api/v1/issues/${id}`, {
       method: "DELETE"
     })
     .then(r => r.json())
@@ -85,7 +85,7 @@ const Issue = props => {
       issue_body: updateBody
     }
     
-    fetch(`http://localhost:3000/issues/${id}`, {
+    fetch(`http://localhost:3000/api/v1/issues/${id}`, {
       method: "PATCH",
       headers: {
         'Content-Type': 'application/json'
@@ -107,7 +107,7 @@ const Issue = props => {
   }
 
   const unlike = () => {
-    fetch(`http://localhost:3000/like_issues/${issueLike.id}`, {
+    fetch(`http://localhost:3000/api/v1/like_issues/${issueLike.id}`, {
       method: "DELETE"
     })
     .then(r => r.json())
@@ -119,7 +119,7 @@ const Issue = props => {
   }
 
   const likeBtn = () => {
-    fetch(`http://localhost:3000/like_issues`, {
+    fetch(`http://localhost:3000/api/v1/like_issues`, {
       method: "POST",
       headers: {
         "Content-Type": "Application/json"
@@ -135,7 +135,7 @@ const Issue = props => {
   }
 
   const dislikeBtn = () => {
-    fetch(`http://localhost:3000/like_issues`, {
+    fetch(`http://localhost:3000/api/v1/like_issues`, {
       method: "POST",
       headers: {
         'Content-Type': "Application/json"
@@ -152,7 +152,7 @@ const Issue = props => {
 
   const favoriteBtn = () => {
     if (!issueFavorite) {
-      fetch(`http://localhost:3000/favorites`, {
+      fetch(`http://localhost:3000/api/v1/favorites`, {
         method: "POST",
         headers: {
           'Content-Type': "Application/json"
@@ -165,7 +165,7 @@ const Issue = props => {
         dispatch({ type: UPDATE_ISSUE, payload: data.issue })
       })
     } else {
-      fetch(`http://localhost:3000/favorites/${issueFavorite.id}`, {
+      fetch(`http://localhost:3000/api/v1/favorites/${issueFavorite.id}`, {
         method: "DELETE"
       })
       .then(r => r.json())
