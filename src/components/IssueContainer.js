@@ -39,7 +39,7 @@ const IssueContainer = props => {
     let pagestring = pagenum.toString()
     setLoading(true)
     
-    const url = "http://localhost:3000/api/v1/issues/?page=" + pagestring
+    const url = `http://localhost:3000/api/v1/issues/?page=${pagestring}`
 
     fetch(url)
     .then(res => res.json())

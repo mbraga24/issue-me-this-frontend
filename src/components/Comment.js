@@ -51,7 +51,7 @@ const Comment = props => {
   }, [allCommentLikes, totalCommentLikes, totalCommentDislikes]) 
 
   const deleteComment = () => {
-    fetch(`http://localhost:3000/api/v1/comments/${props.comment.id}`, {
+    fetch(`http://localhost:3000/api/v1/comments/${props.comment.id}/`, {
       method: 'DELETE'
     })
     .then(r => r.json())
@@ -66,7 +66,7 @@ const Comment = props => {
       comment_body: updateBody
     }
     
-    fetch(`http://localhost:3000/api/v1/comments/${props.comment.id}`, {
+    fetch(`http://localhost:3000/api/v1/comments/${props.comment.id}/`, {
       method: "PATCH",
       headers: {
         'Content-Type': 'application/json'
@@ -87,7 +87,7 @@ const Comment = props => {
   }
 
   const unlike = () => {
-    fetch(`http://localhost:3000/api/v1/like_comments/${commentLike.id}`, {
+    fetch(`http://localhost:3000/api/v1/like_comments/${commentLike.id}/`, {
       method: "DELETE"
     })
     .then(r => r.json())
@@ -99,7 +99,7 @@ const Comment = props => {
   }
 
   const likeBtn = () => {
-    fetch(`http://localhost:3000/api/v1/like_comments`, {
+    fetch(`http://localhost:3000/api/v1/like_comments/`, {
       method: "POST",
       headers: {
         "Content-Type": "Application/json"
@@ -115,7 +115,7 @@ const Comment = props => {
   }
 
   const dislikeBtn = () => {
-    fetch(`http://localhost:3000/api/v1/like_comments`, {
+    fetch(`http://localhost:3000/api/v1/like_comments/`, {
       method: "POST",
       headers: {
         'Content-Type': "Application/json"

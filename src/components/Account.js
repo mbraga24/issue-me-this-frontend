@@ -31,7 +31,7 @@ const Account = props => {
 
   const renderSkills = () => {
     return userProfile.skills.map(skill => (
-      <Grid.Column key={skill.id} className="Account-Skill">
+      <Grid.Column key={new Date().getTime() * skill.id} className="Account-Skill">
         <Segment textAlign="center" key={`${skill.key}`} color={`${skill.color}`}>{skill.text}</Segment> 
       </Grid.Column>
     ))
@@ -40,7 +40,7 @@ const Account = props => {
   const renderIssues = () => {
     if (popularIssues.length !== 0) {
       return popularIssues.map(issue => (
-        <Grid.Column width={6} key={issue.id}>
+        <Grid.Column width={6} key={new Date().getTime() * issue.id}>
             <Card raised className="Card-Size">
               <Card.Content>
                 <Card.Header as={Link} to={`/issues/${issue.id}`}>{issue.title}</Card.Header>
@@ -102,8 +102,8 @@ const Account = props => {
                 <Grid.Row stretched>
                   {
                     accountOptions.map(option => (
-                      <Grid.Column>
-                        <Button circular key={option.iconName} as={Link} to={option.iconName === "boxes" ? `/user-issues/${userId}` : option.link} color="blue" className="Account-Button-Options" >
+                      <Grid.Column key={option.iconName}>
+                        <Button circular as={Link} to={option.iconName === "boxes" ? `/user-issues/${userId}` : option.link} color="blue" className="Account-Button-Options" >
                           <List.Item>
                             <List.Content>
                               <Icon name={option.iconName} size="big"/>

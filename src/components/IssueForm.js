@@ -45,7 +45,7 @@ const IssueForm = props => {
       syntax: 'javascript'
     }
 
-    fetch("http://localhost:3000/api/v1/issues", {
+    fetch("http://localhost:3000/api/v1/issues/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
