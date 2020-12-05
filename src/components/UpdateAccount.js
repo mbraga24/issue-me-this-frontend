@@ -136,7 +136,7 @@ const UpdateAccount = props => {
       password: fields.password
     }
 
-    fetch(`http://localhost:3000/users/${currentUser.id}`, {
+    fetch(`http://localhost:3000/api/v1/users/${currentUser.id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json"
@@ -166,7 +166,7 @@ const UpdateAccount = props => {
     const formData = new FormData();
     formData.append("profile_picture", file);
 
-    fetch(`http://localhost:3000/users/${currentUser.id}/upload_photo`, {
+    fetch(`http://localhost:3000/api/v1/users/${currentUser.id}/upload_photo`, {
       method: "POST",
       body: formData
     })

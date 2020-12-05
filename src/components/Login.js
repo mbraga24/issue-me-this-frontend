@@ -28,7 +28,7 @@ const Login = props => {
     }
 
     // make a fetch request to request to login the user - the fetch will be to the custom route "/login"
-    fetch("http://localhost:3000/login", {
+    fetch("http://localhost:3000/api/v1/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"

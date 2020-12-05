@@ -56,7 +56,7 @@ const SignUp = props => {
       password: fields.password
     }
 
-    fetch("http://localhost:3000/users", {
+    fetch("http://localhost:3000/api/v1/users", {
       method: "POST",  
       headers: {
         'Content-Type': 'application/json'
