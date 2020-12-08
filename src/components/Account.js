@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useSelector } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
 import { Card, Image, Segment, Grid, Header, Icon, List, Button, Divider } from 'semantic-ui-react'
@@ -17,9 +17,12 @@ const Account = props => {
   const [ issueCount, setIssueCount ] = useState([])
   
   const issueThumbsUp = issueLikes => issueLikes.filter(issue => issue.is_like === true )
+
+  const findPopularIssues = useCallback((issues) => {
+    issues.filter(issue => issueThumbsUp(issue.like_issues).length >= 4)
+  }, [issues])
   
   useEffect(() => {
-    const findPopularIssues = (issues) => issues.filter(issue => issueThumbsUp(issue.like_issues).length >= 4)
     if (currentUser.id === userId) {
       setUserProfile(currentUser)
       if (currentUser) {
@@ -30,7 +33,7 @@ const Account = props => {
       const user = users.find(user => user.id === userId)
       setUserProfile(user)
     }
-  }, [users, userId, currentUser])
+  }, [users, userId, currentUser, findPopularIssues])
 
   const renderSkills = () => {
     return userProfile.skills.map(skill => (
