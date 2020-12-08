@@ -16,31 +16,34 @@ const Account = props => {
   const [ popularIssues, setPopularIssues ] = useState([])
   const [ issueCount, setIssueCount ] = useState([])
   
-  function findPopularIssues(issues) {
-    return issues.filter(issue => issue.like_issues.length >= 4)
-  }
-
+  const issueThumbsUp = issueLikes => issueLikes.filter(issue => issue.is_like === true )
+  
   useEffect(() => {
-    const user = users && users.find(user => user.id === userId)
-    setUserProfile(user)
-    if (user) {
-      setPopularIssues(findPopularIssues(user.issues))
-      setIssueCount(user.issues)
+    const findPopularIssues = (issues) => issues.filter(issue => issueThumbsUp(issue.like_issues).length >= 4)
+    if (currentUser.id === userId) {
+      setUserProfile(currentUser)
+      if (currentUser) {
+        setPopularIssues(findPopularIssues(currentUser.issues))
+        setIssueCount(currentUser.issues)
+      }
+    } else {
+      const user = users.find(user => user.id === userId)
+      setUserProfile(user)
     }
-  }, [users, userId])
+  }, [users, userId, currentUser])
 
   const renderSkills = () => {
     return userProfile.skills.map(skill => (
-      <Grid.Column key={new Date().getTime() * skill.id} className="Account-Skill">
+      <Grid.Column key={`${skill.text}-${skill.id}`} className="Account-Skill">
         <Segment textAlign="center" key={`${skill.key}`} color={`${skill.color}`}>{skill.text}</Segment> 
       </Grid.Column>
     ))
   }
   
   const renderIssues = () => {
-    if (popularIssues.length !== 0) {
-      return popularIssues.map(issue => (
-        <Grid.Column width={6} key={new Date().getTime() * issue.id}>
+    return popularIssues.length !== 0 ?
+      popularIssues.map(issue => (
+        <Grid.Column width={6} key={`${issue.title}-${issue.id}`}>
             <Card raised className="Card-Size">
               <Card.Content>
                 <Card.Header as={Link} to={`/issues/${issue.id}`}>{issue.title}</Card.Header>
@@ -49,7 +52,7 @@ const Account = props => {
                 <Grid columns={2} padded>
                   <Grid.Column>
                     <Grid.Row>
-                      <Icon name='thumbs up'/>{issue.like_issues.length} Likes
+                      <Icon name='thumbs up'/>{issueThumbsUp(issue.like_issues).length} Likes
                     </Grid.Row>
                   </Grid.Column>
                   <Grid.Column>
@@ -61,11 +64,11 @@ const Account = props => {
               </Card.Content>
             </Card>
         </Grid.Column>
-      ))
-    } else {
-      return <MissingTemplate center={true} header={`${issueCount > 0 ? "Your issues are not that popular yet" : "No issues posted"}`} />
-    }
+      )) :
+      <MissingTemplate center={true} header={`${issueCount > 0 ? "Your issues are not that popular yet" : "No issues posted"}`} />
   }
+
+  // console.log(new Date().getTime())
 
   return (
     userProfile ?
@@ -123,13 +126,18 @@ const Account = props => {
                   {renderSkills()}
                 </Grid.Row>
               </Grid>
-              <Divider />
-              <Header as='h1' color="blue" textAlign="center" className="Issue-Header">Your popular issues</Header>
-              <Grid stackable columns='equal' className={`${currentUser ? "Popular-Issues-Wrapper" : "Account-Not-Loggedin-User"}`}>
-                <Grid.Row>
-                  {renderIssues()}
-                </Grid.Row>
-              </Grid>
+              { 
+                (currentUser && currentUser.id === userId) &&
+                <>
+                  <Divider />
+                  <Header as='h1' color="blue" textAlign="center" className="Issue-Header">Your popular issues</Header>
+                  <Grid stackable columns='equal' className={`${currentUser ? "Popular-Issues-Wrapper" : "Account-Not-Loggedin-User"}`}>
+                    <Grid.Row>
+                      {renderIssues()}
+                    </Grid.Row>
+                  </Grid> 
+                </>
+              }
           </Grid.Column>
         </Grid.Row>
       </Grid>
