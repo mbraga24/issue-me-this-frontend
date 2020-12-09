@@ -1,68 +1,100 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Issue Me This
 
-## Available Scripts
+## Project Preview 
 
-In the project directory, you can run:
+![Preview-1](https://res.cloudinary.com/dloh9txdc/image/upload/v1607548720/Issue-me-this/IssueMeThis-Collage-2.001_gardod.jpg)
 
-### `yarn start`
+![Preview-2](https://res.cloudinary.com/dloh9txdc/image/upload/v1607548720/Issue-me-this/IssueMeThis-Collage-2.002_qgtk9y.jpg)
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+<br />
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+## Also checkout the project [demo here](needs-to-work-ondemo)
 
-### `yarn test`
+<br />
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+---
 
-### `yarn build`
+### Table of Contents
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- [Description](#description)
+- [Installation](#installation)
+- [References And Technologies](#references-and-technologies)
+- [License](#license)
+- [Author Info](#author-info)
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+---
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Description
 
-### `yarn eject`
+I decided to build an app similar to _Stack Overflow_ for all of those who have already mastered or still learning programming can help and collaborate with each other. On _Issue Me This_  users can post Issues with questions with code snippets, other users can leave comments to try to help them, like, dislike and favorite someone else’s issue post for future reference. I built this app with the intent to solidify foundational skills on React as well as Rails as an API.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+[Back To The Top](#issue-me-this)
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+---
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## References and Technologies
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+#### Technologies
 
-## Learn More
+- Javascript
+- React
+- Rails
+- Cloudinary
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+#### Rails Gems Used
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- [will_paginate](https://github.com/mislav/will_paginate)
+- [active_model_serializers](https://github.com/rails-api/active_model_serializers)
+- [ruby-jwt](https://github.com/jwt/ruby-jwt)
+- [rest-client](https://github.com/rest-client/rest-client)
+- [cloudinary_gem](https://github.com/cloudinary/cloudinary_gem)
+- [figaro](https://github.com/laserlemon/figaro)
+- [bcrypt-ruby](https://github.com/codahale/bcrypt-ruby)
+- [rack-cors](https://github.com/cyu/rack-cors)
 
-### Code Splitting
+#### API's Used
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+- [Random User Generator](https://randomuser.me/)
 
-### Analyzing the Bundle Size
+[Back To The Top](#issue-me-this)
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+---
 
-### Making a Progressive Web App
+## Installation
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+#### [Issue Me This - Frontend](https://github.com/mrdbrg/issue-me-this-frontend)
 
-### Advanced Configuration
+1. Fork and clone the repo
+1. npm install
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
+#### [Issue Me This - Backend](https://github.com/mrdbrg/issue-me-this-backend)
 
-### Deployment
+1. Fork and clone the repo
+1. bundle install
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
+[Back To The Top](#issue-me-this)
 
-### `yarn build` fails to minify
+---
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+## License
+
+MIT License
+
+Copyright [2020] [Marlon Braga]
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE
+
+[Back To The Top](#issue-me-this)
+
+---
+
+## Author Info
+
+- LinkedIn - [Marlon Braga](https://www.linkedin.com/in/marlon-braga/)
+- Portfolio - [Currently unavailable and under construction](https://www.youtube.com/watch?v=oHg5SJYRHA0&ab_channel=cotter548)
+
+[Back To The Top](#issue-me-this)
