@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Grid, Icon, Button, Card, Image, Divider, Modal, Header, Popup } from 'semantic-ui-react'
 import { Link, withRouter } from 'react-router-dom';
-import { UPDATE_ISSUE_INDEX, DELETE_ISSUE_INDEX, DELETE_ISSUE, UPDATE_ISSUE, UPDATE_TITLE, UPDATE_BODY, REMOVE_KEY_HOLDER_ISSUE_LIKE, ADD_KEY_HOLDER_ISSUE_LIKE, ADD_KEY_HOLDER_FAVORITE, REMOVE_KEY_HOLDER_FAVORITE, ADD_ISSUE_LIKE, DELETE_ISSUE_LIKE } from '../store/type';
+import { SET_KEY_HOLDER, UPDATE_ISSUE_INDEX, DELETE_ISSUE_INDEX, DELETE_ISSUE, UPDATE_ISSUE, UPDATE_TITLE, UPDATE_BODY, REMOVE_KEY_HOLDER_ISSUE_LIKE, ADD_KEY_HOLDER_ISSUE_LIKE, ADD_KEY_HOLDER_FAVORITE, REMOVE_KEY_HOLDER_FAVORITE, ADD_ISSUE_LIKE, DELETE_ISSUE_LIKE } from '../store/type';
 import IssueForm from './IssueForm';
 import CreateHighlight from './CreateHighlight';
 import '../resources/Issue.css';
@@ -71,9 +71,11 @@ const Issue = props => {
       method: "DELETE"
     })
     .then(r => r.json())
-    .then(issue => {
+    .then(data => {
+      const { issue, user } = data
       dispatch({ type: DELETE_ISSUE, payload: issue })
       dispatch({ type: DELETE_ISSUE_INDEX, payload: issue })
+      dispatch({ type: SET_KEY_HOLDER, payload: user })
       props.match.path === "/issues/:id" && props.history.push('/issues')
       setOpenDelete(false)
     })

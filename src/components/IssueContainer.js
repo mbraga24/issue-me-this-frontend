@@ -13,9 +13,8 @@ const IssueContainer = props => {
   const [ loading, setLoading ] = useState(true)
   const searchTerm = useSelector(state => state.term.searchTerm)
   const issuesIndex = useSelector(state => state.issue.issuesIndex)
-
+  
   useEffect(() => {
-    // fetch issues
     fetch("http://localhost:3000/api/v1/issues")
     .then(r => r.json())
     .then(issues => {

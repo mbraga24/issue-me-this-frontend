@@ -45,10 +45,10 @@ const UpdateAccount = props => {
   }, [skills, currentUser, skillSelection])
 
   useEffect(() => {
-    if (fields.firstName || fields.lastName || fields.jobTitle || fields.email || fields.password || topSkills.length === 4 || changeDate) {
+    if (fields.firstName || fields.lastName || fields.jobTitle || fields.email || fields.password || changeDate) {
       setDisableBtn(false)
     } 
-  }, [fields.firstName, fields.lastName, fields.jobTitle, fields.email, fields.password, topSkills, changeDate])
+  }, [fields.firstName, fields.lastName, fields.jobTitle, fields.email, fields.password, topSkills, changeDate, currentUser])
 
   const handleMessages = data => {
     setAlertHeader(data.header)
@@ -171,10 +171,10 @@ const UpdateAccount = props => {
       body: formData
     })
     .then(r => r.json())
-    .then(userImage => {
+    .then(user => {
       setUploadStatus(false)
       setBtnUploadState(false)
-      dispatch({ type: UPDATE_USER, payload: userImage })
+      dispatch({ type: SET_KEY_HOLDER, payload: user })
     })
   }
 

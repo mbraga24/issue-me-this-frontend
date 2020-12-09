@@ -40,7 +40,7 @@ const FavoriteIssues = props => {
     {  
       issues ?
       <React.Fragment>
-        <Grid columns={1} divided id="Issue">
+        <Grid columns={1} id="Issue">
           {renderIssues()}
         </Grid> 
       </React.Fragment> : <Loading loadingClass={true} /> 

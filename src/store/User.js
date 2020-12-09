@@ -2,6 +2,7 @@ import { SET_USERS, ADD_USER, UPDATE_USER, SET_KEY_HOLDER, REMOVE_KEY_HOLDER_ISS
 
 const defaultState = {
   keyHolder: null,
+  popularIssues: [],
   users: [],
 }
 
@@ -62,8 +63,6 @@ const reducer = (state = defaultState, action) => {
         users: [...state.users, action.payload]
       }
     case UPDATE_USER:
-      console.log("UPDATE_USER", action.payload)
-      console.log("UPDATE_USER", state.users)
       const updatedUsers = state.users.map(user => user.id === action.payload.id ? action.payload : user )
       return {
         ...state,

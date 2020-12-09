@@ -19,15 +19,15 @@ const Account = props => {
   const issueThumbsUp = issueLikes => issueLikes.filter(issue => issue.is_like === true)
 
   const findPopularIssues = useCallback((issues) => {
-    issues.filter(issue => issueThumbsUp(issue.like_issues).length >= 4)
+    setPopularIssues(issues.filter(issue => issueThumbsUp(issue.like_issues).length >= 4))
   }, [])
   
   useEffect(() => {
     if (currentUser.id === userId) {
       setUserProfile(currentUser)
       if (currentUser) {
-        setPopularIssues(findPopularIssues(currentUser.issues))
-        setIssueCount(currentUser.issues)
+        findPopularIssues(currentUser.issues)
+        setIssueCount(currentUser.issues.length)
       }
     } else {
       const user = users.find(user => user.id === userId)
@@ -44,31 +44,32 @@ const Account = props => {
   }
   
   const renderIssues = () => {
-    if (popularIssues && popularIssues.length !== 0) {
-      return popularIssues.map(issue => (
-        <Grid.Column width={6} key={`${issue.title}-${issue.id}`}>
-            <Card raised className="Card-Size">
-              <Card.Content>
-                <Card.Header as={Link} to={`/issues/${issue.id}`}>{issue.title}</Card.Header>
-              </Card.Content>
-              <Card.Content extra>
-                <Grid columns={2} padded>
-                  <Grid.Column>
-                    <Grid.Row>
-                      <Icon name='thumbs up'/>{issueThumbsUp(issue.like_issues).length} Likes
-                    </Grid.Row>
-                  </Grid.Column>
-                  <Grid.Column>
-                    <Grid.Row>
-                      <Icon name='comment'/>{issue.comments.length} {issue.comments.length < 1 ? "Comment" : "Comments" }
-                    </Grid.Row>
-                  </Grid.Column>
-                </Grid>
-              </Card.Content>
-            </Card>
-        </Grid.Column>
-      ))} else {
-       return  <MissingTemplate center={true} header={`${issueCount > 0 ? "Your issues are not that popular yet" : "No issues posted"}`} />
+      if (popularIssues.length !== 0) {
+        return popularIssues.map(issue => (
+          <Grid.Column width={6} key={`${issue.title}-${issue.id}`}>
+              <Card raised className="Card-Size">
+                <Card.Content>
+                  <Card.Header as={Link} to={`/issues/${issue.id}`}>{issue.title}</Card.Header>
+                </Card.Content>
+                <Card.Content extra>
+                  <Grid columns={2} padded>
+                    <Grid.Column>
+                      <Grid.Row>
+                        <Icon name='thumbs up'/>{issueThumbsUp(issue.like_issues).length} Likes
+                      </Grid.Row>
+                    </Grid.Column>
+                    <Grid.Column>
+                      <Grid.Row>
+                        <Icon name='comment'/>{issue.comments.length} {issue.comments.length < 1 ? "Comment" : "Comments" }
+                      </Grid.Row>
+                    </Grid.Column>
+                  </Grid>
+                </Card.Content>
+              </Card>
+          </Grid.Column>
+        ))
+      } else {
+         return <MissingTemplate center={true} header={`${issueCount > 0 ? "Your issues are not that popular yet" : "No issues posted"}`} />
       }
   }
 
@@ -84,7 +85,7 @@ const Account = props => {
                 <Grid.Row stretched>
                   <Grid.Column>
                     <div className="Account-Image-Alignment Circular">
-                      <Image className="Circular-Image" src={userProfile.profile_picture.image_url} size='small' circular />
+                      <Image className="Circular-Image" src={userProfile.profile_picture && userProfile.profile_picture.image_url} size='small' circular />
                     </div>
                     <Card className="Account-Card">
                       <Card.Content>
