@@ -15,12 +15,12 @@ const Account = props => {
   const [ userProfile, setUserProfile ] = useState(null)
   const [ popularIssues, setPopularIssues ] = useState([])
   const [ issueCount, setIssueCount ] = useState([])
-  
-  const issueThumbsUp = issueLikes => issueLikes.filter(issue => issue.is_like === true )
+
+  const issueThumbsUp = issueLikes => issueLikes.filter(issue => issue.is_like === true)
 
   const findPopularIssues = useCallback((issues) => {
     issues.filter(issue => issueThumbsUp(issue.like_issues).length >= 4)
-  }, [issues])
+  }, [])
   
   useEffect(() => {
     if (currentUser.id === userId) {
@@ -44,8 +44,8 @@ const Account = props => {
   }
   
   const renderIssues = () => {
-    return popularIssues.length !== 0 ?
-      popularIssues.map(issue => (
+    if (popularIssues && popularIssues.length !== 0) {
+      return popularIssues.map(issue => (
         <Grid.Column width={6} key={`${issue.title}-${issue.id}`}>
             <Card raised className="Card-Size">
               <Card.Content>
@@ -67,11 +67,10 @@ const Account = props => {
               </Card.Content>
             </Card>
         </Grid.Column>
-      )) :
-      <MissingTemplate center={true} header={`${issueCount > 0 ? "Your issues are not that popular yet" : "No issues posted"}`} />
+      ))} else {
+       return  <MissingTemplate center={true} header={`${issueCount > 0 ? "Your issues are not that popular yet" : "No issues posted"}`} />
+      }
   }
-
-  // console.log(new Date().getTime())
 
   return (
     userProfile ?
