@@ -8,7 +8,7 @@
 
 <br />
 
-## Also checkout the project [demo here](needs-to-work-ondemo)
+### Checkout the project [demo here](needs-to-work-ondemo)
 
 <br />
 
