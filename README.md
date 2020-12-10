@@ -2,9 +2,23 @@
 
 ## Project Preview 
 
-![Preview-1](https://res.cloudinary.com/dloh9txdc/image/upload/v1607548720/Issue-me-this/IssueMeThis-Collage-2.001_gardod.jpg)
+Home
+![Preview-1](https://res.cloudinary.com/dloh9txdc/image/upload/v1607558322/IssueMeThis%20-%20Project%20Preview/4IssueMeThisPics_xpgsfk.png)
 
-![Preview-2](https://res.cloudinary.com/dloh9txdc/image/upload/v1607548720/Issue-me-this/IssueMeThis-Collage-2.002_qgtk9y.jpg)
+Home + side menu open
+![Preview-2](https://res.cloudinary.com/dloh9txdc/image/upload/v1607558322/IssueMeThis%20-%20Project%20Preview/5IssueMeThisPics_cvchpy.png)
+
+Issues view
+![Preview-3](https://res.cloudinary.com/dloh9txdc/image/upload/v1607558322/IssueMeThis%20-%20Project%20Preview/3IssueMeThisPics_minjwn.png)
+
+Account 
+![Preview-4](https://res.cloudinary.com/dloh9txdc/image/upload/v1607558322/IssueMeThis%20-%20Project%20Preview/2IssueMeThisPics_mwuhtc.png)
+
+Update account
+![Preview-5](https://res.cloudinary.com/dloh9txdc/image/upload/v1607558322/IssueMeThis%20-%20Project%20Preview/1IssueMeThisPics_atnf36.png)
+
+Comment post view
+![Preview-6](https://res.cloudinary.com/dloh9txdc/image/upload/v1607558322/IssueMeThis%20-%20Project%20Preview/0IssueMeThisPics_kbeoqj.png)
 
 <br />
 
