@@ -40,8 +40,7 @@ Comment post view
 
 ## Description
 
-I decided to build an app similar to _Stack Overflow_ so all of those experienced professionals or those who still getting the hang of programming can help and collaborate with one another. On _Issue Me This_  users can post Issues with code snippets, other users can leave answers to try to help them, like, dislike and favorite someone else’s issue post for future reference. I also added a small but cool feature to make easier to copy those code snippets. 
-
+I decided to build an app similar to _Stack Overflow_ so all of those experienced professionals or those who still getting the hang of programming can help and collaborate with one another. On _Issue Me This_  users can post Issues with code snippets, other users can leave answers to try to help them, like, dislike and favorite someone else’s issue post for future reference. I also added a small but cool feature to make easier to copy those code snippets. I used Semantic UI React as my frontend framework to focus less in CSS styling and more in the use of React functional components, Hooks, Redux, Rails, and developing the features I had in mind.
 
 There was _much_ more I would've loved to add to this application such as users can follow/unfollow other users, users can chat in private to discuss more in depth ideas, and other great features but it's time to focus on honing other skills and expand on what this app taught me. I will continue to work and improve this project's code base and features as I grow as I developer.
 
