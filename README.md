@@ -40,7 +40,9 @@ Comment post view
 
 ## Description
 
-I decided to build an app similar to _Stack Overflow_ for all of those who have already mastered or still learning programming can help and collaborate with each other. On _Issue Me This_  users can post Issues with questions with code snippets, other users can leave comments to try to help them, like, dislike and favorite someone else’s issue post for future reference. I built this app with the intent to solidify foundational skills on React as well as Rails as an API.
+I decided to build an app similar to _Stack Overflow_ so all of those experienced professionals or those who still getting the hang of programming can help and collaborate with each one another. On _Issue Me This_  users can post Issues with code snippets, other users can leave answers to try to help them, like, dislike and favorite someone else’s issue post for future reference. I also added a small but cool feature to make easier to copy those code snippets. 
+
+This MVP was built with the intent to solidify foundational skills on React as well as Rails as an API. There is still a lot of work to be done and learning to do but I am a proud created of __Issue Me This__.
 
 [Back To The Top](#issue-me-this)
 
