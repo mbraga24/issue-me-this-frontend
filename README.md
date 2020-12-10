@@ -40,7 +40,7 @@ Comment post view
 
 ## Description
 
-I decided to build an app similar to _Stack Overflow_ so all of those experienced professionals or those who still getting the hang of programming can help and collaborate with each one another. On _Issue Me This_  users can post Issues with code snippets, other users can leave answers to try to help them, like, dislike and favorite someone else’s issue post for future reference. I also added a small but cool feature to make easier to copy those code snippets. 
+I decided to build an app similar to _Stack Overflow_ so all of those experienced professionals or those who still getting the hang of programming can help and collaborate with one another. On _Issue Me This_  users can post Issues with code snippets, other users can leave answers to try to help them, like, dislike and favorite someone else’s issue post for future reference. I also added a small but cool feature to make easier to copy those code snippets. 
 
 
 There was _much_ more I would've loved to add to this application such as users can follow/unfollow other users, users can chat in private to discuss more indepth ideas, and other great features but it's time to focus on honing other skills and expand on what this app taught me. I will definitely continue to work and clean up this project as I grow as I developer.
