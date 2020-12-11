@@ -94,14 +94,12 @@ const ShowIssue = props => {
     }, 4000)
   }
 
-  // console.log(comments.le)
-
   return (
     <Container id="ShowIssue">
       {
         currentIssue ?
         <React.Fragment>
-          <Header as='h1' textAlign="center" className="ShowIssue-Header">Issue</Header>
+          <Header as='h1' textAlign="center" color="blue" className="ShowIssue-Header">Issue</Header>
           <Grid columns="2" divided id="Issue">
             <Issue issue={currentIssue} displayBody={true}/>
             <Grid.Row>
