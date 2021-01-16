@@ -53,6 +53,8 @@ This MVP (Minimum viable product) was built with the intent to solidify foundati
 ## References and Technologies
 
 #### Technologies
+<!---
+import { DateInput } from 'semantic-ui-calendar-react'; --->
 
 - Javascript
 - React
