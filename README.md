@@ -1,5 +1,18 @@
 # Issue Me This
 
+---
+
+### Table of Contents
+
+- [Project Preview](#projectpreview)
+- [Description](#description)
+- [Installation](#installation)
+- [References And Technologies](#references-and-technologies)
+- [License](#license)
+- [Author Info](#author-info)
+
+---
+
 ## Project Preview 
 
 Home
@@ -25,16 +38,6 @@ Comment post view
 ### Check out more features of this project here: [Demo walkthrough](https://www.youtube.com/watch?v=nE63LDZElBY&ab_channel=MarlonBraga)
 
 <br />
-
----
-
-### Table of Contents
-
-- [Description](#description)
-- [Installation](#installation)
-- [References And Technologies](#references-and-technologies)
-- [License](#license)
-- [Author Info](#author-info)
 
 ---
 
