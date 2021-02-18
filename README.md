@@ -55,26 +55,14 @@ This MVP (Minimum viable product) was built with the intent to solidify foundati
 #### Technologies
 <!---
 import { DateInput } from 'semantic-ui-calendar-react'; --->
-
+- HTML
+- CSS
 - Javascript
-- React
-- Rails
-- Cloudinary
+- [React](https://reactjs.org/)
 
-#### Rails Gems Used
+#### Libraries
 
-- [will_paginate](https://github.com/mislav/will_paginate)
-- [active_model_serializers](https://github.com/rails-api/active_model_serializers)
-- [ruby-jwt](https://github.com/jwt/ruby-jwt)
-- [rest-client](https://github.com/rest-client/rest-client)
-- [cloudinary_gem](https://github.com/cloudinary/cloudinary_gem)
-- [figaro](https://github.com/laserlemon/figaro)
-- [bcrypt-ruby](https://github.com/codahale/bcrypt-ruby)
-- [rack-cors](https://github.com/cyu/rack-cors)
-
-#### API's Used
-
-- [Random User Generator](https://randomuser.me/)
+- [Semantic UI React](https://react.semantic-ui.com/)
 
 [Back To The Top](#issue-me-this)
 
@@ -84,13 +72,12 @@ import { DateInput } from 'semantic-ui-calendar-react'; --->
 
 #### [Issue Me This - Frontend](https://github.com/mrdbrg/issue-me-this-frontend)
 
-1. Fork and clone the repo
-1. npm install
-
-#### [Issue Me This - Backend](https://github.com/mrdbrg/issue-me-this-backend)
-
-1. Fork and clone the repo
-1. bundle install
+1. Fork this pository.
+1. Clone this repository onto your local machine.
+1. From your terminal `cd` into the project's folder.
+1. Run `npm install` to install all packages and dependencies.
+1. Follow the instructions for the [backend-end portion](https://github.com/mrdbrg/issue-me-this-backend) of this application. 
+1. Run `npm start` to run the application.
 
 [Back To The Top](#issue-me-this)
 
