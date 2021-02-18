@@ -22,7 +22,7 @@ Comment post view
 
 <br />
 
-### Checkout the project [demo here](needs-to-work-ondemo)
+### Checkout the project [demo here](https://www.youtube.com/watch?v=nE63LDZElBY&ab_channel=MarlonBraga)
 
 <br />
 
